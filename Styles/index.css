@@ -1,27 +1,26 @@
 .hero-section {
   background-color: var(--grey-bg);
-  height: 350px;
+  height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  overflow: hidden;
 }
 
-.hero-text {
-  color: var(--text-blue);
-  font-size: 3rem;
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-color: var(--text-blue);
-  text-decoration-thickness: 3px;
-  text-underline-offset: 8px;
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
+/* Tentang Kami Section CSS*/
 .about-section {
   padding: 4rem 2rem;
   display: flex;
   justify-content: center;
-  background-color: #f7f7f7;
+  background-color: #F6E7D8;
   width: 100%;
 }
 
@@ -34,7 +33,7 @@
 }
 
 .about-subtitle {
-  color: #f1ad66;
+  color: #EFA154;
   font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -55,12 +54,13 @@
   text-align: justify;
 }
 
-/* Timeline Arc*/
+/* Timeline Section CSS*/
 .timeline-section {
   padding: 4rem 2rem;
   display: flex;
   justify-content: center;
-  background-color: #fcfcfc; /* very slightly lighter than about-section to separate them, or we can use the same #f7f7f7 */
+  background-color: #fcfcfc;
+  /* very slightly lighter than about-section to separate them, or we can use the same #f7f7f7 */
   width: 100%;
 }
 
@@ -72,7 +72,7 @@
 }
 
 .timeline-subtitle {
-  color: #f1ad66;
+  color: #EFA154;
   font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -105,7 +105,7 @@
 }
 
 .timeline-year {
-  background-color: #f1ad66;
+  background-color: #EFA154;
   color: rgb(0, 0, 0);
   font-weight: 700;
   padding: 0.3rem 0.5rem;
@@ -116,7 +116,7 @@
 
 .timeline-line {
   width: 1px;
-  background-color: #f1ad66;
+  background-color: #EFA154;
   flex: 1;
   min-height: 30px;
 }
@@ -146,4 +146,71 @@
   font-size: 1rem;
   line-height: 1.6;
   color: #444;
+}
+
+/* Our Founder Section CSS*/
+.our-founder-section {
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  background-color: #F6E7D8;
+  width: 100%;
+}
+
+.our-founder-content {
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.our-founder-subtitle {
+  color: #EFA154;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.our-founder-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.2;
+}
+
+.our-founder-text-container {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.our-founder-image {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.our-founder-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.our-founder-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #333;
+  text-align: justify;
+}
+
+@media (max-width: 768px) {
+  .our-founder-text-container {
+    flex-direction: column;
+    text-align: center;
+  }
 }
