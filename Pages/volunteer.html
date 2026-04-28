@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Volunteer - Ashram Gandhi Puri</title>
+  <!-- Importing Google Fonts for modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../Styles/styles.css" />
+  <link rel="stylesheet" href="../Styles/volunteer.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">
+        <img src="../assets/Logo NGO.png" alt="Logo Ashram Gandhi Puri" />
+      </div>
+    </div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="volunteer.html">Volunteer</a></li>
+        <li><a href="donation.html">Donate</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="volunteer-section">
+      <div class="volunteer-image">
+        <img src="../assets/Hero Photo 2.jpg" alt="Volunteer Working">
+      </div>
+      <div class="volunteer-form-container">
+        <h2>Become a Volunteer</h2>
+        <p class="volunteer-desc">Join our mission to empower the community and make a positive impact. Fill out the form below to register as a volunteer.</p>
+        <form class="volunteer-form">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="John Doe" required>
+          
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="+62 812 3456 7890" required>
+          
+          <label for="nationality">Nationality</label>
+          <input type="text" id="nationality" name="nationality" placeholder="Indonesian" required>
+          
+          <label for="reason">Why do you want to volunteer?</label>
+          <textarea id="reason" name="reason" rows="5" placeholder="Share your motivation..." required></textarea>
+          
+          <button type="submit">Submit Application</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-text">Footer</div>
+  </footer>
+</body>
+</html>

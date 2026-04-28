@@ -1,0 +1,84 @@
+.volunteer-section {
+  display: flex;
+  min-height: calc(100vh - 165px);
+}
+
+.volunteer-image {
+  flex: 1;
+}
+
+.volunteer-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.volunteer-form-container {
+  flex: 1;
+  background-color: #F6E7D8; /* Soft Beige from design */
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.volunteer-form-container h2 {
+  font-family: "Poppins", sans-serif;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+
+.volunteer-desc {
+  color: #444;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.volunteer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.volunteer-form label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.volunteer-form input,
+.volunteer-form textarea {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.volunteer-form button {
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 1rem;
+  transition: opacity 0.2s;
+  font-size: 1.1rem;
+}
+
+.volunteer-form button:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .volunteer-section {
+    flex-direction: column;
+  }
+  
+  .volunteer-image {
+    height: 300px;
+  }
+}
