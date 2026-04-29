@@ -25,7 +25,7 @@
 .map-container {
   margin-top: 2rem;
   width: 100%;
-  height: 300px;
+  height: 500px;
   background-color: #e0e0e0;
   display: flex;
   align-items: center;
@@ -34,19 +34,26 @@
 }
 
 .map-placeholder {
-  color: #666;
-  font-weight: 600;
+  width: 100%;
+  height: 100%;
+}
+
+.map-placeholder iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
 }
 
 .contact-form-container {
   flex: 1;
-  background-color: #F6E7D8; /* Soft Beige from design */
+  background-color: #f6e7d8; /* Soft Beige from design */
   padding: 3rem;
   display: flex;
   flex-direction: column;
 }
 
 .contact-form-container h2 {
+  margin-top: 11rem;
   font-family: "Poppins", sans-serif;
   color: var(--text-dark);
   margin-bottom: 1.5rem;
