@@ -26,12 +26,33 @@
   width: 100%;
 }
 
-.about-content {
-  max-width: 800px;
+.about-wrapper {
+  max-width: 1200px;
   width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.about-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+
+.about-image {
+  flex: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.about-image img {
+  width: 600px;
+  height: 350px;
+  display: block;
+  object-fit: cover;
 }
 
 .about-subtitle {
@@ -66,8 +87,14 @@
   width: 100%;
 }
 
+.timeline-wrapper {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  gap: 3rem;
+}
+
 .timeline-content {
-  max-width: 800px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -150,21 +177,99 @@
   color: #444;
 }
 
+.timeline-hidden {
+  display: none !important;
+}
+
+.toggle-timeline-btn {
+  margin-top: 2rem;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background-color 0.3s;
+}
+/* Activity Section CSS*/
+.latest-activities-section {
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  background-color: #f6e7d8;
+  /* very slightly lighter than about-section to separate them, or we can use the same #f7f7f7 */
+  width: 100%;
+}
+
+.latest-activities-wrapper {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.latest-activities-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+
+.latest-activities-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.latest-activities-subtitle {
+  color: #efa154;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.latest-activities-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0;
+}
+
+.see-more-link {
+  color: #555;
+  text-decoration: underline;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s;
+}
+
+.see-more-link:hover {
+  color: #efa154;
+}
+
 /* Our Founder Section CSS*/
 .our-founder-section {
   padding: 4rem 2rem;
   display: flex;
   justify-content: center;
-  background-color: #f6e7d8;
+  background-color: #fcfcfc;
   width: 100%;
 }
 
-.our-founder-content {
-  max-width: 800px;
+.our-founder-wrapper {
+  max-width: 1200px;
   width: 100%;
   display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.our-founder-content {
+  flex: 1;
+  display: flex;
   flex-direction: column;
-  gap: 1.5rem;
 }
 
 .our-founder-subtitle {
@@ -183,23 +288,20 @@
 }
 
 .our-founder-text-container {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 .our-founder-image {
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
+  flex: 1;
+  border-radius: 8px;
   overflow: hidden;
-  flex-shrink: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .our-founder-image img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  display: block;
   object-fit: cover;
 }
 
@@ -211,13 +313,79 @@
 }
 
 @media (max-width: 768px) {
+  .carousel-container {
+    height: 300px;
+  }
+  
+  .carousel-slide img {
+    height: 300px;
+  }
+
   .nav-links {
     text-align: center;
     display: flex;
     flex-direction: column;
   }
-  .our-founder-text-container {
+  
+  .about-wrapper {
     flex-direction: column;
     text-align: center;
+  }
+
+  .timeline-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .latest-activities-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .our-founder-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .our-founder-text-container {
+    text-align: center;
+  }
+
+  .about-image, .our-founder-image {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-container, .carousel-slide img {
+    height: 200px;
+  }
+  
+  .about-section, .timeline-section, .latest-activities-section, .our-founder-section {
+    padding: 2rem 1rem;
+  }
+
+  .about-title, .timeline-title, .latest-activities-title, .our-founder-title {
+    font-size: 1.75rem;
+  }
+
+  .timeline-item {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-year-col {
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .timeline-line {
+    display: none;
   }
 }
