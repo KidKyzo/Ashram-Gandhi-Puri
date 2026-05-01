@@ -75,7 +75,9 @@ nav {
   color: var(--text-dark);
   font-size: 1.2rem;
   font-weight: 600;
-  transition: color 0.3s ease;
+  transition: color 0.4s ease;
+  transition-delay: 0.05s;
+  text-underline-offset: 10px;
 }
 
 .nav-links li a:hover {
