@@ -24,10 +24,19 @@
     <header>
       <div class="brand">
         <div class="logo">
-          <img src="../assets/Logo NGO.png" alt="Logo Ashram Gandhi Puri" />
+          <img src="../assets/Logo%20NGO.png" alt="Logo Ashram Gandhi Puri" />
         </div>
       </div>
-      <nav>
+      <button
+        class="hamburger"
+        id="hamburger-btn"
+        aria-label="Toggle navigation"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="main-nav">
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
           <li><a href="gallery.html">Gallery</a></li>
@@ -42,20 +51,25 @@
       <div class="carousel-container">
         <div class="carousel">
           <div class="carousel-slide">
-            <img src="../assets/Hero Photo 4.jpg" alt="Image 1" />
+            <img src="../assets/Hero%20Photo%204.jpg" alt="Image 1" />
           </div>
           <div class="carousel-slide">
-            <img src="../assets/Hero Photo 2.jpg" alt="Image 2" />
+            <img src="../assets/Hero%20Photo%202.jpg" alt="Image 2" />
           </div>
         </div>
       </div>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="../JavaScript/script.js"></script>
+      <script>
+        const hamburger = document.getElementById("hamburger-btn");
+        const nav = document.getElementById("main-nav");
+        hamburger.addEventListener("click", () => nav.classList.toggle("open"));
+      </script>
 
       <section class="about-section">
         <div class="about-wrapper">
           <div class="about-content">
-            <h4 class="about-subtitle">TENTANG KAMI</h4>
+            <h3 class="about-subtitle">TENTANG KAMI</h3>
             <h2 class="about-title">Ashram Gandhi Puri</h2>
             <div class="about-text-container">
               <p class="about-text">
@@ -74,7 +88,7 @@
           </div>
           <div class="about-image">
             <img
-              src="../assets/Hero Photo 3.jpg"
+              src="../assets/Hero%20Photo%203.jpg"
               alt="About Ashram Gandhi Puri"
             />
           </div>
@@ -84,9 +98,8 @@
       <section class="timeline-section">
         <div class="timeline-wrapper">
           <div class="timeline-content">
-            <h4 class="timeline-subtitle">Perjalanan Sejarah</h4>
+            <h3 class="timeline-subtitle">Perjalanan Sejarah</h3>
             <h2 class="timeline-title">Tonggak Penting Ashram Gandhi Puri</h2>
-
             <div class="timeline">
               <div class="timeline-item">
                 <div class="timeline-year-col">
@@ -205,17 +218,17 @@
         <div class="latest-activities-wrapper">
           <div class="latest-activities-header">
             <div class="latest-activities-content">
-              <h4 class="latest-activities-subtitle">Kegiatan</h4>
+              <h3 class="latest-activities-subtitle">Kegiatan</h3>
               <h2 class="latest-activities-title">
                 Aktivitas Ashram Gandhi Puri
               </h2>
             </div>
-            <a href="gallery.html" class="see-more-link">Lihat Semua Berita</a>
+            <a href="gallery.html" class="see-more-link">Read More</a>
           </div>
           <div class="gallery-grid">
             <div class="gallery-card">
               <img
-                src="../assets/Hero Photo 2.jpg"
+                src="../assets/Hero%20Photo%202.jpg"
                 alt="Dharma Talk and Bhajan"
               />
               <div class="gallery-info">
@@ -231,7 +244,7 @@
             </div>
             <div class="gallery-card">
               <img
-                src="../assets/Hero Photo.jpg"
+                src="../assets/Hero%20Photo.jpg"
                 alt="Kegiatan Bersama Generasi Muda"
               />
               <div class="gallery-info">
@@ -247,7 +260,7 @@
             </div>
             <div class="gallery-card">
               <img
-                src="../assets/Founder Photo.jpg"
+                src="../assets/Founder%20Photo.jpg"
                 alt="Peresmian Patung Acharya Vinoba Bhave"
               />
               <div class="gallery-info">
@@ -268,10 +281,10 @@
       <section class="our-founder-section">
         <div class="our-founder-wrapper">
           <div class="our-founder-image">
-            <img src="../assets/Founder Photo.jpg" alt="Founder" />
+            <img src="../assets/Founder%20Photo.jpg" alt="Founder" />
           </div>
           <div class="our-founder-content">
-            <h4 class="our-founder-subtitle">OUR FOUNDER</h4>
+            <h3 class="our-founder-subtitle">THE FOUNDER</h3>
             <h2 class="our-founder-title">Ida Rsi Putra Manuaba</h2>
             <div class="our-founder-text-container">
               <p class="our-founder-text">
@@ -289,7 +302,7 @@
     <footer>
       <div class="footer-content">
         <div class="footer-logo">
-          <img src="../assets/Logo NGO.png" alt="Logo Ashram Gandhi Puri" />
+          <img src="../assets/Logo%20NGO.png" alt="Logo Ashram Gandhi Puri" />
         </div>
         <div class="footer-right">
           <div class="footer-links-social">
@@ -301,8 +314,12 @@
               <li><a href="donation.html">Donate</a></li>
             </ul>
             <div class="footer-socials">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.facebook.com/profile.php?id=100078784072776"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="https://www.instagram.com/ashramgandhipuri/"
+                ><i class="fab fa-instagram"></i
+              ></a>
             </div>
           </div>
           <div class="footer-copyright">

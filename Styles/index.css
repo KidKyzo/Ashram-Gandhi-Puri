@@ -49,7 +49,7 @@
 }
 
 .about-image img {
-  width: 600px;
+  width: 100%;
   height: 350px;
   display: block;
   object-fit: cover;
@@ -316,7 +316,7 @@
   .carousel-container {
     height: 300px;
   }
-  
+
   .carousel-slide img {
     height: 300px;
   }
@@ -326,9 +326,13 @@
     display: flex;
     flex-direction: column;
   }
-  
+
   .about-wrapper {
     flex-direction: column;
+    text-align: center;
+  }
+
+  .about-text {
     text-align: center;
   }
 
@@ -337,39 +341,66 @@
     gap: 2rem;
   }
 
+  .timeline-content {
+    text-align: center;
+  }
+
   .latest-activities-header {
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 1rem;
   }
-  
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  }
+
   .our-founder-wrapper {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .our-founder-text-container {
     text-align: center;
   }
 
-  .about-image, .our-founder-image {
+  .about-image,
+  .our-founder-image {
     width: 100%;
-    max-width: 500px;
+    max-width: 100%;
+    align-self: center;
+  }
+
+  .about-image img,
+  .our-founder-image img {
+    width: 100%;
+    height: 280px;
   }
 }
 
 @media (max-width: 480px) {
-  .carousel-container, .carousel-slide img {
+  .carousel-container,
+  .carousel-slide img {
     height: 200px;
   }
-  
-  .about-section, .timeline-section, .latest-activities-section, .our-founder-section {
+
+  .about-section,
+  .timeline-section,
+  .latest-activities-section,
+  .our-founder-section {
     padding: 2rem 1rem;
   }
 
-  .about-title, .timeline-title, .latest-activities-title, .our-founder-title {
+  .about-title,
+  .timeline-title,
+  .latest-activities-title,
+  .our-founder-title {
     font-size: 1.75rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
   }
 
   .timeline-item {

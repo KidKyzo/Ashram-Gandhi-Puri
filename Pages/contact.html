@@ -13,7 +13,10 @@
     />
     <link rel="stylesheet" href="../Styles/styles.css" />
     <link rel="stylesheet" href="../Styles/contact.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
   </head>
   <body>
     <header>
@@ -22,7 +25,16 @@
           <img src="../assets/Logo NGO.png" alt="Logo Ashram Gandhi Puri" />
         </div>
       </div>
-      <nav>
+      <button
+        class="hamburger"
+        id="hamburger-btn"
+        aria-label="Toggle navigation"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="main-nav">
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
           <li><a href="gallery.html">Gallery</a></li>
@@ -106,16 +118,19 @@
             </ul>
             <div class="footer-socials">
               <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-tiktok"></i></a>
               <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-youtube"></i></a>
             </div>
           </div>
           <div class="footer-copyright">
-            ©2024 Ashram Gandhi Puri. All rights reserved.
+            ©2026 Ashram Gandhi Puri. All rights reserved.
           </div>
         </div>
       </div>
     </footer>
+    <script>
+      const hamburger = document.getElementById("hamburger-btn");
+      const nav = document.getElementById("main-nav");
+      hamburger.addEventListener("click", () => nav.classList.toggle("open"));
+    </script>
   </body>
 </html>

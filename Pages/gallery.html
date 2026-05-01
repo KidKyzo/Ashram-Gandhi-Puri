@@ -25,7 +25,16 @@
           <img src="../assets/Logo NGO.png" alt="Logo Ashram Gandhi Puri" />
         </div>
       </div>
-      <nav>
+      <button
+        class="hamburger"
+        id="hamburger-btn"
+        aria-label="Toggle navigation"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="main-nav">
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
           <li><a href="gallery.html">Gallery</a></li>
@@ -71,15 +80,74 @@
           </div>
           <div class="gallery-card">
             <img
-              src="../assets/Founder Photo.jpg"
+              src="../assets/Activity and Gallery 2.jpg"
+              alt="Vishramapuri Volunteer Program 2025"
+            />
+            <div class="gallery-info">
+              <h3>Vishramapuri Volunteer Program 2025</h3>
+              <span class="gallery-date">Desember 2025</span>
+              <p>
+                Melakukan kegiatan Yoga dan Dharma Talk bersama Dr. Achrya
+                Naresh Ji dalam kegiatan Vishramapuri Volunteer Program 2025.
+              </p>
+            </div>
+          </div>
+          <div class="gallery-card">
+            <img
+              src="../assets/Acticity and Gallery 3.jpg"
+              alt="100 Hour Yoga Training Course"
+            />
+            <div class="gallery-info">
+              <h3>100 Hour Yoga Teacher Training Course</h3>
+              <span class="gallery-date">Desember 2025</span>
+              <p>
+                Ashram Gandhi Puri mengadakan 100 Hour Yoga Teacher Training
+                Course. Kegiatan ini diikuti oleh 30 peserta yang berasal dari
+                berbagai daerah.
+              </p>
+            </div>
+          </div>
+          <div class="gallery-card">
+            <img
+              src="../assets/Activity and Gallery 7.jpg"
               alt="Peresmian Patung Acharya Vinoba Bhave"
             />
             <div class="gallery-info">
-              <h3>Peresmian Patung</h3>
+              <h3>Peresmian Patung Acharya Vinoba Bhave</h3>
               <span class="gallery-date">September 2025</span>
               <p>
                 Peresmian Patung Acharya Vinoba Bhave saat perayaan hari ulang
                 tahun ke-28 berdirinya Ashram Gandhi Puri.
+              </p>
+            </div>
+          </div>
+          <div class="gallery-card">
+            <img
+              src="../assets/Activity and Gallery 6.webp"
+              alt="Ashram Gandhi Puri Sevagram Gelar Yoga massal"
+            />
+            <div class="gallery-info">
+              <h3>Ashram Gandhi Puri Sevagram Gelar Yoga massal</h3>
+              <span class="gallery-date">Juni 2025</span>
+              <p>
+                Ashram Gandhi Puri Sevagram Klungkung Gelar Sanggam Yoga 2025,
+                menghadirkan Anjasmara Prasetya sebagai intruktur yang merupakan
+                serangkaian memperingati 10 Tahun Aliansi Yoga Indonesia.
+              </p>
+            </div>
+          </div>
+          <div class="gallery-card">
+            <img
+              src="../assets/Hero Photo 2.jpg"
+              alt="Penanaman 1.000 pohon dalam rangka HUT ke-27 Ashram Gandhi Puri"
+            />
+            <div class="gallery-info">
+              <h3>Penanaman 1.000 pohon</h3>
+              <span class="gallery-date">September 2024</span>
+              <p>
+                Dalam rangka HUT ke-27 Ashram Gandhi Puri, Konjen India dan
+                Ashram Gandhi Puri menanam 1.000 pohon dalam gerakan
+                Plant4Mother.
               </p>
             </div>
           </div>
@@ -103,16 +171,19 @@
             </ul>
             <div class="footer-socials">
               <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-tiktok"></i></a>
               <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-youtube"></i></a>
             </div>
           </div>
           <div class="footer-copyright">
-            ©2024 Ashram Gandhi Puri. All rights reserved.
+            ©2026 Ashram Gandhi Puri. All rights reserved.
           </div>
         </div>
       </div>
     </footer>
+    <script>
+      const hamburger = document.getElementById("hamburger-btn");
+      const nav = document.getElementById("main-nav");
+      hamburger.addEventListener("click", () => nav.classList.toggle("open"));
+    </script>
   </body>
 </html>
