@@ -97,3 +97,32 @@ if (donateBtn) {
     alert("Thank you for your generosity! You will be redirected to our donation portal.");
   });
 }
+
+
+// ------------------------------------------------------------
+// 6. Carousel (used on index.html)
+//    - Automated sliding image for hero section
+// ------------------------------------------------------------
+document.addEventListener("DOMContentLoaded", function () {
+  const carousel = document.querySelector(".carousel");
+  const slides = document.querySelectorAll(".carousel-slide");
+
+  if (!carousel || slides.length === 0) return;
+
+  let currentIndex = 0;
+
+  function showSlide(index) {
+    if (index < 0) {
+      currentIndex = slides.length - 1;
+    } else if (index >= slides.length) {
+      currentIndex = 0;
+    }
+    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  // Auto-advance every 3 seconds
+  setInterval(function () {
+    currentIndex++;
+    showSlide(currentIndex);
+  }, 3000);
+});
