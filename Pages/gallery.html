@@ -48,125 +48,14 @@
     <main>
       <section class="gallery-section">
         <h2 class="gallery-title">Activity and Gallery</h2>
-        <div class="gallery-grid">
-          <div class="gallery-card">
-            <img
-              src="../assets/Activity and GAllery 4.jpg"
-              alt="Activities With the Younger Generation"
-            />
-            <div class="gallery-info">
-              <h3>Meeting with Japa Malamitra Partner</h3>
-              <span class="gallery-date">April 2026</span>
-              <p>
-                The Founder of Ashram Gandhi Puri held a meeting and discussion
-                with the Japa Malamitra partner in Ashram Gandhi Puri Klungkung.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Activity and Gallery 9.jpg"
-              alt="Briefing with Ashram Gandhi Puri members"
-            />
-            <div class="gallery-info">
-              <h3>Briefing and Meetings with Ashram Gandhi Puri members</h3>
-              <span class="gallery-date">April 2026</span>
-              <p>
-                Holding regular meetings with Ashram Gandhi Puri members to hear
-                their stories and discuss issues.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Activity and Gallery 8.jpg"
-              alt="Self Retreat with GuruJi Rasik Varagi"
-            />
-            <div class="gallery-info">
-              <h3>Self Retreat with GuruJi Rasik Varagi</h3>
-              <span class="gallery-date">April 2026</span>
-              <p>
-                Self Retreat activities with GuruJi Rasik Varagi were held at
-                the Ashram Gandhi Puri community.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Activity and Gallery 2.jpg"
-              alt="Vishramapuri Volunteer Program 2025"
-            />
-            <div class="gallery-info">
-              <h3>Vishramapuri Volunteer Program 2025</h3>
-              <span class="gallery-date">December 2025</span>
-              <p>
-                Conducting Yoga and Dharma Talk activities with Dr. Achrya
-                Naresh Ji in the Vishramapuri Volunteer Program 2025.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Acticity and Gallery 3.jpg"
-              alt="100 Hour Yoga Training Course"
-            />
-            <div class="gallery-info">
-              <h3>100 Hour Yoga Teacher Training Course</h3>
-              <span class="gallery-date">December 2025</span>
-              <p>
-                Ashram Gandhi Puri held a 100 Hour Yoga Teacher Training Course.
-                This activity was attended by 30 participants from various
-                regions.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Activity and Gallery 7.jpg"
-              alt="Inauguration of the Acharya Vinoba Bhave Statue"
-            />
-            <div class="gallery-info">
-              <h3>Inauguration of the Acharya Vinoba Bhave Statue</h3>
-              <span class="gallery-date">September 2025</span>
-              <p>
-                Inauguration of the Acharya Vinoba Bhave Statue during the
-                celebration of the 28th anniversary of the founding of Ashram
-                Gandhi Puri.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Activity and Gallery 6.webp"
-              alt="Ashram Gandhi Puri Sevagram Holds Mass Yoga"
-            />
-            <div class="gallery-info">
-              <h3>Ashram Gandhi Puri Sevagram Holds Mass Yoga</h3>
-              <span class="gallery-date">June 2025</span>
-              <p>
-                Ashram Gandhi Puri Sevagram Klungkung Holds Sanggam Yoga 2025,
-                presenting Anjasmara Prasetya as an instructor which is a series
-                to commemorate the 10th Anniversary of the Indonesian Yoga
-                Alliance.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Hero Photo 2.jpg"
-              alt="Planting 1,000 trees for the 27th anniversary of Ashram Gandhi Puri"
-            />
-            <div class="gallery-info">
-              <h3>Planting 1,000 trees</h3>
-              <span class="gallery-date">Oktober 2024</span>
-              <p>
-                In the context of the 27th Anniversary of Ashram Gandhi Puri,
-                the Consul General of India and Ashram Gandhi Puri planted 1,000
-                trees in the Plant4Mother movement.
-              </p>
-            </div>
-          </div>
+        <div class="gallery-control">
+          <input type="text" id="search-input" placeholder="Search Activities..." />
+          <select id="sort-select">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
         </div>
+        <div class="gallery-grid" id="gallery-container"></div>
       </section>
     </main>
 
@@ -196,5 +85,6 @@
       </div>
     </footer>
     <script src="../JavaScript/main.js"></script>
+    <script src="../JavaScript/gallery.js"></script>
   </body>
 </html>
