@@ -79,16 +79,16 @@ function renderGallery(dataToRender) {
     })
 }
 
-
-
-
+// update + filter + sorting
 function updateGallery() {
+    // Take search and sort data from DOM element
     const searchTerm = document.getElementById('search-input').value.toLowerCase();
     const sortValue = document.getElementById('sort-select').value;
-
+    // Filter data
     const filteredData = galleryData.filter(function (item) {
         return item.title.toLocaleLowerCase().includes(searchTerm);
     });
+    // Sorting data
     if (sortValue === 'newest') {
         filteredData.sort((a, b) => new Date(b.date) - new Date(a.date));
     }
@@ -98,12 +98,12 @@ function updateGallery() {
     renderGallery(filteredData);
 }
 
-
+// Add event listener
 const searchInput = document.getElementById('search-input');
 const sortSelect = document.getElementById('sort-select');
-
+// Listening event
 searchInput.addEventListener('input', updateGallery);
 sortSelect.addEventListener('change', updateGallery);
 
-
+// Update gallery
 updateGallery();
