@@ -5,6 +5,7 @@ const galleryData = [
         date: "2026-04",
         date_display: "April 2026",
         description: "The Founder of Ashram Gandhi Puri held a meeting and discussion with the Japa Malamitra partner in Ashram Gandhi Puri Klungkung.",
+        source: "https://www.facebook.com/photo/?fbid=2173525370152628&set=a.2106933593478473"
     },
     {
         image: "../assets/Activity and Gallery 9.jpg",
@@ -12,6 +13,7 @@ const galleryData = [
         date: "2026-04",
         date_display: "April 2026",
         description: "Holding regular meetings with Ashram Gandhi Puri members to hear their stories and discuss issues.",
+        source: "https://www.facebook.com/photo/?fbid=2172735710231594&set=a.2149182732586892"
     },
     {
         image: "../assets/Activity and Gallery 8.jpg",
@@ -19,6 +21,7 @@ const galleryData = [
         date: "2026-04",
         date_display: "April 2026",
         description: "Self Retreat activities with GuruJi Rasik Varagi were held at the Ashram Gandhi Puri community.",
+        source: "https://www.facebook.com/photo/?fbid=2161938091311356&set=a.2106982273473605"
     },
     {
         image: "../assets/Activity and Gallery 2.jpg",
@@ -26,6 +29,7 @@ const galleryData = [
         date: "2025-12",
         date_display: "December 2025",
         description: "Conducting Yoga and Dharma Talk activities with Dr. Achrya Naresh Ji in the Vishramapuri Volunteer Program 2025.",
+        source: "https://www.facebook.com/photo/?fbid=2056297878542045&set=a.2044874456351054"
     },
     {
         image: "../assets/Acticity and Gallery 3.jpg",
@@ -33,6 +37,7 @@ const galleryData = [
         date: "2025-12",
         date_display: "December 2025",
         description: "Ashram Gandhi Puri held a 100 Hour Yoga Teacher Training Course. This activity was attended by 30 participants from various regions.",
+        source: "https://www.facebook.com/photo/?fbid=2061142884724211&set=a.2044874456351054"
     },
     {
         image: "../assets/Activity and Gallery 7.jpg",
@@ -40,6 +45,7 @@ const galleryData = [
         date: "2025-09",
         date_display: "September 2025",
         description: "Inauguration of the Acharya Vinoba Bhave Statue during the celebration of the 28th anniversary of the founding of Ashram Gandhi Puri.",
+        source: "https://lenteraesai.id/2025/09/06/perayaan-28-tahun-ashram-gandhi-puri-satukan-spiritualitas-budaya-dan-kemanusiaan/"
     },
     {
         image: "../assets/Activity and Gallery 6.webp",
@@ -47,13 +53,15 @@ const galleryData = [
         date: "2025-06",
         date_display: "June 2025",
         description: "Ashram Gandhi Puri Sevagram Klungkung Holds Sanggam Yoga 2025, presenting Anjasmara Prasetya as an instructor which is a series of Yoga and Dharma Talk activities with Dr. Achrya Naresh Ji in the Vishramapuri Volunteer Program 2025.",
+        source: "https://craddha.com/ashram-gandhi-puri-rayakan-10-tahun-aliansi-yoga-indonesia/"
     },
     {
         image: "../assets/Hero Photo 2.jpg",
         title: "Planting 1000 Trees Activity",
         date: "2024-11",
         date_display: "November 2024",
-        description: "Ashram Gandhi Puri held a planting activity of 1000 trees to welcome the 2025 New Year. This activity aims to preserve the environment and provide benefits for the community."
+        description: "Ashram Gandhi Puri held a planting activity of 1000 trees to welcome the 2025 New Year. This activity aims to preserve the environment and provide benefits for the community.",
+        source: "https://laksara.id/2024/10/29/serangkaian-hut-ke-27-1-000-pohon-ditanam-di-ashram-gandhi-puri/"
     }
 ];
 // DOM element from gallery
@@ -65,14 +73,14 @@ function renderGallery(dataToRender) {
 
     dataToRender.forEach(function (item) {
         const cardHTML = `
-        <div class="gallery-card">
+        <a href="${item.source}" target="_blank" class="gallery-card" style="text-decoration: none; color: inherit;">
             <img src="${item.image}" alt="${item.title}"/>
             <div class="gallery-info">
             <h3>${item.title}</h3>
             <span class="gallery-date">${item.date_display}</span>
             <p>${item.description}</p>
             </div>
-        </div>
+        </a>
         `;
 
         gallerylist.insertAdjacentHTML('beforeend', cardHTML);
