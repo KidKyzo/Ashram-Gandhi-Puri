@@ -15,7 +15,7 @@
 
 .volunteer-form-container {
   flex: 1;
-  background-color: #F6E7D8; /* Soft Beige from design */
+  background-color: #f6e7d8; /* Soft Beige from design */
   padding: 3rem;
   display: flex;
   flex-direction: column;
@@ -77,7 +77,7 @@
   .volunteer-section {
     flex-direction: column;
   }
-  
+
   .volunteer-image {
     height: 300px;
   }

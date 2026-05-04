@@ -49,13 +49,8 @@ if (contactForm) {
     const email = document.getElementById("email").value.trim();
     const message = document.getElementById("message").value.trim();
 
-    // Simple check: make sure all fields are filled in
-    if (name === "" || email === "" || message === "") {
-      alert("Please fill in all fields before sending.");
-    } else {
-      alert("Thank you, " + name + "! Your message has been sent. We will get back to you soon.");
-      contactForm.reset(); // Clear the form after submitting
-    }
+    showToast("Thank you, " + name + "! Your message has been sent. We will get back to you soon.");
+    contactForm.reset(); // Clear the form 
   });
 }
 
@@ -75,25 +70,149 @@ if (volunteerForm) {
     const nationality = document.getElementById("nationality").value.trim();
     const reason = document.getElementById("reason").value.trim();
 
-    // Simple check: make sure all fields are filled in
-    if (name === "" || phone === "" || nationality === "" || reason === "") {
-      alert("Please fill in all fields before submitting.");
+    showToast("Thank you, " + name + "! Your volunteer application has been submitted. We will contact you soon.");
+    volunteerForm.reset(); // Clear the form 
+  });
+}
+
+
+// ------------------------------------------------------------
+// 5. DONATION MODAL (used on donation.html)
+//    - Opens a popup form when the donate button is clicked
+//    - Closes when the X button or the dark background is clicked
+//    - Validates the form (name, email, amount, transfer proof)
+//    - Shows thank-you alert on submit
+// ------------------------------------------------------------
+
+// Step 1: Get references to the HTML elements we need
+const donateBtn     = document.getElementById("donate-btn");       // The donate button
+const donationModal = document.getElementById("donation-modal");   // The modal overlay (dark background)
+const closeBtn      = document.getElementById("modal-close-btn"); // The X button inside the modal
+const donationForm  = document.getElementById("donation-form");   // The <form> inside the modal
+const copyBtn       = document.getElementById("copy-btn");        // The "Copy Account Number" button
+const accountNumber = document.getElementById("account-number"); // The span that contains the account number
+
+// Step 2: Open the modal when the donate button is clicked
+if (donateBtn && donationModal) {
+  donateBtn.addEventListener("click", function () {
+    donationModal.classList.add("active"); // Adding "active" class makes it visible (see donation.css)
+  });
+}
+
+// Step 3: Close the modal when the X button is clicked
+if (closeBtn && donationModal) {
+  closeBtn.addEventListener("click", function () {
+    donationModal.classList.remove("active"); // Removing "active" hides the modal again
+  });
+}
+
+// Step 4: Close the modal when clicking outside the white box (on the dark background)
+if (donationModal) {
+  donationModal.addEventListener("click", function (event) {
+    // event.target is what was actually clicked
+    // If the click was directly on the overlay (not the box inside), close the modal
+    if (event.target === donationModal) {
+      donationModal.classList.remove("active");
+    }
+  });
+}
+
+// Step 5: Copy account number to clipboard when copy button is clicked
+if (copyBtn && accountNumber) {
+  copyBtn.addEventListener("click", function () {
+    // navigator.clipboard.writeText() copies text to the user's clipboard
+    navigator.clipboard.writeText(accountNumber.textContent).then(function () {
+      // Temporarily change the button text to give feedback to the user
+      copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+      // After 2 seconds, revert the button text back to original
+      setTimeout(function () {
+        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Account Number';
+      }, 2000);
+    });
+  });
+}
+
+// Step 6: Handle the form submission
+if (donationForm) {
+  donationForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // Stop the page from reloading on submit
+
+    // Get the values the user typed in each field
+    const name   = document.getElementById("donor-name").value.trim();
+    const email  = document.getElementById("donor-email").value.trim();
+    const amount = document.getElementById("donor-amount").value.trim();
+
+    // Get the file upload input — .files[0] = the first selected file
+    const proofInput = document.getElementById("donor-proof");
+    const proofFile  = proofInput.files[0]; // undefined if no file selected
+
+    // Check if any field is empty OR no file was uploaded
+    if (name === "" || email === "" || amount === "") {
+      showToast("Please fill in all fields before confirming.");
+    } else if (!proofFile) {
+      // proofFile is undefined = no file was chosen by the user
+      showToast("Please upload your transfer proof before confirming.");
     } else {
-      alert("Thank you, " + name + "! Your volunteer application has been submitted. We will contact you soon.");
-      volunteerForm.reset(); // Clear the form after submitting
+      // All fields are filled and a file was uploaded — show a thank-you message
+      showToast(
+        "Thank you, " + name + "!" +
+        " Your donation of IDR " + parseInt(amount).toLocaleString("id-ID") +
+        " has been received. We will verify your transfer proof (" + proofFile.name + ")" +
+        " and send a confirmation to " + email + "."
+      );
+      donationForm.reset();                        // Clear all form fields
+      donationModal.classList.remove("active");   // Close the modal
     }
   });
 }
 
 
 // ------------------------------------------------------------
-// 5. DONATE BUTTON (used on donation.html)
-//    - Shows a confirmation message when the button is clicked
+// 6. Carousel (used on index.html)
+//    - Automated sliding image for hero section
 // ------------------------------------------------------------
-const donateBtn = document.querySelector(".donate-btn");
+document.addEventListener("DOMContentLoaded", function () {
+  const carousel = document.querySelector(".carousel");
+  const slides = document.querySelectorAll(".carousel-slide");
 
-if (donateBtn) {
-  donateBtn.addEventListener("click", function () {
-    alert("Thank you for your generosity! You will be redirected to our donation portal.");
-  });
+  if (!carousel || slides.length === 0) return;
+
+  let currentIndex = 0;
+
+  function showSlide(index) {
+    if (index < 0) {
+      currentIndex = slides.length - 1;
+    } else if (index >= slides.length) {
+      currentIndex = 0;
+    }
+    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  // Auto-advance every 3 seconds
+  setInterval(function () {
+    currentIndex++;
+    showSlide(currentIndex);
+  }, 3000);
+});
+
+// Adding Toast for Aesthetic Purposes
+function showToast(message) {
+  const container = document.getElementById('toast-container');
+  if (container.children.length >= 3) {
+    container.children[0].remove();
+  }
+  const toast = document.createElement('div');
+  
+  toast.classList.add('toast');
+  toast.innerText = message;
+
+  container.appendChild(toast);
+
+  setTimeout(function () {
+    toast.classList.add('fade-out');
+    setTimeout(function(){
+      toast.remove();
+    }, 500);
+  }, 1800);
+  
 }

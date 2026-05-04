@@ -48,110 +48,14 @@
     <main>
       <section class="gallery-section">
         <h2 class="gallery-title">Activity and Gallery</h2>
-        <div class="gallery-grid">
-          <div class="gallery-card">
-            <img
-              src="../assets/Hero Photo 2.jpg"
-              alt="Dharma Talk and Bhajan"
-            />
-            <div class="gallery-info">
-              <h3>Dharma Talk & Bhajan</h3>
-              <span class="gallery-date">April 2024</span>
-              <p>
-                Dharma Talk and Bhajan activities filled by Ida Rsi Putra
-                Manuaba and Anup Jalota in Ayodhya.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Hero Photo.jpg"
-              alt="Activities With the Younger Generation"
-            />
-            <div class="gallery-info">
-              <h3>Activities With the Younger Generation</h3>
-              <span class="gallery-date">October 2025</span>
-              <p>
-                The Ashram Gandhi Puri community carried out activities with
-                young people to instill noble values and environmental
-                awareness.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Activity and Gallery 2.jpg"
-              alt="Vishramapuri Volunteer Program 2025"
-            />
-            <div class="gallery-info">
-              <h3>Vishramapuri Volunteer Program 2025</h3>
-              <span class="gallery-date">December 2025</span>
-              <p>
-                Conducting Yoga and Dharma Talk activities with Dr. Achrya
-                Naresh Ji in the Vishramapuri Volunteer Program 2025.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Acticity and Gallery 3.jpg"
-              alt="100 Hour Yoga Training Course"
-            />
-            <div class="gallery-info">
-              <h3>100 Hour Yoga Teacher Training Course</h3>
-              <span class="gallery-date">December 2025</span>
-              <p>
-                Ashram Gandhi Puri held a 100 Hour Yoga Teacher Training
-                Course. This activity was attended by 30 participants from
-                various regions.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Activity and Gallery 7.jpg"
-              alt="Inauguration of the Acharya Vinoba Bhave Statue"
-            />
-            <div class="gallery-info">
-              <h3>Inauguration of the Acharya Vinoba Bhave Statue</h3>
-              <span class="gallery-date">September 2025</span>
-              <p>
-                Inauguration of the Acharya Vinoba Bhave Statue during the celebration of
-                the 28th anniversary of the founding of Ashram Gandhi Puri.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Activity and Gallery 6.webp"
-              alt="Ashram Gandhi Puri Sevagram Holds Mass Yoga"
-            />
-            <div class="gallery-info">
-              <h3>Ashram Gandhi Puri Sevagram Holds Mass Yoga</h3>
-              <span class="gallery-date">June 2025</span>
-              <p>
-                Ashram Gandhi Puri Sevagram Klungkung Holds Sanggam Yoga 2025,
-                presenting Anjasmara Prasetya as an instructor which is
-                a series to commemorate the 10th Anniversary of the Indonesian Yoga Alliance.
-              </p>
-            </div>
-          </div>
-          <div class="gallery-card">
-            <img
-              src="../assets/Hero Photo 2.jpg"
-              alt="Planting 1,000 trees for the 27th anniversary of Ashram Gandhi Puri"
-            />
-            <div class="gallery-info">
-              <h3>Planting 1,000 trees</h3>
-              <span class="gallery-date">September 2024</span>
-              <p>
-                In the context of the 27th Anniversary of Ashram Gandhi Puri, the Consul General of India and
-                Ashram Gandhi Puri planted 1,000 trees in the
-                Plant4Mother movement.
-              </p>
-            </div>
-          </div>
+        <div class="gallery-control">
+          <input type="text" id="search-input" placeholder="Search Activities..." />
+          <select id="sort-select">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
         </div>
+        <div class="gallery-grid" id="gallery-container"></div>
       </section>
     </main>
 
@@ -181,5 +85,6 @@
       </div>
     </footer>
     <script src="../JavaScript/main.js"></script>
+    <script src="../JavaScript/gallery.js"></script>
   </body>
 </html>
