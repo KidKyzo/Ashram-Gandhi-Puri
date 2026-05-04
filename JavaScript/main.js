@@ -198,6 +198,9 @@ document.addEventListener("DOMContentLoaded", function () {
 // Adding Toast for Aesthetic Purposes
 function showToast(message) {
   const container = document.getElementById('toast-container');
+  if (container.children.length >= 3) {
+    container.children[0].remove();
+  }
   const toast = document.createElement('div');
   
   toast.classList.add('toast');
@@ -210,6 +213,6 @@ function showToast(message) {
     setTimeout(function(){
       toast.remove();
     }, 500);
-  }, 2000);
+  }, 1800);
   
 }
