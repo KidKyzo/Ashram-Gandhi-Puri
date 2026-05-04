@@ -49,13 +49,8 @@ if (contactForm) {
     const email = document.getElementById("email").value.trim();
     const message = document.getElementById("message").value.trim();
 
-    // Simple check: make sure all fields are filled in
-    if (name === "" || email === "" || message === "") {
-      alert("Please fill in all fields before sending.");
-    } else {
-      alert("Thank you, " + name + "! Your message has been sent. We will get back to you soon.");
-      contactForm.reset(); // Clear the form after submitting
-    }
+    showToast("Thank you, " + name + "! Your message has been sent. We will get back to you soon.");
+    contactForm.reset(); // Clear the form 
   });
 }
 
@@ -75,13 +70,8 @@ if (volunteerForm) {
     const nationality = document.getElementById("nationality").value.trim();
     const reason = document.getElementById("reason").value.trim();
 
-    // Simple check: make sure all fields are filled in
-    if (name === "" || phone === "" || nationality === "" || reason === "") {
-      alert("Please fill in all fields before submitting.");
-    } else {
-      alert("Thank you, " + name + "! Your volunteer application has been submitted. We will contact you soon.");
-      volunteerForm.reset(); // Clear the form after submitting
-    }
+    showToast("Thank you, " + name + "! Your volunteer application has been submitted. We will contact you soon.");
+    volunteerForm.reset(); // Clear the form 
   });
 }
 
@@ -158,13 +148,13 @@ if (donationForm) {
 
     // Check if any field is empty OR no file was uploaded
     if (name === "" || email === "" || amount === "") {
-      alert("Please fill in all fields before confirming.");
+      showToast("Please fill in all fields before confirming.");
     } else if (!proofFile) {
       // proofFile is undefined = no file was chosen by the user
-      alert("Please upload your transfer proof before confirming.");
+      showToast("Please upload your transfer proof before confirming.");
     } else {
       // All fields are filled and a file was uploaded — show a thank-you message
-      alert(
+      showToast(
         "Thank you, " + name + "!" +
         " Your donation of IDR " + parseInt(amount).toLocaleString("id-ID") +
         " has been received. We will verify your transfer proof (" + proofFile.name + ")" +
@@ -204,3 +194,25 @@ document.addEventListener("DOMContentLoaded", function () {
     showSlide(currentIndex);
   }, 3000);
 });
+
+// Adding Toast for Aesthetic Purposes
+function showToast(message) {
+  const container = document.getElementById('toast-container');
+  if (container.children.length >= 3) {
+    container.children[0].remove();
+  }
+  const toast = document.createElement('div');
+  
+  toast.classList.add('toast');
+  toast.innerText = message;
+
+  container.appendChild(toast);
+
+  setTimeout(function () {
+    toast.classList.add('fade-out');
+    setTimeout(function(){
+      toast.remove();
+    }, 500);
+  }, 1800);
+  
+}
