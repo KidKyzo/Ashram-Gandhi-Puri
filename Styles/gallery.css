@@ -61,6 +61,32 @@
   line-height: 1.5;
 }
 
+
+.gallery-control {
+  margin-bottom: 3rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+#search-input {
+  padding: 0.8rem 1rem;
+  width: 100%;
+  max-width: 200px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+#sort-select {
+  padding: 0.8rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 @media (max-width: 640px) {
   .gallery-grid {
     grid-template-columns: 1fr;
