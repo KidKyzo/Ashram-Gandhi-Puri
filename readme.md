@@ -8,7 +8,9 @@ Adrienne Lie / E2400071
 
 Bagoes Oka / E2400074
 
-Ivan Maulana / E2400081
+Erlang Laksmana /E2400081
+
+Ivan Maulana / E2400084
 
 ## About
 
