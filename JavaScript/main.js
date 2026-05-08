@@ -58,7 +58,7 @@ if (contactForm) {
     btn.innerText = "Sending...";
 
     // REPLACE 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID_CONTACT' with your actual IDs
-    emailjs.sendForm('template_wforxm1', 'template_vhmny7r', contactForm, {
+    emailjs.sendForm('service_gndy8k8', 'template_vhmny7r', contactForm, {
       publicKey: '-thawvZg0wjq1LVEt'
     })
       .then(() => {
