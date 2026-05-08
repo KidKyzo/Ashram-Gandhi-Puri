@@ -23,99 +23,96 @@
           <img src="../assets/Logo%20NGO.png" alt="Logo Ashram Gandhi Puri">
         </div>
       </div>
-      <button
-        class="hamburger"
-        id="hamburger-btn"
-        aria-label="Toggle navigation"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav id="main-nav">
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
-          <li><a href="volunteer.html">Volunteer</a></li>
-          <li><a href="donation.html">Donate</a></li>
-        </ul>
-      </nav>
-    </header>
+    </div>
+    <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav id="main-nav">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="volunteer.html">Volunteer</a></li>
+        <li><a href="donation.html">Donate</a></li>
+      </ul>
+    </nav>
+  </header>
 
     <main>
       <div class="donation-hero">
         <img src="../assets/Hero%20Photo.jpg" alt="Donation Banner">
       </div>
 
-      <section class="donation-content">
-        <h2>Let's Share Kindness</h2>
+    <section class="donation-content">
+      <h2>Let's Share Kindness</h2>
+      <p>
+        Your help means a lot for the continuity of education programs,
+        community empowerment, and environmental conservation at Ashram Gandhi
+        Puri. Every donation you make, no matter how small, brings
+        a big change for the future of those in need.
+      </p>
+
+      <div class="donation-card">
+        <h3>Be a Part of Japa Malamitra</h3>
         <p>
-          Your help means a lot for the continuity of education programs,
-          community empowerment, and environmental conservation at Ashram Gandhi
-          Puri. Every donation you make, no matter how small, brings
-          a big change for the future of those in need.
+          By donating, you also join the Japa Malamitra philanthropy network
+          that cares about humanity and peace.
         </p>
 
-        <div class="donation-card">
-          <h3>Be a Part of Japa Malamitra</h3>
-          <p>
-            By donating, you also join the Japa Malamitra philanthropy network
-            that cares about humanity and peace.
-          </p>
-
-          <!-- ================================================
+        <!-- ================================================
                BANK ACCOUNT INFO
                Donatur perlu mentransfer ke rekening ini
                sebelum mengisi form dan upload bukti transfer
           ================================================= -->
-          <div class="bank-info">
-            <h4>Transfer to Our Bank Account</h4>
+        <div class="bank-info">
+          <h4>Transfer to Our Bank Account</h4>
 
-            <div class="bank-detail">
-              <span class="bank-label">Bank</span>
-              <span class="bank-value">BCA (Bank Central Asia)</span>
-            </div>
-            <div class="bank-detail">
-              <span class="bank-label">Account Number</span>
-              <span class="bank-value" id="account-number">1234567890</span>
-            </div>
-            <div class="bank-detail">
-              <span class="bank-label">Account Name</span>
-              <span class="bank-value">Yayasan Ashram Gandhi Puri</span>
-            </div>
-
-            <!-- Copy button to copy the account number -->
-            <button type="button" class="copy-btn" id="copy-btn">
-              <i class="fas fa-copy"></i> Copy Account Number
-            </button>
+          <div class="bank-detail">
+            <span class="bank-label">Bank</span>
+            <span class="bank-value">Bank Mandiri</span>
+          </div>
+          <div class="bank-detail">
+            <span class="bank-label">Account Number</span>
+            <span class="bank-value" id="account-number">1450018046181</span>
+          </div>
+          <div class="bank-detail">
+            <span class="bank-label">Account Name</span>
+            <span class="bank-value">Yayasan Ashram Gandhi Puri</span>
           </div>
 
-          <!-- The id="donate-btn" is used by JavaScript to detect when this button is clicked -->
-          <button class="donate-btn" id="donate-btn">I Have Transferred — Confirm Donation</button>
+          <!-- Copy button to copy the account number -->
+          <button type="button" class="copy-btn" id="copy-btn">
+            <i class="fas fa-copy"></i> Copy Account Number
+          </button>
         </div>
-      </section>
-    </main>
 
-    <!-- =====================================================
+        <!-- The id="donate-btn" is used by JavaScript to detect when this button is clicked -->
+        <button class="donate-btn" id="donate-btn">I Have Transferred — Confirm Donation</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================
          DONATION MODAL
          This is a popup (modal) that appears when the
          "Continue Donation" button is clicked.
          It is hidden by default (display: none in CSS)
          and becomes visible via JavaScript.
     ====================================================== -->
-    <div id="donation-modal" class="modal-overlay">
-      <!-- .modal-box is the white card in the center of the screen -->
-      <div class="modal-box">
+  <div id="donation-modal" class="modal-overlay">
+    <!-- .modal-box is the white card in the center of the screen -->
+    <div class="modal-box">
 
-        <!-- Close button (the X in the top-right corner) -->
-        <button class="modal-close" id="modal-close-btn">&times;</button>
+      <!-- Close button (the X in the top-right corner) -->
+      <button class="modal-close" id="modal-close-btn">&times;</button>
 
-        <h3>Donation Form</h3>
-        <p>Please fill in the details below to proceed with your donation.</p>
+      <h3>Donation Form</h3>
+      <p>Please fill in the details below to proceed with your donation.</p>
 
-        <!-- The form itself. We use id="donation-form" so JS can find it -->
-        <form id="donation-form">
+      <!-- The form itself. We use id="donation-form" so JS can find it -->
+      <form id="donation-form">
 
           <!-- Donor Name field -->
           <div class="form-group">
@@ -150,6 +147,10 @@
 
       </div>
     </div>
+  </footer>
+  <div id="toast-container"></div>
+  <script src="../JavaScript/main.js"></script>
+</body>
 
     <footer>
       <div class="footer-content">
