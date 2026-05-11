@@ -1,6 +1,6 @@
 .contact-section {
   display: flex;
-  min-height: calc(100vh - 165px);
+  min-height: calc(100vh - 165px); 
 }
 
 .contact-info {

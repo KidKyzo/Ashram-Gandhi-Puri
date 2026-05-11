@@ -17,7 +17,6 @@
   object-position: center;
 }
 
-/* Tentang Kami Section CSS*/
 .about-section {
   padding: 4rem 2rem;
   display: flex;
@@ -77,13 +76,11 @@
   text-align: justify;
 }
 
-/* Timeline Section CSS*/
 .timeline-section {
   padding: 4rem 2rem;
   display: flex;
   justify-content: center;
   background-color: #fcfcfc;
-  /* very slightly lighter than about-section to separate them, or we can use the same #f7f7f7 */
   width: 100%;
 }
 
@@ -198,7 +195,6 @@
   display: flex;
   justify-content: center;
   background-color: #f6e7d8;
-  /* very slightly lighter than about-section to separate them, or we can use the same #f7f7f7 */
   width: 100%;
 }
 
@@ -249,7 +245,6 @@
   color: #efa154;
 }
 
-/* Our Founder Section CSS*/
 .our-founder-section {
   padding: 4rem 2rem;
   display: flex;

@@ -2,11 +2,8 @@
 
 :root {
   --primary-color: #f1ad66;
-  /* Orange from wireframe */
   --grey-bg: #a19d9e;
-  /* Grey from wireframe */
   --text-blue: #3098d3;
-  /* Blue from wireframe */
   --text-dark: #000000;
   --bg-white: #ffffff;
   --font-family: "Inter", system-ui, -apple-system, sans-serif;
@@ -91,7 +88,6 @@ nav {
   color: #ffffff;
 }
 
-/* Hamburger button - hidden by default on desktop */
 .hamburger {
   display: none;
   flex-direction: column;

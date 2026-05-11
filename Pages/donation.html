@@ -1,27 +1,23 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donate - Ashram Gandhi Puri</title>
-    <!-- Importing Google Fonts for modern typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-      rel="stylesheet">
-    <link rel="stylesheet" href="../Styles/styles.css">
-    <link rel="stylesheet" href="../Styles/donation.css">
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  </head>
-  <body>
-    <header>
-      <div class="brand">
-        <div class="logo">
-          <img src="../assets/Logo%20NGO.png" alt="Logo Ashram Gandhi Puri">
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donate - Ashram Gandhi Puri</title>
+  <!-- Importing Google Fonts for modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../Styles/styles.css" />
+  <link rel="stylesheet" href="../Styles/donation.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">
+        <img src="../assets/Logo%20NGO.png" alt="Logo Ashram Gandhi Puri" />
       </div>
     <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation">
       <span></span>
@@ -60,11 +56,6 @@
           that cares about humanity and peace.
         </p>
 
-        <!-- ================================================
-               BANK ACCOUNT INFO
-               Donatur perlu mentransfer ke rekening ini
-               sebelum mengisi form dan upload bukti transfer
-          ================================================= -->
         <div class="bank-info">
           <h3>Transfer to Our Bank Account</h3>
 
@@ -81,43 +72,32 @@
             <span class="bank-value">Yayasan Ashram Gandhi Puri</span>
           </div>
 
-          <!-- Copy button to copy the account number -->
           <button type="button" class="copy-btn" id="copy-btn">
             <i class="fas fa-copy"></i> Copy Account Number
           </button>
         </div>
 
-        <!-- The id="donate-btn" is used by JavaScript to detect when this button is clicked -->
         <button class="donate-btn" id="donate-btn">I Have Transferred — Confirm Donation</button>
       </div>
     </section>
   </main>
 
-  <!-- =====================================================
-         DONATION MODAL
-         This is a popup (modal) that appears when the
-         "Continue Donation" button is clicked.
-         It is hidden by default (display: none in CSS)
-         and becomes visible via JavaScript.
-    ====================================================== -->
+
   <div id="donation-modal" class="modal-overlay">
-    <!-- .modal-box is the white card in the center of the screen -->
     <div class="modal-box">
 
-      <!-- Close button (the X in the top-right corner) -->
+      <!-- Close button -->
       <button class="modal-close" id="modal-close-btn">&times;</button>
 
       <h2>Donation Form</h2>
       <p>Please fill in the details below to proceed with your donation.</p>
 
-      <!-- The form itself. We use id="donation-form" so JS can find it -->
       <form id="donation-form">
-
-          <!-- Donor Name field -->
-          <div class="form-group">
-            <label for="donor-name">Full Name</label>
-            <input type="text" id="donor-name" placeholder="Your full name">
-          </div>
+        <!-- Donor Name field -->
+        <div class="form-group">
+          <label for="donor-name">Full Name</label>
+          <input type="text" id="donor-name" placeholder="Your full name" />
+        </div>
 
           <!-- Email field -->
           <div class="form-group">
@@ -131,20 +111,21 @@
             <input type="number" id="donor-amount" placeholder="e.g. 50000" min="1">
           </div>
 
-          <!-- Transfer Proof Upload field -->
-          <div class="form-group">
-            <label for="donor-proof">Upload Transfer Proof</label>
-            <!-- accept="image/*" = only allow image files (jpg, png, etc.) -->
-            <input type="file" id="donor-proof" accept="image/*">
-            <!-- Small hint text below the input -->
-            <small class="upload-hint">Please upload a photo/screenshot of your bank transfer receipt.</small>
-          </div>
+        <!-- Transfer Proof Upload field -->
+        <div class="form-group">
+          <label for="donor-proof">Upload Transfer Proof</label>
+          <!-- accept="image/*" = only allow image files (jpg, png, etc.) -->
+          <input type="file" id="donor-proof" accept="image/*" />
+          <!-- Small hint text below the input -->
+          <small class="upload-hint">Please upload a photo/screenshot of your bank transfer receipt.</small>
+        </div>
 
-          <!-- Submit button inside the form -->
-          <button type="submit" class="donate-btn" style="width: 100%;">Confirm Donation</button>
-        </form>
-      </div>
+        <!-- Submit button -->
+        <button type="submit" class="donate-btn" style="width: 100%;">Confirm Donation</button>
+      </form>
+
     </div>
+  </div>
       <footer>
       <div class="footer-content">
         <div class="footer-logo">

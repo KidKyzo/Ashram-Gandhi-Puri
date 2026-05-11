@@ -90,13 +90,12 @@ if (volunteerForm) {
     const originalBtnText = btn.innerText;
     btn.innerText = "Submitting...";
 
-    // REPLACE 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID_VOLUNTEER' with your actual IDs
     emailjs.sendForm('service_gndy8k8', 'template_wforxm1', volunteerForm, {
       publicKey: '-thawvZg0wjq1LVEt'
     })
       .then(() => {
         showToast("Thank you, " + name + "! Your volunteer application has been submitted. We will contact you soon.");
-        volunteerForm.reset(); // Clear the form 
+        volunteerForm.reset();
       })
       .catch((error) => {
         showToast("Failed to submit application. Please try again later.");
@@ -117,47 +116,38 @@ if (volunteerForm) {
 //    - Shows thank-you alert on submit
 // ------------------------------------------------------------
 
-// Step 1: Get references to the HTML elements we need
-const donateBtn = document.getElementById("donate-btn");       // The donate button
-const donationModal = document.getElementById("donation-modal");   // The modal overlay (dark background)
-const closeBtn = document.getElementById("modal-close-btn"); // The X button inside the modal
-const donationForm = document.getElementById("donation-form");   // The <form> inside the modal
-const copyBtn = document.getElementById("copy-btn");        // The "Copy Account Number" button
-const accountNumber = document.getElementById("account-number"); // The span that contains the account number
+const donateBtn = document.getElementById("donate-btn");
+const donationModal = document.getElementById("donation-modal");
+const closeBtn = document.getElementById("modal-close-btn");
+const donationForm = document.getElementById("donation-form");
+const copyBtn = document.getElementById("copy-btn");
+const accountNumber = document.getElementById("account-number");
 
-// Step 2: Open the modal when the donate button is clicked
 if (donateBtn && donationModal) {
   donateBtn.addEventListener("click", function () {
-    donationModal.classList.add("active"); // Adding "active" class makes it visible (see donation.css)
+    donationModal.classList.add("active");
   });
 }
 
-// Step 3: Close the modal when the X button is clicked
 if (closeBtn && donationModal) {
   closeBtn.addEventListener("click", function () {
-    donationModal.classList.remove("active"); // Removing "active" hides the modal again
+    donationModal.classList.remove("active");
   });
 }
 
-// Step 4: Close the modal when clicking outside the white box (on the dark background)
 if (donationModal) {
   donationModal.addEventListener("click", function (event) {
-    // event.target is what was actually clicked
-    // If the click was directly on the overlay (not the box inside), close the modal
     if (event.target === donationModal) {
       donationModal.classList.remove("active");
     }
   });
 }
 
-// Step 5: Copy account number to clipboard when copy button is clicked
+
 if (copyBtn && accountNumber) {
   copyBtn.addEventListener("click", function () {
-    // navigator.clipboard.writeText() copies text to the user's clipboard
     navigator.clipboard.writeText(accountNumber.textContent).then(function () {
-      // Temporarily change the button text to give feedback to the user
       copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-      // After 2 seconds, revert the button text back to original
       setTimeout(function () {
         copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Account Number';
       }, 2000);
@@ -165,36 +155,30 @@ if (copyBtn && accountNumber) {
   });
 }
 
-// Step 6: Handle the form submission
 if (donationForm) {
   donationForm.addEventListener("submit", function (event) {
-    event.preventDefault(); // Stop the page from reloading on submit
-
-    // Get the values the user typed in each field
+    event.preventDefault();
     const name = document.getElementById("donor-name").value.trim();
     const email = document.getElementById("donor-email").value.trim();
     const amount = document.getElementById("donor-amount").value.trim();
-
-    // Get the file upload input — .files[0] = the first selected file
     const proofInput = document.getElementById("donor-proof");
-    const proofFile = proofInput.files[0]; // undefined if no file selected
+    const proofFile = proofInput.files[0];
 
     // Check if any field is empty OR no file was uploaded
     if (name === "" || email === "" || amount === "") {
       showToast("Please fill in all fields before confirming.");
     } else if (!proofFile) {
-      // proofFile is undefined = no file was chosen by the user
       showToast("Please upload your transfer proof before confirming.");
     } else {
-      // All fields are filled and a file was uploaded — show a thank-you message
+      // All fields are filled and a file was uploaded and show a thank-you message
       showToast(
         "Thank you, " + name + "!" +
         " Your donation of IDR " + parseInt(amount).toLocaleString("id-ID") +
         " has been received. We will verify your transfer proof (" + proofFile.name + ")" +
         " and send a confirmation to " + email + "."
       );
-      donationForm.reset();                        // Clear all form fields
-      donationModal.classList.remove("active");   // Close the modal
+      donationForm.reset();
+      donationModal.classList.remove("active");
     }
   });
 }
