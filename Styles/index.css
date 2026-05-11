@@ -189,7 +189,7 @@
   align-self: flex-start;
   transition: background-color 0.3s;
 }
-
+/* Activity Section CSS*/
 .latest-activities-section {
   padding: 4rem 2rem;
   display: flex;

@@ -4,11 +4,11 @@ A website for **Ashram Gandhi Puri**, built as a project for the Web Page Publis
 
 ## Team Member
 
-Adrienne Lie / E2400071
+Adrienne Kayana Wistara Lie / E2400071
 
-Bagoes Oka / E2400074
+Bagoes Chinmayananda Ariel Oka / E2400074
 
-Erlang Laksmana /E2400081
+I Putu Erlang Laksmana Putra Erdiana / E2400081
 
 Ivan Maulana / E2400084
 
