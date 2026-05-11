@@ -14,7 +14,7 @@
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
-  min-height: calc(100vh - 565px); /* approx adjusting for header/footer and hero */
+  min-height: calc(100vh - 565px);
 }
 
 .donation-content h2 {
@@ -32,7 +32,7 @@
 }
 
 .donation-card {
-  background-color: #F6E7D8; /* Soft Beige */
+  background-color: #F6E7D8; 
   padding: 3rem 2rem;
   border-radius: 8px;
   margin-top: 2rem;
@@ -68,43 +68,31 @@
 }
 
 
-/* ============================================================
-   MODAL OVERLAY
-   This is the dark semi-transparent background that appears
-   behind the popup form when it is open.
-   - display: none  → hidden by default
-   - When JS adds the class "active", it becomes visible
-============================================================ */
 .modal-overlay {
-  display: none;                     /* Hidden by default */
-  position: fixed;                   /* Stays in place even if you scroll */
+  display: none;                     
+  position: fixed;                   
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark transparent background */
-  z-index: 1000;                     /* Appears on top of everything */
-  justify-content: center;           /* Center the modal box horizontally */
-  align-items: center;               /* Center the modal box vertically */
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1000;                    
+  justify-content: center;          
+  align-items: center;               
 }
 
-/* When JS adds class "active" to the overlay, show it as flexbox */
 .modal-overlay.active {
   display: flex;
 }
 
 
-/* ============================================================
-   MODAL BOX
-   This is the white card that contains the donation form.
-============================================================ */
 .modal-box {
   background-color: #ffffff;
   padding: 2.5rem 2rem;
   border-radius: 10px;
   width: 100%;
-  max-width: 480px;                  /* Limit width so it doesn't stretch too wide */
-  position: relative;               /* Needed so the close button can be positioned inside */
+  max-width: 480px;                  
+  position: relative;               
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
@@ -122,14 +110,12 @@
 }
 
 
-/* ============================================================
-   CLOSE BUTTON (the X in the top-right corner)
-============================================================ */
+
 .modal-close {
-  position: absolute;               /* Position it relative to .modal-box */
+  position: absolute;            
   top: 1rem;
   right: 1rem;
-  background: none;                 /* No background color */
+  background: none;                
   border: none;
   font-size: 1.8rem;
   cursor: pointer;
@@ -141,25 +127,19 @@
   color: #333;
 }
 
-
-/* ============================================================
-   FORM GROUPS
-   Each label + input pair inside the modal form
-============================================================ */
 .form-group {
   margin-bottom: 1.2rem;
   text-align: left;
 }
 
 .form-group label {
-  display: block;                   /* Put label on its own line above the input */
+  display: block;                   
   margin-bottom: 0.4rem;
   font-size: 0.9rem;
   font-weight: 600;
   color: #333;
 }
 
-/* Style for both text inputs and the select dropdown */
 .form-group input,
 .form-group select {
   width: 100%;
@@ -168,36 +148,28 @@
   border-radius: 6px;
   font-size: 1rem;
   font-family: "Inter", sans-serif;
-  box-sizing: border-box;           /* Makes sure padding doesn't break the width */
+  box-sizing: border-box;          
   transition: border-color 0.2s;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-  outline: none;                    /* Remove default blue outline */
-  border-color: var(--primary-color); /* Highlight with brand color on focus */
+  outline: none;                    
+  border-color: var(--primary-color); 
 }
 
-/* Style khusus untuk input file upload agar lebih rapi */
 .form-group input[type="file"] {
-  padding: 0.5rem;                  /* Sedikit padding agar tidak terlalu mepet */
+  padding: 0.5rem;                  
   cursor: pointer;
 }
 
-/* Teks petunjuk kecil di bawah field upload */
 .upload-hint {
-  display: block;                   /* Taruh di baris baru di bawah input */
+  display: block;                   
   margin-top: 0.4rem;
   font-size: 0.82rem;
   color: #888;
 }
 
-
-/* ============================================================
-   BANK INFO BOX
-   Kotak informasi rekening bank Ashram Gandhi di halaman
-   utama donation (bukan di dalam modal)
-============================================================ */
 .bank-info {
   background-color: #ffffff;
   border: 1px solid #e0d5c8;
@@ -216,17 +188,17 @@
   letter-spacing: 0.05em;
 }
 
-/* Setiap baris info bank (label + value) */
+
 .bank-detail {
-  display: flex;                    /* Taruh label dan value bersebelahan */
-  justify-content: space-between;   /* Label di kiri, value di kanan */
+  display: flex;                    
+  justify-content: space-between;   
   padding: 0.5rem 0;
-  border-bottom: 1px solid #f0ebe4; /* Garis pemisah antar baris */
+  border-bottom: 1px solid #f0ebe4; 
   font-size: 0.95rem;
 }
 
 .bank-detail:last-of-type {
-  border-bottom: none;              /* Hapus garis di baris terakhir */
+  border-bottom: none;              
 }
 
 .bank-label {
@@ -239,7 +211,6 @@
   color: #333;
 }
 
-/* Tombol salin nomor rekening */
 .copy-btn {
   display: inline-block;
   margin-top: 1rem;
