@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donate — Ashram Gandhi Puri</title>
+    <meta
+      name="description"
+      content="Support education, community empowerment and environmental care at Ashram Gandhi Puri. Donate by bank transfer to Yayasan Ashram Gandhi Puri and receive a confirmation."
+    />
+    <meta name="theme-color" content="#2E1065" />
+    <link rel="icon" href="../assets/logo-ngo-256.png" type="image/png" />
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/donation.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header" id="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href="index.html" aria-label="Ashram Gandhi Puri — home">
+          <img class="brand__logo" src="../assets/logo-ngo-256.png" alt="" width="48" height="48" />
+          <span class="brand__name">Ashram Gandhi Puri<small>Klungkung · Bali</small></span>
+        </a>
+        <button
+          class="nav-toggle"
+          id="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="main-nav"
+          aria-label="Toggle navigation menu"
+        >
+          <span class="nav-toggle__bars" aria-hidden="true"></span>
+        </button>
+        <nav class="site-nav" id="main-nav" aria-label="Primary">
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+            <li class="nav-cta"><a class="btn btn-primary btn-sm" href="donation.html" aria-current="page">Donate</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero on-dark" aria-labelledby="page-title">
+        <img class="page-hero__bg" src="../assets/hero-photo-3.jpg" alt="" width="1280" height="471" />
+        <div class="container">
+          <p class="eyebrow eyebrow--light">Donate</p>
+          <h1 id="page-title">Let's Share Kindness</h1>
+          <p>
+            Every donation, no matter how small, brings a big change for the future of those in
+            need.
+          </p>
+        </div>
+      </section>
+
+      <section class="section section--tint" aria-label="Donation details">
+        <div class="container donate-layout">
+          <div class="donate-copy">
+            <p class="eyebrow">Where your gift goes</p>
+            <h2>Keeping the ashram's work going</h2>
+            <p>
+              Your help means a lot for the continuity of education programs, community
+              empowerment, and environmental conservation at Ashram Gandhi Puri.
+            </p>
+            <ul class="check-list">
+              <li>
+                <span class="check-list__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span><strong>Education programs.</strong> Spiritual education, yoga and noble values for young people.</span>
+              </li>
+              <li>
+                <span class="check-list__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span><strong>Community empowerment.</strong> Volunteer programs and training open to people from many regions.</span>
+              </li>
+              <li>
+                <span class="check-list__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span><strong>Environmental conservation.</strong> Tree planting and organic farming around the ashram.</span>
+              </li>
+              <li>
+                <span class="check-list__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span><strong>Transparent giving.</strong> Transfers go straight to the foundation account shown here, and we confirm each donation by email after verifying your transfer proof.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="donation-card">
+            <h2>Be a part of Japa Malamitra</h2>
+            <p>
+              By donating, you also join the Japa Malamitra philanthropy network that cares about
+              humanity and peace.
+            </p>
+
+            <div class="bank-info">
+              <h3>Transfer to our bank account</h3>
+              <div class="bank-detail">
+                <span class="bank-label">Bank</span>
+                <span class="bank-value">Bank Mandiri</span>
+              </div>
+              <div class="bank-detail">
+                <span class="bank-label">Account number</span>
+                <span class="bank-value" id="account-number">1450018046181</span>
+              </div>
+              <div class="bank-detail">
+                <span class="bank-label">Account name</span>
+                <span class="bank-value">Yayasan Ashram Gandhi Puri</span>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm copy-btn" id="copy-btn">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                <span id="copy-btn-label">Copy account number</span>
+              </button>
+            </div>
+
+            <button type="button" class="btn btn-primary donate-btn" id="donate-btn" aria-haspopup="dialog">
+              I have transferred — confirm donation
+            </button>
+            <p class="donation-note">You will be asked to upload your transfer receipt.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="donation-modal" class="modal-overlay" aria-hidden="true">
+      <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="donation-modal-title">
+        <button class="modal-close" id="modal-close-btn" type="button" aria-label="Close donation form">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+
+        <h2 id="donation-modal-title">Donation form</h2>
+        <p>Please fill in the details below to confirm your donation.</p>
+
+        <form class="form" id="donation-form" novalidate>
+          <div class="field">
+            <label for="donor-name">Full name</label>
+            <input class="input" type="text" id="donor-name" autocomplete="name" placeholder="Your full name" required />
+          </div>
+          <div class="field">
+            <label for="donor-email">Email address</label>
+            <input class="input" type="email" id="donor-email" autocomplete="email" placeholder="you@example.com" required />
+          </div>
+          <div class="field">
+            <label for="donor-amount">Donation amount (IDR)</label>
+            <input class="input" type="number" id="donor-amount" inputmode="numeric" placeholder="e.g. 50000" min="1" required />
+          </div>
+          <div class="field">
+            <label for="donor-proof">Upload transfer proof</label>
+            <input class="input" type="file" id="donor-proof" accept="image/*" required aria-describedby="proof-hint" />
+            <span class="field-hint" id="proof-hint">Please upload a photo or screenshot of your bank transfer receipt.</span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Confirm donation</button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="site-footer on-dark" id="contact">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="brand" href="index.html" aria-label="Ashram Gandhi Puri — home">
+              <img class="brand__logo" src="../assets/logo-ngo-256.png" alt="" width="48" height="48" loading="lazy" />
+              <span class="brand__name">Ashram Gandhi Puri<small>Klungkung · Bali</small></span>
+            </a>
+            <p>
+              Spiritual education, yoga and community service — nurturing minds, hearts and
+              communities since 1997.
+            </p>
+            <h2 class="footer-heading">Contact</h2>
+            <ul class="contact-list">
+              <li>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <address>
+                  Ashram Gandhi Puri Sevagram<br />Jalan Raya Gunaksa 99, Klungkung, Indonesia<br />
+                  <a href="https://www.google.com/maps/search/?api=1&query=Ashram+Gandhi+Puri+Sevagram" target="_blank" rel="noopener noreferrer">View on Google Maps<span class="sr-only"> (opens in a new tab)</span></a>
+                </address>
+              </li>
+              <li>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <a href="mailto:ashramgandhipuriorg@gmail.com">ashramgandhipuriorg@gmail.com</a>
+              </li>
+            </ul>
+            <div class="socials">
+              <a href="https://www.facebook.com/profile.php?id=100078784072776" target="_blank" rel="noopener noreferrer" aria-label="Facebook (opens in a new tab)">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <a href="https://www.instagram.com/ashramgandhipuri/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (opens in a new tab)">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <nav aria-label="Footer">
+            <h2 class="footer-heading">Explore</h2>
+            <ul class="footer-list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
+              <li><a href="volunteer.html">Volunteer</a></li>
+              <li><a href="donation.html">Donate</a></li>
+            </ul>
+          </nav>
+
+          <div class="footer-form">
+            <h2 class="footer-heading" id="footer-form-title">Send us a message</h2>
+            <p>Questions about visiting, volunteering or giving? Leave a note and we will reply by email.</p>
+            <form class="form contact-form" aria-labelledby="footer-form-title">
+              <div class="field">
+                <label for="footer-name">Name</label>
+                <input class="input" type="text" id="footer-name" name="name" autocomplete="name" placeholder="Your name" required />
+              </div>
+              <div class="field">
+                <label for="footer-email">Email</label>
+                <input class="input" type="email" id="footer-email" name="email" autocomplete="email" placeholder="you@example.com" required />
+              </div>
+              <div class="field">
+                <label for="footer-message">Message</label>
+                <textarea class="input" id="footer-message" name="message" rows="4" placeholder="How can we help?" required></textarea>
+              </div>
+              <button class="btn btn-primary" type="submit">
+                Send message
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container footer-bottom__inner">
+          <p>©2026 Ashram Gandhi Puri. All rights reserved.</p>
+          <p>Donations are received by Yayasan Ashram Gandhi Puri.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div id="toast-container" role="status" aria-live="polite"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

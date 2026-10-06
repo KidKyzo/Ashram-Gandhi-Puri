@@ -1,0 +1,98 @@
+/* ==========================================================================
+   Volunteer page
+   ========================================================================== */
+
+.volunteer-layout {
+  display: grid;
+  gap: var(--space-3xl);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .volunteer-layout {
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--space-3xl) * 1.25);
+  }
+
+  .volunteer-media {
+    position: sticky;
+    top: calc(var(--header-h) + var(--space-xl));
+  }
+}
+
+.volunteer-media figure {
+  margin: 0;
+}
+
+.volunteer-media img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+}
+
+.volunteer-media figcaption {
+  margin-top: var(--space-md);
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+}
+
+.volunteer-media h2 {
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-lg);
+  font-size: 1.5rem;
+}
+
+.check-list {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  color: var(--color-text-muted);
+}
+
+.check-list__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-top: 1px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-deep);
+}
+
+.check-list__icon .icon {
+  width: 16px;
+  height: 16px;
+  stroke-width: 3;
+}
+
+.form-card {
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-tint);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 768px) {
+  .form-card { padding: var(--space-xl); }
+}
+
+.form-card h2 {
+  margin-bottom: var(--space-sm);
+  font-size: 1.75rem;
+}
+
+.form-card > p {
+  margin-bottom: var(--space-lg);
+  color: var(--color-text-muted);
+}

@@ -18,14 +18,14 @@ Ashram Gandhi Puri is a community-focused ashram dedicated to promoting peace, s
 
 ## Pages
 
-- **Home** — Introduction and overview of the ashram
-- **Gallery** — Photo gallery showcasing the ashram and its activities
-- **Donation** — Information on how to support the ashram through donations
-- **Volunteer** — Details on volunteer opportunities
-- **Contact** — Get in touch with the ashram
+- **Home (`pages/index.html`)** — Editorial YCAB-inspired overview, hero statement, about us, impact stats, milestones timeline, activity showcase, founder spotlight, and contact footer
+- **Gallery (`pages/gallery.html`)** — Interactive activity showcase with search, category filtering, and sorting
+- **Volunteer (`pages/volunteer.html`)** — Vishramapuri Volunteer Program overview and registration
+- **Donate (`pages/donation.html`)** — Transparent giving details, bank information with 1-click copy, and transfer confirmation modal
+- *Note: Contact details, social links, and an inquiry form are centrally integrated into the footer across all pages (as per `MASTER.md`).*
 
 ## Tech Stack
 
-- HTML
-- CSS
-- JavaScript
+- **Vanilla Edition**: HTML, CSS, JavaScript (terletak di folder `pages/`, `css/`, `js/`)
+- **Modern Next.js Edition**: Next.js 16 (App Router), TypeScript, Tailwind CSS v4, Lucide React (terletak di folder `next-app/`)
+

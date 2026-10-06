@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Volunteer — Ashram Gandhi Puri</title>
+    <meta
+      name="description"
+      content="Join the Vishramapuri Volunteer Program at Ashram Gandhi Puri in Klungkung, Bali. Practise yoga, live simply and serve the community. Apply online."
+    />
+    <meta name="theme-color" content="#2E1065" />
+    <link rel="icon" href="../assets/logo-ngo-256.png" type="image/png" />
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/volunteer.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header" id="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href="index.html" aria-label="Ashram Gandhi Puri — home">
+          <img class="brand__logo" src="../assets/logo-ngo-256.png" alt="" width="48" height="48" />
+          <span class="brand__name">Ashram Gandhi Puri<small>Klungkung · Bali</small></span>
+        </a>
+        <button
+          class="nav-toggle"
+          id="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="main-nav"
+          aria-label="Toggle navigation menu"
+        >
+          <span class="nav-toggle__bars" aria-hidden="true"></span>
+        </button>
+        <nav class="site-nav" id="main-nav" aria-label="Primary">
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="volunteer.html" aria-current="page">Volunteer</a></li>
+            <li class="nav-cta"><a class="btn btn-primary btn-sm" href="donation.html">Donate</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero on-dark" aria-labelledby="page-title">
+        <img class="page-hero__bg" src="../assets/hero-photo-3.jpg" alt="" width="1280" height="471" />
+        <div class="container">
+          <p class="eyebrow eyebrow--light">Vishramapuri Volunteer Program</p>
+          <h1 id="page-title">Become a Volunteer</h1>
+          <p>
+            Join our Vishramapuri Volunteer Program to empower the community and make a positive
+            impact.
+          </p>
+        </div>
+      </section>
+
+      <section class="section section--tint" aria-label="Volunteer application">
+        <div class="container volunteer-layout">
+          <div class="volunteer-media">
+            <figure>
+              <img
+                src="../assets/volunteer-program.jpg"
+                alt="Collage of volunteers and teachers sharing time together in the ashram gardens"
+                width="1400"
+                height="788"
+              />
+              <figcaption>Volunteers and teachers at Ashram Gandhi Puri Sevagram.</figcaption>
+            </figure>
+
+            <h2>What volunteering looks like</h2>
+            <ul class="check-list">
+              <li>
+                <span class="check-list__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+                Join Yoga and Dharma Talk sessions led by experienced teachers.
+              </li>
+              <li>
+                <span class="check-list__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+                Live alongside residents in a healthy, simple ashram lifestyle.
+              </li>
+              <li>
+                <span class="check-list__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+                Support community and environmental programs, from organic farming to tree planting.
+              </li>
+            </ul>
+          </div>
+
+          <div class="form-card">
+            <h2 id="volunteer-form-title">Register as a volunteer</h2>
+            <p>Fill out the form below and we will contact you by email.</p>
+            <form class="form volunteer-form" aria-labelledby="volunteer-form-title">
+              <div class="field">
+                <label for="name">Full name</label>
+                <input class="input" type="text" id="name" name="name" autocomplete="name" placeholder="Your name" required />
+              </div>
+              <div class="field">
+                <label for="email">Email address</label>
+                <input class="input" type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required />
+              </div>
+              <div class="field">
+                <label for="phone">Phone number</label>
+                <input class="input" type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+62 …" required />
+              </div>
+              <div class="field">
+                <label for="nationality">Nationality</label>
+                <input class="input" type="text" id="nationality" name="nationality" autocomplete="country-name" placeholder="Your nationality" required />
+              </div>
+              <button class="btn btn-primary btn-block" type="submit">Submit application</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer on-dark" id="contact">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="brand" href="index.html" aria-label="Ashram Gandhi Puri — home">
+              <img class="brand__logo" src="../assets/logo-ngo-256.png" alt="" width="48" height="48" loading="lazy" />
+              <span class="brand__name">Ashram Gandhi Puri<small>Klungkung · Bali</small></span>
+            </a>
+            <p>
+              Spiritual education, yoga and community service — nurturing minds, hearts and
+              communities since 1997.
+            </p>
+            <h2 class="footer-heading">Contact</h2>
+            <ul class="contact-list">
+              <li>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <address>
+                  Ashram Gandhi Puri Sevagram<br />Jalan Raya Gunaksa 99, Klungkung, Indonesia<br />
+                  <a href="https://www.google.com/maps/search/?api=1&query=Ashram+Gandhi+Puri+Sevagram" target="_blank" rel="noopener noreferrer">View on Google Maps<span class="sr-only"> (opens in a new tab)</span></a>
+                </address>
+              </li>
+              <li>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <a href="mailto:ashramgandhipuriorg@gmail.com">ashramgandhipuriorg@gmail.com</a>
+              </li>
+            </ul>
+            <div class="socials">
+              <a href="https://www.facebook.com/profile.php?id=100078784072776" target="_blank" rel="noopener noreferrer" aria-label="Facebook (opens in a new tab)">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <a href="https://www.instagram.com/ashramgandhipuri/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (opens in a new tab)">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <nav aria-label="Footer">
+            <h2 class="footer-heading">Explore</h2>
+            <ul class="footer-list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
+              <li><a href="volunteer.html">Volunteer</a></li>
+              <li><a href="donation.html">Donate</a></li>
+            </ul>
+          </nav>
+
+          <div class="footer-form">
+            <h2 class="footer-heading" id="footer-form-title">Send us a message</h2>
+            <p>Questions about visiting, volunteering or giving? Leave a note and we will reply by email.</p>
+            <form class="form contact-form" aria-labelledby="footer-form-title">
+              <div class="field">
+                <label for="footer-name">Name</label>
+                <input class="input" type="text" id="footer-name" name="name" autocomplete="name" placeholder="Your name" required />
+              </div>
+              <div class="field">
+                <label for="footer-email">Email</label>
+                <input class="input" type="email" id="footer-email" name="email" autocomplete="email" placeholder="you@example.com" required />
+              </div>
+              <div class="field">
+                <label for="footer-message">Message</label>
+                <textarea class="input" id="footer-message" name="message" rows="4" placeholder="How can we help?" required></textarea>
+              </div>
+              <button class="btn btn-primary" type="submit">
+                Send message
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container footer-bottom__inner">
+          <p>©2026 Ashram Gandhi Puri. All rights reserved.</p>
+          <p>Donations are received by Yayasan Ashram Gandhi Puri.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div id="toast-container" role="status" aria-live="polite"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

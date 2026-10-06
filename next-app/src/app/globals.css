@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@import "../css/styles.css";
+@import "../css/index.css";
+@import "../css/gallery.css";
+@import "../css/volunteer.css";
+@import "../css/donation.css";
