@@ -28,23 +28,36 @@ export default function Footer({ settings }: FooterProps) {
 
     setIsSubmitting(true);
     try {
-      await emailjs.send(
-        "service_gndy8k8",
-        "template_vhmny7r",
-        formData,
-        "-thawvZg0wjq1LVEt"
-      );
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_gndy8k8";
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID || "template_vhmny7r";
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "-thawvZg0wjq1LVEt";
+      const staffEmail = process.env.NEXT_PUBLIC_STAFF_EMAIL || settings?.contactEmail || "ashramgandhipuriorg@gmail.com";
+
+      const templateParams = {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        to_email: staffEmail,
+        recipient_email: staffEmail,
+        to_name: "Ashram Gandhi Puri Staff",
+        from_name: formData.name,
+        from_email: formData.email,
+        reply_to: formData.email,
+      };
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+
       showToast(
         `Thank you, ${formData.name}! Your message has been sent. We will get back to you soon.`,
         "success"
       );
       setFormData({ name: "", email: "", message: "" });
-    } catch {
+    } catch (error) {
+      console.error("Contact form submission error:", error);
       showToast(
-        `Thank you, ${formData.name}! Your message has been received.`,
-        "success"
+        "Could not send message right now. Please try again or contact us directly.",
+        "error"
       );
-      setFormData({ name: "", email: "", message: "" });
     } finally {
       setIsSubmitting(false);
     }

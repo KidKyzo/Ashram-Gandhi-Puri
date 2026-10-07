@@ -23,23 +23,38 @@ export default function VolunteerPage() {
 
     setIsSubmitting(true);
     try {
-      await emailjs.send(
-        "service_gndy8k8",
-        "template_wforxm1",
-        formData,
-        "-thawvZg0wjq1LVEt"
-      );
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_gndy8k8";
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_VOLUNTEER_TEMPLATE_ID || "template_wforxm1";
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "-thawvZg0wjq1LVEt";
+      const staffEmail = process.env.NEXT_PUBLIC_STAFF_EMAIL || "ashramgandhipuriorg@gmail.com";
+
+      const templateParams = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        nationality: formData.nationality,
+        to_email: staffEmail,
+        recipient_email: staffEmail,
+        to_name: "Ashram Gandhi Puri Staff",
+        from_name: formData.name,
+        from_email: formData.email,
+        reply_to: formData.email,
+        message: `New Volunteer Application:\n- Full Name: ${formData.name}\n- Email: ${formData.email}\n- Phone: ${formData.phone}\n- Nationality: ${formData.nationality}`,
+      };
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+
       showToast(
         `Thank you, ${formData.name}! Your volunteer application has been submitted. We will contact you soon.`,
         "success"
       );
       setFormData({ name: "", email: "", phone: "", nationality: "" });
-    } catch {
+    } catch (error) {
+      console.error("Volunteer application submission error:", error);
       showToast(
-        `Thank you, ${formData.name}! Your volunteer application has been submitted. We will contact you soon.`,
-        "success"
+        "Could not send application right now. Please try again or email us directly at ashramgandhipuriorg@gmail.com.",
+        "error"
       );
-      setFormData({ name: "", email: "", phone: "", nationality: "" });
     } finally {
       setIsSubmitting(false);
     }
