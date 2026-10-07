@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import Image from "next/image";
 import type { GalleryItem } from "@/types/content";
 
 export default function GalleryView({ items }: { items: GalleryItem[] }) {
@@ -22,12 +23,13 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
   return (
     <>
       <section className="page-hero on-dark" aria-labelledby="page-title">
-        <img
+        <Image
           className="page-hero__bg"
           src="/assets/hero-photo-4.jpg"
           alt=""
-          width="1280"
-          height="547"
+          fill
+          priority
+          sizes="100vw"
         />
         <div className="container">
           <p className="eyebrow eyebrow--light">Gallery</p>
@@ -98,15 +100,13 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
                     className="gallery-card"
                   >
                   <div className="gallery-card__media">
-                    <img
+                    <Image
                       src={item.image}
-                      alt=""
-                      width="800"
-                      height="500"
+                      alt={item.title}
+                      width={800}
+                      height={500}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       loading="lazy"
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = "/assets/activity-gallery-1.jpg";
-                      }}
                     />
                   </div>
                   <div className="gallery-card__body">

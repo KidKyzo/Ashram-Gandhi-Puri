@@ -34,7 +34,8 @@ export async function generateMetadata(): Promise<Metadata> {
     title: settings.siteTitle,
     description: settings.siteDescription,
     icons: {
-      icon: "/assets/logo-ngo.png",
+      icon: "/assets/favicon-32.png",
+      apple: "/assets/apple-touch-icon.png",
     },
     openGraph: {
       title: `${settings.heroTitle} — Ashram Gandhi Puri`,

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -28,12 +29,13 @@ export default function Navbar() {
     <header className={`site-header ${isScrolled ? "is-scrolled" : ""}`} id="site-header">
       <div className="container site-header__inner">
         <Link className="brand" href="/" aria-label="Ashram Gandhi Puri — home">
-          <img
+          <Image
             className="brand__logo"
-            src="/assets/logo-ngo.png"
-            alt=""
+            src="/assets/logo-ngo-96.webp"
+            alt="Ashram Gandhi Puri Logo"
             width={48}
             height={48}
+            priority
           />
           <span className="brand__name">
             Ashram Gandhi Puri<small>Klungkung · Bali</small>
