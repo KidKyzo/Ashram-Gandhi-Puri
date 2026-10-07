@@ -46,8 +46,10 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December",
 ];
 
-function formatMonth(date: string): string {
+function formatMonth(date?: string): string {
+  if (!date || typeof date !== "string") return "";
   const [year, month] = date.split("-");
+  if (!month || !year) return date;
   return `${MONTHS[Number(month) - 1] ?? month} ${year}`;
 }
 
@@ -77,15 +79,29 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
       limit: 500,
       pagination: false,
     });
-    return docs.map((doc) => ({
-      id: String(doc.id),
-      image: (doc.image as Media)?.url ?? "",
-      title: doc.title,
-      date: doc.date,
-      date_display: formatMonth(doc.date),
-      description: doc.description,
-      source: doc.source,
-    }));
+    return docs.map((doc) => {
+      let imageUrl = "";
+      if (typeof doc.image === "object" && doc.image) {
+        imageUrl = (doc.image as Media).url ?? "";
+      } else if (typeof doc.image === "string") {
+        imageUrl = doc.image;
+      }
+
+      if (!imageUrl) {
+        imageUrl = "/assets/activity-gallery-1.jpg";
+      }
+
+      const dateStr = doc.date || "";
+      return {
+        id: String(doc.id),
+        image: imageUrl,
+        title: doc.title,
+        date: dateStr,
+        date_display: formatMonth(dateStr),
+        description: doc.description,
+        source: doc.source,
+      };
+    });
   } catch (err) {
     console.error("Failed to load gallery items from CMS:", err);
     return [];
@@ -104,30 +120,30 @@ export async function getSiteSettings(): Promise<SiteSettingsData> {
     }
 
     return {
-      siteTitle: settings.siteTitle || DEFAULT_SITE_SETTINGS.siteTitle,
-      siteDescription: settings.siteDescription || DEFAULT_SITE_SETTINGS.siteDescription,
-      contactEmail: settings.contactEmail || DEFAULT_SITE_SETTINGS.contactEmail,
-      address: settings.address || DEFAULT_SITE_SETTINGS.address,
-      googleMapsUrl: settings.googleMapsUrl || DEFAULT_SITE_SETTINGS.googleMapsUrl,
-      facebookUrl: settings.facebookUrl || DEFAULT_SITE_SETTINGS.facebookUrl,
-      instagramUrl: settings.instagramUrl || DEFAULT_SITE_SETTINGS.instagramUrl,
-      heroEyebrow: settings.heroEyebrow || DEFAULT_SITE_SETTINGS.heroEyebrow,
-      heroTitle: settings.heroTitle || DEFAULT_SITE_SETTINGS.heroTitle,
-      heroSubtitle: settings.heroSubtitle || DEFAULT_SITE_SETTINGS.heroSubtitle,
-      heroFact1: settings.heroFact1 || DEFAULT_SITE_SETTINGS.heroFact1,
-      heroFact2: settings.heroFact2 || DEFAULT_SITE_SETTINGS.heroFact2,
-      heroFact3: settings.heroFact3 || DEFAULT_SITE_SETTINGS.heroFact3,
-      founderEyebrow: settings.founderEyebrow || DEFAULT_SITE_SETTINGS.founderEyebrow,
-      founderName: settings.founderName || DEFAULT_SITE_SETTINGS.founderName,
-      founderBio: settings.founderBio || DEFAULT_SITE_SETTINGS.founderBio,
+      siteTitle: settings.siteTitle ?? DEFAULT_SITE_SETTINGS.siteTitle,
+      siteDescription: settings.siteDescription ?? DEFAULT_SITE_SETTINGS.siteDescription,
+      contactEmail: settings.contactEmail ?? DEFAULT_SITE_SETTINGS.contactEmail,
+      address: settings.address ?? DEFAULT_SITE_SETTINGS.address,
+      googleMapsUrl: settings.googleMapsUrl ?? DEFAULT_SITE_SETTINGS.googleMapsUrl,
+      facebookUrl: settings.facebookUrl ?? DEFAULT_SITE_SETTINGS.facebookUrl,
+      instagramUrl: settings.instagramUrl ?? DEFAULT_SITE_SETTINGS.instagramUrl,
+      heroEyebrow: settings.heroEyebrow ?? DEFAULT_SITE_SETTINGS.heroEyebrow,
+      heroTitle: settings.heroTitle ?? DEFAULT_SITE_SETTINGS.heroTitle,
+      heroSubtitle: settings.heroSubtitle ?? DEFAULT_SITE_SETTINGS.heroSubtitle,
+      heroFact1: settings.heroFact1 ?? DEFAULT_SITE_SETTINGS.heroFact1,
+      heroFact2: settings.heroFact2 ?? DEFAULT_SITE_SETTINGS.heroFact2,
+      heroFact3: settings.heroFact3 ?? DEFAULT_SITE_SETTINGS.heroFact3,
+      founderEyebrow: settings.founderEyebrow ?? DEFAULT_SITE_SETTINGS.founderEyebrow,
+      founderName: settings.founderName ?? DEFAULT_SITE_SETTINGS.founderName,
+      founderBio: settings.founderBio ?? DEFAULT_SITE_SETTINGS.founderBio,
       founderAwards:
         Array.isArray(settings.founderAwards) && settings.founderAwards.length > 0
           ? settings.founderAwards
           : DEFAULT_SITE_SETTINGS.founderAwards,
-      bankName: settings.bankName || DEFAULT_SITE_SETTINGS.bankName,
-      accountNumber: settings.accountNumber || DEFAULT_SITE_SETTINGS.accountNumber,
-      accountName: settings.accountName || DEFAULT_SITE_SETTINGS.accountName,
-      donationSubtitle: settings.donationSubtitle || DEFAULT_SITE_SETTINGS.donationSubtitle,
+      bankName: settings.bankName ?? DEFAULT_SITE_SETTINGS.bankName,
+      accountNumber: settings.accountNumber ?? DEFAULT_SITE_SETTINGS.accountNumber,
+      accountName: settings.accountName ?? DEFAULT_SITE_SETTINGS.accountName,
+      donationSubtitle: settings.donationSubtitle ?? DEFAULT_SITE_SETTINGS.donationSubtitle,
     };
   } catch (err) {
     console.error("Failed to load site settings from CMS:", err);
