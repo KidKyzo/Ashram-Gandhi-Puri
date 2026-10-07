@@ -98,6 +98,9 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
                       width="800"
                       height="500"
                       loading="lazy"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = "/assets/activity-gallery-1.jpg";
+                      }}
                     />
                   </div>
                   <div className="gallery-card__body">

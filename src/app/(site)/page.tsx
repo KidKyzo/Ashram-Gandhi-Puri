@@ -1,13 +1,15 @@
 import React from "react";
 import Link from "next/link";
-import { getMilestones, getSiteSettings } from "@/lib/content";
+import { getMilestones, getSiteSettings, getGalleryItems } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function HomePage() {
-  const [milestones, settings] = await Promise.all([
+  const [milestones, settings, galleryItems] = await Promise.all([
     getMilestones(),
     getSiteSettings(),
+    getGalleryItems(),
   ]);
   return (
     <>
@@ -33,28 +35,36 @@ export default async function HomePage() {
                 Become a Volunteer
               </Link>
             </div>
-            <ul className="hero__meta" aria-label="Quick facts">
-              <li>
-                <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                {settings.heroFact1}
-              </li>
-              <li>
-                <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <rect width="18" height="18" x="3" y="4" rx="2" />
-                  <path d="M16 2v4M8 2v4M3 10h18" />
-                </svg>
-                {settings.heroFact2}
-              </li>
-              <li>
-                <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                </svg>
-                {settings.heroFact3}
-              </li>
-            </ul>
+            {(Boolean(settings.heroFact1) || Boolean(settings.heroFact2) || Boolean(settings.heroFact3)) && (
+              <ul className="hero__meta" aria-label="Quick facts">
+                {Boolean(settings.heroFact1) && (
+                  <li>
+                    <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    {settings.heroFact1}
+                  </li>
+                )}
+                {Boolean(settings.heroFact2) && (
+                  <li>
+                    <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <rect width="18" height="18" x="3" y="4" rx="2" />
+                      <path d="M16 2v4M8 2v4M3 10h18" />
+                    </svg>
+                    {settings.heroFact2}
+                  </li>
+                )}
+                {Boolean(settings.heroFact3) && (
+                  <li>
+                    <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                    </svg>
+                    {settings.heroFact3}
+                  </li>
+                )}
+              </ul>
+            )}
           </div>
         </div>
       </section>
@@ -223,104 +233,37 @@ export default async function HomePage() {
           </div>
 
           <div className="gallery-grid">
-            <Link className="gallery-card" href="/gallery">
-              <div className="gallery-card__media">
-                <img
-                  src="/assets/activity-gallery-8.jpg"
-                  alt=""
-                  width="800"
-                  height="500"
-                  loading="lazy"
-                />
-              </div>
-              <div className="gallery-card__body">
-                <span className="gallery-card__meta">
-                  <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <rect width="18" height="18" x="3" y="4" rx="2" />
-                    <path d="M16 2v4M8 2v4M3 10h18" />
-                  </svg>
-                  <time dateTime="2026-04">April 2026</time>
-                </span>
-                <h3 className="gallery-card__title">Self Retreat with GuruJi Rasik Varagi</h3>
-                <p className="gallery-card__text">
-                  Self Retreat activities with GuruJi Rasik Varagi were held at the Ashram Gandhi
-                  Puri community.
-                </p>
-                <span className="gallery-card__more">
-                  See in gallery
-                  <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
-                </span>
-              </div>
-            </Link>
-
-            <Link className="gallery-card" href="/gallery">
-              <div className="gallery-card__media">
-                <img
-                  src="/assets/activity-gallery-2.jpg"
-                  alt=""
-                  width="800"
-                  height="500"
-                  loading="lazy"
-                />
-              </div>
-              <div className="gallery-card__body">
-                <span className="gallery-card__meta">
-                  <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <rect width="18" height="18" x="3" y="4" rx="2" />
-                    <path d="M16 2v4M8 2v4M3 10h18" />
-                  </svg>
-                  <time dateTime="2025-12">December 2025</time>
-                </span>
-                <h3 className="gallery-card__title">Vishramapuri Volunteer Program 2025</h3>
-                <p className="gallery-card__text">
-                  Conducting Yoga and Dharma Talk activities with Dr. Achrya Naresh Ji in the
-                  Vishramapuri Volunteer Program 2025.
-                </p>
-                <span className="gallery-card__more">
-                  See in gallery
-                  <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
-                </span>
-              </div>
-            </Link>
-
-            <Link className="gallery-card" href="/gallery">
-              <div className="gallery-card__media">
-                <img
-                  src="/assets/activity-gallery-3.jpg"
-                  alt=""
-                  width="800"
-                  height="500"
-                  loading="lazy"
-                />
-              </div>
-              <div className="gallery-card__body">
-                <span className="gallery-card__meta">
-                  <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <rect width="18" height="18" x="3" y="4" rx="2" />
-                    <path d="M16 2v4M8 2v4M3 10h18" />
-                  </svg>
-                  <time dateTime="2025-12">December 2025</time>
-                </span>
-                <h3 className="gallery-card__title">100 Hour Yoga Teacher Training Course</h3>
-                <p className="gallery-card__text">
-                  Ashram Gandhi Puri held a 100 Hour Yoga Teacher Training Course. This activity was
-                  attended by 30 participants from various regions.
-                </p>
-                <span className="gallery-card__more">
-                  See in gallery
-                  <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
-                </span>
-              </div>
-            </Link>
+            {galleryItems.slice(0, 3).map((item) => (
+              <Link key={item.id} className="gallery-card" href="/gallery">
+                <div className="gallery-card__media">
+                  <img
+                    src={item.image}
+                    alt=""
+                    width="800"
+                    height="500"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="gallery-card__body">
+                  <span className="gallery-card__meta">
+                    <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <rect width="18" height="18" x="3" y="4" rx="2" />
+                      <path d="M16 2v4M8 2v4M3 10h18" />
+                    </svg>
+                    <time dateTime={item.date}>{item.date_display}</time>
+                  </span>
+                  <h3 className="gallery-card__title">{item.title}</h3>
+                  <p className="gallery-card__text">{item.description}</p>
+                  <span className="gallery-card__more">
+                    See in gallery
+                    <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </span>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
