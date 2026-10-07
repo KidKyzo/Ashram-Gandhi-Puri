@@ -52,34 +52,44 @@ function formatMonth(date: string): string {
 }
 
 export async function getMilestones(): Promise<Milestone[]> {
-  const payload = await getPayload({ config });
-  const { docs } = await payload.find({
-    collection: "milestones",
-    sort: "year",
-    limit: 100,
-    pagination: false,
-  });
-  return docs.map(({ year, title, description }) => ({ year, title, description }));
+  try {
+    const payload = await getPayload({ config });
+    const { docs } = await payload.find({
+      collection: "milestones",
+      sort: "year",
+      limit: 100,
+      pagination: false,
+    });
+    return docs.map(({ year, title, description }) => ({ year, title, description }));
+  } catch (err) {
+    console.error("Failed to load milestones from CMS:", err);
+    return [];
+  }
 }
 
 export async function getGalleryItems(): Promise<GalleryItem[]> {
-  const payload = await getPayload({ config });
-  const { docs } = await payload.find({
-    collection: "gallery-items",
-    sort: "-date",
-    depth: 1,
-    limit: 500,
-    pagination: false,
-  });
-  return docs.map((doc) => ({
-    id: String(doc.id),
-    image: (doc.image as Media).url ?? "",
-    title: doc.title,
-    date: doc.date,
-    date_display: formatMonth(doc.date),
-    description: doc.description,
-    source: doc.source,
-  }));
+  try {
+    const payload = await getPayload({ config });
+    const { docs } = await payload.find({
+      collection: "gallery-items",
+      sort: "-date",
+      depth: 1,
+      limit: 500,
+      pagination: false,
+    });
+    return docs.map((doc) => ({
+      id: String(doc.id),
+      image: (doc.image as Media)?.url ?? "",
+      title: doc.title,
+      date: doc.date,
+      date_display: formatMonth(doc.date),
+      description: doc.description,
+      source: doc.source,
+    }));
+  } catch (err) {
+    console.error("Failed to load gallery items from CMS:", err);
+    return [];
+  }
 }
 
 export async function getSiteSettings(): Promise<SiteSettingsData> {
