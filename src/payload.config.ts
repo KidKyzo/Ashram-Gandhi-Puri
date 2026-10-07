@@ -54,6 +54,16 @@ const s3Region =
 
 const s3PublicUrl = process.env.S3_PUBLIC_URL || process.env.R2_PUBLIC_URL;
 
+const payloadSecret =
+  process.env.PAYLOAD_SECRET ||
+  (process.env.NODE_ENV !== "production"
+    ? "dev-fallback-secret-for-local-testing-only-replace-in-env"
+    : "");
+
+if (!payloadSecret && process.env.NODE_ENV === "production") {
+  throw new Error("SECURITY FATAL: PAYLOAD_SECRET must be configured in production environments.");
+}
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -63,7 +73,7 @@ export default buildConfig({
   collections: [Users, Media, Milestones, GalleryItems],
   globals: [SiteSettings],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || "",
+  secret: payloadSecret,
   typescript: { outputFile: path.resolve(dirname, "payload-types.ts") },
   db: isPostgres
     ? postgresAdapter({

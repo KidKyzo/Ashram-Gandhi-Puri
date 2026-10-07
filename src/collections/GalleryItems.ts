@@ -8,7 +8,12 @@ export const GalleryItems: CollectionConfig = {
     defaultColumns: ["title", "date"],
     description: "Activities shown on the Gallery page.",
   },
-  access: { read: () => true },
+  access: {
+    read: () => true,
+    create: ({ req: { user } }) => Boolean(user),
+    update: ({ req: { user } }) => Boolean(user),
+    delete: ({ req: { user } }) => Boolean(user),
+  },
   defaultSort: "-date",
   fields: [
     { name: "title", type: "text", required: true },
@@ -26,7 +31,19 @@ export const GalleryItems: CollectionConfig = {
       name: "source",
       type: "text",
       required: true,
-      admin: { description: "Link to the full story (opens in a new tab)." },
+      validate: (v: string | null | undefined) => {
+        if (!v) return "Link source is required.";
+        try {
+          const parsed = new URL(v);
+          if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+            return "URL must begin with http:// or https://";
+          }
+          return true;
+        } catch {
+          return "Please enter a valid URL (e.g. https://instagram.com/p/...)";
+        }
+      },
+      admin: { description: "Link to the full story (must start with https:// or http://)." },
     },
   ],
 };

@@ -18,11 +18,30 @@ export default function Footer({ settings }: FooterProps) {
     email: "",
     message: "",
   });
+  const [honeypot, setHoneypot] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Anti-bot honeypot protection: bots fill hidden inputs
+    if (honeypot) {
+      showToast(
+        `Thank you, ${formData.name}! Your message has been sent. We will get back to you soon.`,
+        "success"
+      );
+      setFormData({ name: "", email: "", message: "" });
+      setHoneypot("");
+      return;
+    }
+
     if (!formData.name || !formData.email || !formData.message) {
       showToast("Please fill in all fields before sending.", "error");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      showToast("Please enter a valid email address.", "error");
       return;
     }
 
@@ -194,6 +213,18 @@ export default function Footer({ settings }: FooterProps) {
               aria-labelledby="footer-form-title"
               onSubmit={handleSubmit}
             >
+              <div style={{ display: "none" }} aria-hidden="true">
+                <label htmlFor="company_website">Leave empty</label>
+                <input
+                  type="text"
+                  id="company_website"
+                  name="company_website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
               <div className="field">
                 <label htmlFor="footer-name">Name</label>
                 <input
