@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +30,7 @@ export default function Navbar() {
         <Link className="brand" href="/" aria-label="Ashram Gandhi Puri — home">
           <img
             className="brand__logo"
-            src="/assets/logo-ngo-256.png"
+            src="/assets/logo-ngo.png"
             alt=""
             width={48}
             height={48}
