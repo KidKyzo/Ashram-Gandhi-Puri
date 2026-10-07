@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { useToast } from "@/context/ToastContext";
 import emailjs from "@emailjs/browser";
 
@@ -90,12 +91,13 @@ export default function VolunteerPage() {
   return (
     <>
       <section className="page-hero on-dark" aria-labelledby="page-title">
-        <img
+        <Image
           className="page-hero__bg"
           src="/assets/hero-photo-3.jpg"
           alt=""
-          width="1280"
-          height="471"
+          fill
+          priority
+          sizes="100vw"
         />
         <div className="container">
           <p className="eyebrow eyebrow--light">Vishramapuri Volunteer Program</p>
@@ -111,11 +113,13 @@ export default function VolunteerPage() {
         <div className="container volunteer-layout">
           <div className="volunteer-media">
             <figure>
-              <img
+              <Image
                 src="/assets/volunteer-program.jpg"
                 alt="Collage of volunteers and teachers sharing time together in the ashram gardens"
-                width="1400"
-                height="788"
+                width={1400}
+                height={788}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                loading="lazy"
               />
               <figcaption>Volunteers and teachers at Ashram Gandhi Puri Sevagram.</figcaption>
             </figure>

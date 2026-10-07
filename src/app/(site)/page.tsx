@@ -1,9 +1,9 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { getMilestones, getSiteSettings, getGalleryItems } from "@/lib/content";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function HomePage() {
   const [milestones, settings, galleryItems] = await Promise.all([
@@ -15,12 +15,13 @@ export default async function HomePage() {
     <>
       {/* ============ HERO ============ */}
       <section className="hero on-dark" aria-labelledby="hero-title">
-        <img
+        <Image
           className="hero__bg"
           src="/assets/hero-photo-5.jpg"
           alt=""
-          width="2048"
-          height="1536"
+          fill
+          priority
+          sizes="100vw"
         />
         <div className="container">
           <div className="hero__content">
@@ -132,11 +133,12 @@ export default async function HomePage() {
           </div>
 
           <figure className="media-frame">
-            <img
+            <Image
               src="/assets/hero-photo-2.jpg"
               alt="Ashram residents, teachers and guests gathered with young dancers inside an open Balinese pavilion"
-              width="1068"
-              height="801"
+              width={1068}
+              height={801}
+              sizes="(max-width: 768px) 100vw, 50vw"
               loading="lazy"
             />
             <div className="media-badge">
@@ -236,11 +238,12 @@ export default async function HomePage() {
             {galleryItems.slice(0, 3).map((item) => (
               <Link key={item.id} className="gallery-card" href="/gallery">
                 <div className="gallery-card__media">
-                  <img
+                  <Image
                     src={item.image}
-                    alt=""
-                    width="800"
-                    height="500"
+                    alt={item.title}
+                    width={800}
+                    height={500}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     loading="lazy"
                   />
                 </div>
@@ -296,11 +299,12 @@ export default async function HomePage() {
           </div>
 
           <figure className="media-frame split__media">
-            <img
+            <Image
               src="/assets/hero-photo-1.jpg"
               alt="Ida Rsi Putra Manuaba, in white, receiving the Padma Shri award from the President of India"
-              width="1080"
-              height="700"
+              width={1080}
+              height={700}
+              sizes="(max-width: 768px) 100vw, 50vw"
               loading="lazy"
             />
             <figcaption>Receiving the Padma Shri at Rashtrapati Bhavan, 2020.</figcaption>
@@ -310,12 +314,12 @@ export default async function HomePage() {
 
       {/* ============ JOIN CTA ============ */}
       <section className="cta-band on-dark" aria-labelledby="cta-title">
-        <img
+        <Image
           className="cta-band__bg"
           src="/assets/hero-photo-3.jpg"
           alt=""
-          width="1280"
-          height="471"
+          fill
+          sizes="100vw"
           loading="lazy"
         />
         <div className="container">

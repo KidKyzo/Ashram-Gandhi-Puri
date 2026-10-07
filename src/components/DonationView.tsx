@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { useToast } from "@/context/ToastContext";
 import type { SiteSettingsData } from "@/types/content";
 
@@ -77,12 +78,13 @@ export default function DonationView({ settings }: DonationViewProps) {
   return (
     <>
       <section className="page-hero on-dark" aria-labelledby="page-title">
-        <img
+        <Image
           className="page-hero__bg"
           src="/assets/hero-photo-3.jpg"
           alt=""
-          width="1280"
-          height="471"
+          fill
+          priority
+          sizes="100vw"
         />
         <div className="container">
           <p className="eyebrow eyebrow--light">Donate</p>

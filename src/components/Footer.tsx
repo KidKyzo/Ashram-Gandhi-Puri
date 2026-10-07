@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useToast } from "@/context/ToastContext";
 import type { SiteSettingsData } from "@/types/content";
@@ -98,10 +99,10 @@ export default function Footer({ settings }: FooterProps) {
         <div className="footer-grid">
           <div className="footer-brand">
             <Link className="brand" href="/" aria-label="Ashram Gandhi Puri — home">
-              <img
+              <Image
                 className="brand__logo"
-                src="/assets/logo-ngo-256.png"
-                alt=""
+                src="/assets/logo-ngo-96.webp"
+                alt="Ashram Gandhi Puri Logo"
                 width={48}
                 height={48}
                 loading="lazy"
