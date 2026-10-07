@@ -23,23 +23,31 @@ export default function VolunteerPage() {
 
     setIsSubmitting(true);
     try {
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_gndy8k8";
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_VOLUNTEER_TEMPLATE_ID || "template_wforxm1";
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "-thawvZg0wjq1LVEt";
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_VOLUNTEER_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
       const staffEmail = process.env.NEXT_PUBLIC_STAFF_EMAIL || "ashramgandhipuriorg@gmail.com";
+
+      if (!serviceId || !templateId || !publicKey) {
+        console.error("EmailJS credentials are missing in environment variables.");
+        showToast("Email service is currently misconfigured. Please email us directly at " + staffEmail, "error");
+        return;
+      }
 
       const templateParams = {
         name: formData.name,
+        from_name: formData.name,
         email: formData.email,
+        from_email: formData.email,
+        reply_to: formData.email,
         phone: formData.phone,
         nationality: formData.nationality,
+        subject: `Volunteer Application from ${formData.name}`,
+        form_title: "Volunteer Application",
+        message: `Volunteer Application Details:\n- Name: ${formData.name}\n- Email: ${formData.email}\n- Phone: ${formData.phone}\n- Nationality: ${formData.nationality}`,
         to_email: staffEmail,
         recipient_email: staffEmail,
         to_name: "Ashram Gandhi Puri Staff",
-        from_name: formData.name,
-        from_email: formData.email,
-        reply_to: formData.email,
-        message: `New Volunteer Application:\n- Full Name: ${formData.name}\n- Email: ${formData.email}\n- Phone: ${formData.phone}\n- Nationality: ${formData.nationality}`,
       };
 
       await emailjs.send(serviceId, templateId, templateParams, publicKey);
@@ -52,7 +60,7 @@ export default function VolunteerPage() {
     } catch (error) {
       console.error("Volunteer application submission error:", error);
       showToast(
-        "Could not send application right now. Please try again or email us directly at ashramgandhipuriorg@gmail.com.",
+        "Could not send application right now. Please try again or email us directly at " + (process.env.NEXT_PUBLIC_STAFF_EMAIL || "ashramgandhipuriorg@gmail.com") + ".",
         "error"
       );
     } finally {

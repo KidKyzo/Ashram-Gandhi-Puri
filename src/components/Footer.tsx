@@ -28,21 +28,31 @@ export default function Footer({ settings }: FooterProps) {
 
     setIsSubmitting(true);
     try {
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_gndy8k8";
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID || "template_vhmny7r";
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "-thawvZg0wjq1LVEt";
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
       const staffEmail = process.env.NEXT_PUBLIC_STAFF_EMAIL || settings?.contactEmail || "ashramgandhipuriorg@gmail.com";
+
+      if (!serviceId || !templateId || !publicKey) {
+        console.error("EmailJS credentials are missing in environment variables.");
+        showToast("Email service is currently misconfigured. Please email us directly at " + staffEmail, "error");
+        return;
+      }
 
       const templateParams = {
         name: formData.name,
+        from_name: formData.name,
         email: formData.email,
+        from_email: formData.email,
+        reply_to: formData.email,
+        phone: "-",
+        nationality: "-",
+        subject: `Contact Inquiry from ${formData.name}`,
+        form_title: "Contact Inquiry",
         message: formData.message,
         to_email: staffEmail,
         recipient_email: staffEmail,
         to_name: "Ashram Gandhi Puri Staff",
-        from_name: formData.name,
-        from_email: formData.email,
-        reply_to: formData.email,
       };
 
       await emailjs.send(serviceId, templateId, templateParams, publicKey);
