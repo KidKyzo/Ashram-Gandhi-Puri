@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "seed": "payload run src/scripts/seed.ts",
+    "test:bucket": "payload run src/scripts/test-bucket.ts",
     "payload": "payload",
     "generate:types": "payload generate:types",
     "generate:importmap": "payload generate:importmap"

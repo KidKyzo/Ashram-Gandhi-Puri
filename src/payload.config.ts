@@ -18,6 +18,42 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 const dbUri = process.env.DATABASE_URI || "file:./data/payload.db";
 const isPostgres = dbUri.startsWith("postgres://") || dbUri.startsWith("postgresql://");
 
+const s3Bucket =
+  process.env.S3_BUCKET ||
+  process.env.BUCKET_NAME ||
+  process.env.R2_BUCKET;
+
+const rawEndpoint =
+  process.env.S3_ENDPOINT ||
+  process.env.AWS_ENDPOINT_URL_S3 ||
+  process.env.AWS_ENDPOINT ||
+  process.env.R2_ENDPOINT;
+
+const s3Endpoint = rawEndpoint
+  ? rawEndpoint.startsWith("http://") || rawEndpoint.startsWith("https://")
+    ? rawEndpoint
+    : `https://${rawEndpoint}`
+  : undefined;
+
+const s3AccessKeyId =
+  process.env.S3_ACCESS_KEY_ID ||
+  process.env.AWS_ACCESS_KEY_ID ||
+  process.env.R2_ACCESS_KEY_ID ||
+  "";
+
+const s3SecretAccessKey =
+  process.env.S3_SECRET_ACCESS_KEY ||
+  process.env.AWS_SECRET_ACCESS_KEY ||
+  process.env.R2_SECRET_ACCESS_KEY ||
+  "";
+
+const s3Region =
+  process.env.S3_REGION ||
+  process.env.AWS_REGION ||
+  "auto";
+
+const s3PublicUrl = process.env.S3_PUBLIC_URL || process.env.R2_PUBLIC_URL;
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -39,22 +75,29 @@ export default buildConfig({
         client: { url: dbUri },
       }),
   plugins: [
-    ...(process.env.S3_BUCKET || process.env.R2_BUCKET
+    ...(s3Bucket
       ? [
           s3Storage({
             collections: {
-              media: true,
+              media: s3PublicUrl
+                ? {
+                    generateFileURL: ({ filename, prefix }) => {
+                      const cleanBase = s3PublicUrl.replace(/\/$/, "");
+                      const pathPrefix = prefix ? `${prefix.replace(/^\/|\/$/g, "")}/` : "";
+                      return `${cleanBase}/${pathPrefix}${filename}`;
+                    },
+                  }
+                : true,
             },
-            bucket: process.env.S3_BUCKET || process.env.R2_BUCKET || "",
+            bucket: s3Bucket,
             config: {
-              endpoint: process.env.S3_ENDPOINT || process.env.R2_ENDPOINT,
+              endpoint: s3Endpoint,
               credentials: {
-                accessKeyId:
-                  process.env.S3_ACCESS_KEY_ID || process.env.R2_ACCESS_KEY_ID || "",
-                secretAccessKey:
-                  process.env.S3_SECRET_ACCESS_KEY || process.env.R2_SECRET_ACCESS_KEY || "",
+                accessKeyId: s3AccessKeyId,
+                secretAccessKey: s3SecretAccessKey,
               },
-              region: process.env.S3_REGION || "auto",
+              region: s3Region,
+              forcePathStyle: true,
             },
           }),
         ]
