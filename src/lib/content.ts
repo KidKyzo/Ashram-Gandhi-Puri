@@ -9,6 +9,8 @@ import { getPayload } from "payload";
 
 import type { Media } from "@/payload-types";
 import type { GalleryItem, Milestone, SiteSettingsData } from "@/types/content";
+import { galleryData } from "@/content/gallery";
+import { milestonesData } from "@/content/milestones";
 
 export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
   siteTitle: "Ashram Gandhi Puri — Spiritual Education, Yoga & Community Service in Bali",
@@ -62,10 +64,13 @@ export async function getMilestones(): Promise<Milestone[]> {
       limit: 100,
       pagination: false,
     });
+    if (!docs || docs.length === 0) {
+      return milestonesData;
+    }
     return docs.map(({ year, title, description }) => ({ year, title, description }));
   } catch (err) {
-    console.error("Failed to load milestones from CMS:", err);
-    return [];
+    console.error("Failed to load milestones from CMS, falling back to static data:", err);
+    return milestonesData;
   }
 }
 
@@ -79,6 +84,9 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
       limit: 500,
       pagination: false,
     });
+    if (!docs || docs.length === 0) {
+      return galleryData;
+    }
     return docs.map((doc) => {
       let imageUrl = "";
       if (typeof doc.image === "object" && doc.image) {
@@ -103,8 +111,8 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
       };
     });
   } catch (err) {
-    console.error("Failed to load gallery items from CMS:", err);
-    return [];
+    console.error("Failed to load gallery items from CMS, falling back to static data:", err);
+    return galleryData;
   }
 }
 

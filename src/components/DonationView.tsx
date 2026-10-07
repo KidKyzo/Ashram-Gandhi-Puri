@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
 import { useToast } from "@/context/ToastContext";
 import type { SiteSettingsData } from "@/types/content";
+import Image from "next/image";
+import React, { useState } from "react";
 
 interface DonationViewProps {
   settings: SiteSettingsData;

@@ -1,9 +1,9 @@
-import React from "react";
+import { getGalleryItems, getMilestones, getSiteSettings } from "@/lib/content";
 import Image from "next/image";
 import Link from "next/link";
-import { getMilestones, getSiteSettings, getGalleryItems } from "@/lib/content";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function HomePage() {
   const [milestones, settings, galleryItems] = await Promise.all([

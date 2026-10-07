@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { useToast } from "@/context/ToastContext";
 import type { SiteSettingsData } from "@/types/content";
 import emailjs from "@emailjs/browser";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useState } from "react";
 
 interface FooterProps {
   settings?: SiteSettingsData;

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import Image from "next/image";
 import type { GalleryItem } from "@/types/content";
+import Image from "next/image";
+import { useMemo, useState } from "react";
 
 export default function GalleryView({ items }: { items: GalleryItem[] }) {
   const [searchTerm, setSearchTerm] = useState("");
