@@ -204,7 +204,7 @@ export interface GalleryItem {
   date: string;
   description: string;
   /**
-   * Link to the full story (opens in a new tab).
+   * Link to the full story (must start with https:// or http://).
    */
   source: string;
   updatedAt: string;

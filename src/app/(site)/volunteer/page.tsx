@@ -13,11 +13,30 @@ export default function VolunteerPage() {
     phone: "",
     nationality: "",
   });
+  const [honeypot, setHoneypot] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Anti-bot honeypot protection: bots auto-fill hidden fields
+    if (honeypot) {
+      showToast(
+        `Thank you, ${formData.name}! Your volunteer application has been submitted. We will contact you soon.`,
+        "success"
+      );
+      setFormData({ name: "", email: "", phone: "", nationality: "" });
+      setHoneypot("");
+      return;
+    }
+
     if (!formData.name || !formData.email || !formData.phone || !formData.nationality) {
       showToast("Please fill in all fields before submitting.", "error");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      showToast("Please provide a valid email address.", "error");
       return;
     }
 
@@ -138,6 +157,18 @@ export default function VolunteerPage() {
               aria-labelledby="volunteer-form-title"
               onSubmit={handleSubmit}
             >
+              <div style={{ display: "none" }} aria-hidden="true">
+                <label htmlFor="website">Leave empty</label>
+                <input
+                  type="text"
+                  id="website"
+                  name="website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
               <div className="field">
                 <label htmlFor="name">Full name</label>
                 <input

@@ -54,6 +54,16 @@ const s3Region =
 
 const s3PublicUrl = process.env.S3_PUBLIC_URL || process.env.R2_PUBLIC_URL;
 
+const payloadSecret =
+  process.env.PAYLOAD_SECRET ||
+  "temp-payload-secret-change-in-production-env";
+
+if (!process.env.PAYLOAD_SECRET && process.env.NODE_ENV === "production") {
+  console.warn(
+    "[SECURITY WARNING] PAYLOAD_SECRET environment variable is not set. A temporary fallback is being used. Please configure PAYLOAD_SECRET in your production deployment settings."
+  );
+}
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -63,7 +73,7 @@ export default buildConfig({
   collections: [Users, Media, Milestones, GalleryItems],
   globals: [SiteSettings],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || "",
+  secret: payloadSecret,
   typescript: { outputFile: path.resolve(dirname, "payload-types.ts") },
   db: isPostgres
     ? postgresAdapter({

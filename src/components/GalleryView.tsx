@@ -83,14 +83,20 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
                 <p>Try a different search term to see more of our activities.</p>
               </div>
             ) : (
-              filteredData.map((item) => (
-                <a
-                  key={item.id}
-                  href={item.source}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="gallery-card"
-                >
+              filteredData.map((item) => {
+                const isSafeUrl =
+                  typeof item.source === "string" &&
+                  (item.source.startsWith("https://") || item.source.startsWith("http://"));
+                const safeHref = isSafeUrl ? item.source : "#";
+
+                return (
+                  <a
+                    key={item.id}
+                    href={safeHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="gallery-card"
+                  >
                   <div className="gallery-card__media">
                     <img
                       src={item.image}
@@ -122,7 +128,8 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
                     </span>
                   </div>
                 </a>
-              ))
+              );
+            })
             )}
           </div>
         </div>
