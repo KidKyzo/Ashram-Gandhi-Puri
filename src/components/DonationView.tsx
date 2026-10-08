@@ -2,35 +2,39 @@
 
 import { useToast } from "@/context/ToastContext";
 import type { SiteSettingsData } from "@/types/content";
+import type { DonationRecord, DonationSummary } from "@/lib/donations";
 import Image from "next/image";
 import React, { useState } from "react";
+import DonationModal from "@/components/DonationModal";
+import DonationTransparency from "@/components/DonationTransparency";
 
 interface DonationViewProps {
   settings: SiteSettingsData;
+  initialDonations: DonationRecord[];
+  summary: DonationSummary;
 }
 
-export default function DonationView({ settings }: DonationViewProps) {
+export default function DonationView({
+  settings,
+  initialDonations,
+  summary,
+}: DonationViewProps) {
   const { showToast } = useToast();
   const [copyLabel, setCopyLabel] = useState("Copy account number");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [donorName, setDonorName] = useState("");
-  const [donorEmail, setDonorEmail] = useState("");
-  const [donorAmount, setDonorAmount] = useState("");
-  const [proofFile, setProofFile] = useState<File | null>(null);
 
   const accountNumber = settings.accountNumber || "1450018046181";
 
   const handleCopy = () => {
     const done = () => {
       setCopyLabel("Copied!");
-      showToast("Account number copied to clipboard.");
+      showToast("Nomor rekening berhasil disalin.");
       setTimeout(() => setCopyLabel("Copy account number"), 2000);
     };
 
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(accountNumber).then(done, () => {
-        showToast("Could not copy automatically. Please copy manually.");
+        showToast("Gagal menyalin otomatis. Silakan salin manual.");
       });
     } else {
       const helper = document.createElement("textarea");
@@ -44,66 +48,43 @@ export default function DonationView({ settings }: DonationViewProps) {
         document.execCommand("copy");
         done();
       } catch {
-        showToast("Could not copy automatically. Please copy manually.");
+        showToast("Gagal menyalin otomatis. Silakan salin manual.");
       }
       helper.remove();
     }
   };
 
-  const handleConfirmDonation = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!donorName || !donorEmail || !donorAmount) {
-      showToast("Please fill in all fields before confirming.");
-      return;
-    }
-    if (!proofFile) {
-      showToast("Please upload your transfer proof before confirming.");
-      return;
-    }
-
-    const numAmount = parseInt(donorAmount, 10);
-    const formatted = isNaN(numAmount) ? donorAmount : numAmount.toLocaleString("id-ID");
-
-    showToast(
-      `Thank you, ${donorName}! Your donation of IDR ${formatted} has been received. We will verify your transfer proof (${proofFile.name}) and send a confirmation to ${donorEmail}.`
-    );
-
-    setDonorName("");
-    setDonorEmail("");
-    setDonorAmount("");
-    setProofFile(null);
-    setIsModalOpen(false);
-  };
-
   return (
     <>
+      {/* Hero Section */}
       <section className="page-hero on-dark" aria-labelledby="page-title">
         <Image
           className="page-hero__bg"
           src="/assets/hero-photo-3.jpg"
-          alt=""
+          alt="Ashram Gandhi Puri Bali"
           fill
           priority
           sizes="100vw"
         />
         <div className="container">
-          <p className="eyebrow eyebrow--light">Donate</p>
-          <h1 id="page-title">Let&apos;s Share Kindness</h1>
+          <p className="eyebrow eyebrow--light">Dana Punia & Donasi</p>
+          <h1 id="page-title">Mari Berbagi Kebaikan & Kebijaksanaan</h1>
           <p>
-            Every donation, no matter how small, brings a big change for the future of those in
-            need.
+            Setiap punia dan kebaikan yang Anda berikan mengalir untuk kelangsungan pendidikan
+            spiritual, pembinaan santri yoga, dan kelestarian lingkungan Ashram Gandhi Puri.
           </p>
         </div>
       </section>
 
+      {/* Donation Details & Bank Account Info */}
       <section className="section section--tint" aria-label="Donation details">
         <div className="container donate-layout">
           <div className="donate-copy">
-            <p className="eyebrow">Where your gift goes</p>
-            <h2>Keeping the ashram&apos;s work going</h2>
+            <p className="eyebrow">Penyaluran Dana Punia</p>
+            <h2>Menjaga Amanah & Dedikasi Ashram</h2>
             <p>
-              Your help means a lot for the continuity of education programs, community
-              empowerment, and environmental conservation at Ashram Gandhi Puri.
+              Dukungan Anda memberikan napas bagi keberlangsungan pelayanan sosial dan pembinaan
+              generasi muda di Ashram Gandhi Puri Sevagram, Klungkung, Bali.
             </p>
             <ul className="check-list">
               <li>
@@ -113,8 +94,8 @@ export default function DonationView({ settings }: DonationViewProps) {
                   </svg>
                 </span>
                 <span>
-                  <strong>Education programs.</strong> Spiritual education, yoga and noble values
-                  for young people.
+                  <strong>Pendidikan Spiritual & Yoga.</strong> Beasiswa dan biaya pembinaan santri
+                  pasraman, modul yoga, dan nilai-nilai luhur Mahatma Gandhi.
                 </span>
               </li>
               <li>
@@ -124,8 +105,8 @@ export default function DonationView({ settings }: DonationViewProps) {
                   </svg>
                 </span>
                 <span>
-                  <strong>Community empowerment.</strong> Volunteer programs and training open to
-                  people from many regions.
+                  <strong>Pemberdayaan Masyarakat & Relawan.</strong> Program pelatihan pemuda, bakti
+                  sosial kemanusiaan, serta dialog persaudaraan lintas budaya.
                 </span>
               </li>
               <li>
@@ -135,8 +116,8 @@ export default function DonationView({ settings }: DonationViewProps) {
                   </svg>
                 </span>
                 <span>
-                  <strong>Environmental conservation.</strong> Tree planting and organic farming
-                  around the ashram.
+                  <strong>Konservasi Lingkungan Organik.</strong> Penanaman pohon, pemeliharaan kebun
+                  organik, dan pengelolaan sampah pasraman yang berkelanjutan.
                 </span>
               </li>
               <li>
@@ -146,32 +127,31 @@ export default function DonationView({ settings }: DonationViewProps) {
                   </svg>
                 </span>
                 <span>
-                  <strong>Transparent giving.</strong> Transfers go straight to the foundation
-                  account shown here, and we confirm each donation by email after verifying your
-                  transfer proof.
+                  <strong>Transparansi Terbuka.</strong> Seluruh transfer masuk langsung ke rekening
+                  resmi yayasan, diverifikasi, dan dicatat berkala dalam laporan publik di bawah ini.
                 </span>
               </li>
             </ul>
           </div>
 
           <div className="donation-card">
-            <h2>Be a part of Japa Malamitra</h2>
+            <h2>Bagian dari Japa Malamitra</h2>
             <p>{settings.donationSubtitle}</p>
 
             <div className="bank-info">
-              <h3>Transfer to our bank account</h3>
+              <h3>Transfer ke Rekening Resmi</h3>
               <div className="bank-detail">
                 <span className="bank-label">Bank</span>
                 <span className="bank-value">{settings.bankName}</span>
               </div>
               <div className="bank-detail">
-                <span className="bank-label">Account number</span>
+                <span className="bank-label">Nomor Rekening</span>
                 <span className="bank-value" id="account-number">
                   {accountNumber}
                 </span>
               </div>
               <div className="bank-detail">
-                <span className="bank-label">Account name</span>
+                <span className="bank-label">Nama Pemilik Rekening</span>
                 <span className="bank-value">{settings.accountName}</span>
               </div>
               <button
@@ -195,112 +175,26 @@ export default function DonationView({ settings }: DonationViewProps) {
               aria-haspopup="dialog"
               onClick={() => setIsModalOpen(true)}
             >
-              I have transferred — confirm donation
+              Saya sudah transfer — Konfirmasi Donasi
             </button>
-            <p className="donation-note">You will be asked to upload your transfer receipt.</p>
+            <p className="donation-note">
+              Anda akan diminta mengunggah struk atau foto bukti transfer bank.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Donation Modal */}
-      {isModalOpen && (
-        <div
-          id="donation-modal"
-          className="modal-overlay active"
-          aria-hidden="false"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setIsModalOpen(false);
-          }}
-        >
-          <div
-            className="modal-box"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="donation-modal-title"
-          >
-            <button
-              className="modal-close"
-              id="modal-close-btn"
-              type="button"
-              aria-label="Close donation form"
-              onClick={() => setIsModalOpen(false)}
-            >
-              <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18 6 6 18" />
-                <path d="m6 6 12 12" />
-              </svg>
-            </button>
+      {/* Laporan Transparansi Donasi Publik & Unduh CSV */}
+      <DonationTransparency
+        initialDonations={initialDonations}
+        summary={summary}
+      />
 
-            <h2 id="donation-modal-title">Donation form</h2>
-            <p>Please fill in the details below to confirm your donation.</p>
-
-            <form className="form" id="donation-form" onSubmit={handleConfirmDonation}>
-              <div className="field">
-                <label htmlFor="donor-name">Full name</label>
-                <input
-                  className="input"
-                  type="text"
-                  id="donor-name"
-                  autoComplete="name"
-                  placeholder="Your full name"
-                  required
-                  value={donorName}
-                  onChange={(e) => setDonorName(e.target.value)}
-                />
-              </div>
-              <div className="field">
-                <label htmlFor="donor-email">Email address</label>
-                <input
-                  className="input"
-                  type="email"
-                  id="donor-email"
-                  autoComplete="email"
-                  placeholder="you@example.com"
-                  required
-                  value={donorEmail}
-                  onChange={(e) => setDonorEmail(e.target.value)}
-                />
-              </div>
-              <div className="field">
-                <label htmlFor="donor-amount">Donation amount (IDR)</label>
-                <input
-                  className="input"
-                  type="number"
-                  id="donor-amount"
-                  inputMode="numeric"
-                  placeholder="e.g. 50000"
-                  min="1"
-                  required
-                  value={donorAmount}
-                  onChange={(e) => setDonorAmount(e.target.value)}
-                />
-              </div>
-              <div className="field">
-                <label htmlFor="donor-proof">Upload transfer proof</label>
-                <input
-                  className="input"
-                  type="file"
-                  id="donor-proof"
-                  accept="image/*"
-                  required
-                  aria-describedby="proof-hint"
-                  onChange={(e) => {
-                    if (e.target.files && e.target.files[0]) {
-                      setProofFile(e.target.files[0]);
-                    }
-                  }}
-                />
-                <span className="field-hint" id="proof-hint">
-                  Please upload a photo or screenshot of your bank transfer receipt.
-                </span>
-              </div>
-              <button type="submit" className="btn btn-primary btn-block">
-                Confirm donation
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+      {/* Modal Konfirmasi Donasi */}
+      <DonationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 }
