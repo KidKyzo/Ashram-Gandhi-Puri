@@ -59,7 +59,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Please check the form fields and try again." }, { status: 400 });
   }
 
-  if (!(await sendStaffInquiry(inquiry))) {
+  const origin = request.headers.get("origin") || request.nextUrl.origin;
+  if (!(await sendStaffInquiry(inquiry, origin))) {
     return NextResponse.json(
       { error: "Email could not be sent. Please try again later." },
       { status: 502 }

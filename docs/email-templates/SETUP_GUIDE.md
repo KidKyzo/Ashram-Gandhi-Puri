@@ -13,11 +13,12 @@ Set these values in local `.env.local` and the deployment environment. Keep real
 | --- | --- |
 | `EMAILJS_SERVICE_ID` | EmailJS email service ID |
 | `EMAILJS_PUBLIC_KEY` | EmailJS public key used for REST requests |
+| `EMAILJS_PRIVATE_KEY` | *(Optional / Recommended)* EmailJS private key (Account > Security) for strict API access |
 | `EMAILJS_INQUIRY_TEMPLATE_ID` | Shared contact + volunteer template ID |
 | `EMAILJS_DONATION_TEMPLATE_ID` | Donation template ID |
 | `STAFF_EMAIL` | Inbox for contact, volunteer, and donation notifications |
 
-The application calls EmailJS from server routes, validates form submissions and donation receipts on the server, and sends the transfer proof only to the staff inbox. The public key is designed for use in client applications by EmailJS; it is kept in the server environment here so the forms use the same validated server-side path.
+The application calls EmailJS from server routes, validates form submissions and donation receipts on the server, and sends the transfer proof only to the staff inbox. EmailJS requires non-browser/server requests to either provide an `Origin` header matching the authorized domain or supply the `EMAILJS_PRIVATE_KEY` (`accessToken`). The server routes automatically send the request origin and attach the private key if defined.
 
 ## Inquiry template
 
