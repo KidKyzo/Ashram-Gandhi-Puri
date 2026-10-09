@@ -4,14 +4,18 @@ import { sendDonationEmails, sendStaffInquiry } from "../src/lib/email.ts";
 
 const originalFetch = globalThis.fetch;
 const originalEnv = {
-  RESEND_API_KEY: process.env.RESEND_API_KEY,
-  RESEND_FROM_EMAIL: process.env.RESEND_FROM_EMAIL,
+  EMAILJS_SERVICE_ID: process.env.EMAILJS_SERVICE_ID,
+  EMAILJS_PUBLIC_KEY: process.env.EMAILJS_PUBLIC_KEY,
+  EMAILJS_INQUIRY_TEMPLATE_ID: process.env.EMAILJS_INQUIRY_TEMPLATE_ID,
+  EMAILJS_DONATION_TEMPLATE_ID: process.env.EMAILJS_DONATION_TEMPLATE_ID,
   STAFF_EMAIL: process.env.STAFF_EMAIL,
 };
 
 beforeEach(() => {
-  process.env.RESEND_API_KEY = "test-key";
-  process.env.RESEND_FROM_EMAIL = "hello@example.org";
+  process.env.EMAILJS_SERVICE_ID = "service-test";
+  process.env.EMAILJS_PUBLIC_KEY = "public-test";
+  process.env.EMAILJS_INQUIRY_TEMPLATE_ID = "template-inquiry";
+  process.env.EMAILJS_DONATION_TEMPLATE_ID = "template-donation";
   process.env.STAFF_EMAIL = "staff@example.org";
 });
 
@@ -23,10 +27,10 @@ afterEach(() => {
   }
 });
 
-test("donation sends proof to staff before donor acknowledgment", async () => {
+test("donation uses one template for staff proof and donor acknowledgment", async () => {
   const requests = [];
   globalThis.fetch = async (_url, options) => {
-    requests.push({ headers: options.headers, body: JSON.parse(options.body) });
+    requests.push({ url: _url, body: JSON.parse(options.body) });
     return { ok: true };
   };
 
@@ -44,11 +48,14 @@ test("donation sends proof to staff before donor acknowledgment", async () => {
   });
 
   assert.deepEqual(result, { staffSent: true, donorSent: true });
-  assert.deepEqual(requests.map(({ body }) => body.to), [["staff@example.org"], ["donor@example.org"]]);
-  assert.equal(requests[0].body.attachments[0].content, Buffer.from("proof").toString("base64"));
-  assert.match(requests[0].body.html, /&lt;Donor&gt;/);
-  assert.match(requests[1].body.html, /menunggu pemeriksaan mutasi rekening/);
-  assert.notEqual(requests[0].headers["Idempotency-Key"], requests[1].headers["Idempotency-Key"]);
+  assert.deepEqual(requests.map(({ body }) => body.template_id), ["template-donation", "template-donation"]);
+  assert.deepEqual(requests.map(({ body }) => body.template_params.to_email), ["staff@example.org", "donor@example.org"]);
+  assert.match(requests[0].body.template_params.proof_attachment, /^data:image\/png;base64,/);
+  assert.equal(requests[0].body.template_params.proof_filename, "proof.png");
+  assert.equal(requests[1].body.template_params.proof_attachment, undefined);
+  assert.match(requests[0].body.template_params.donor_name, /&lt;Donor&gt;/);
+  assert.match(requests[1].body.template_params.recipient_notice, /menunggu verifikasi bendahara/);
+  assert.ok(requests.every(({ url }) => url === "https://api.emailjs.com/api/v1.0/email/send"));
 });
 
 test("donor email is skipped when staff delivery fails", async () => {
@@ -97,7 +104,8 @@ test("contact and volunteer inquiries use the same sender and escape user text",
   }), true);
 
   assert.equal(bodies.length, 2);
-  assert.equal(bodies[0].reply_to, "alice@example.org");
-  assert.match(bodies[0].html, /&lt;script&gt;/);
-  assert.match(bodies[1].html, /\+62 123/);
+  assert.deepEqual(bodies.map((body) => body.template_id), ["template-inquiry", "template-inquiry"]);
+  assert.equal(bodies[0].template_params.reply_to, "alice@example.org");
+  assert.match(bodies[0].template_params.message, /&lt;script&gt;/);
+  assert.match(bodies[1].template_params.phone, /\+62 123/);
 });

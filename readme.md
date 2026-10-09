@@ -64,4 +64,4 @@ docs/             Design system (MASTER.md)
 
 ## Email setup
 
-All public forms send email through Resend on the server. Set `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, and `STAFF_EMAIL` in the deployment environment; the sender address needs a verified Resend domain. See [the email setup guide](docs/email-templates/SETUP_GUIDE.md) for the test flow. The donation email acknowledges receipt of a transfer proof while the treasurer checks the bank transaction.
+All public forms send through EmailJS from server routes using two templates: one dynamic template shared by contact and volunteer inquiries, and one donation template. Set `EMAILJS_SERVICE_ID`, `EMAILJS_PUBLIC_KEY`, `EMAILJS_INQUIRY_TEMPLATE_ID`, `EMAILJS_DONATION_TEMPLATE_ID`, and `STAFF_EMAIL` in the deployment environment. See [the email setup guide](docs/email-templates/SETUP_GUIDE.md) for the required template variables and test flow. Donation confirmation emails acknowledge receipt of a transfer proof while the treasurer checks the bank transaction.
