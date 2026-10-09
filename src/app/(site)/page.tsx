@@ -14,25 +14,17 @@ export default async function HomePage() {
   return (
     <>
       {/* ============ HERO ============ */}
-      <section className="hero on-dark" aria-labelledby="hero-title">
-        <Image
-          className="hero__bg"
-          src="/assets/hero-photo-5.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-        />
-        <div className="container">
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="container hero__layout">
           <div className="hero__content">
-            <p className="eyebrow eyebrow--light">{settings.heroEyebrow}</p>
+            <p className="eyebrow">{settings.heroEyebrow}</p>
             <h1 id="hero-title">{settings.heroTitle}</h1>
             <p className="hero__lead">{settings.heroSubtitle}</p>
             <div className="hero__actions">
               <Link className="btn btn-primary" href="/donation">
                 Donate Now
               </Link>
-              <Link className="btn btn-secondary btn-secondary--light" href="/volunteer">
+              <Link className="btn btn-secondary" href="/volunteer">
                 Become a Volunteer
               </Link>
             </div>
@@ -67,6 +59,17 @@ export default async function HomePage() {
               </ul>
             )}
           </div>
+          <figure className="hero__media">
+            <Image
+              src="/assets/hero-photo-5.jpg"
+              alt="A golden statue in meditation among the trees at Ashram Gandhi Puri"
+              width={1080}
+              height={1200}
+              priority
+              sizes="(max-width: 899px) 100vw, 45vw"
+            />
+            <figcaption>A life of learning, service and community.</figcaption>
+          </figure>
         </div>
       </section>
 
@@ -155,13 +158,13 @@ export default async function HomePage() {
 
       {/* ============ IMPACT ============ */}
       <section
-        className="section section--dark impact on-dark"
+        className="section section--tint impact"
         id="impact"
         aria-labelledby="impact-title"
       >
         <div className="container">
           <div className="section-head">
-            <p className="eyebrow eyebrow--light">Our Impact</p>
+            <p className="eyebrow">Our Impact</p>
             <h2 id="impact-title">Nearly three decades of service, in numbers</h2>
             <p>Every figure below comes from activities we have published on this site.</p>
           </div>
@@ -313,15 +316,7 @@ export default async function HomePage() {
       </section>
 
       {/* ============ JOIN CTA ============ */}
-      <section className="cta-band on-dark" aria-labelledby="cta-title">
-        <Image
-          className="cta-band__bg"
-          src="/assets/hero-photo-3.jpg"
-          alt=""
-          fill
-          sizes="100vw"
-          loading="lazy"
-        />
+      <section className="cta-band" aria-labelledby="cta-title">
         <div className="container">
           <h2 id="cta-title">Be part of the story</h2>
           <p>
@@ -332,7 +327,7 @@ export default async function HomePage() {
             <Link className="btn btn-primary" href="/donation">
               Donate Now
             </Link>
-            <Link className="btn btn-secondary btn-secondary--light" href="/volunteer">
+            <Link className="btn btn-secondary" href="/volunteer">
               Become a Volunteer
             </Link>
           </div>

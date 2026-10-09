@@ -3,28 +3,13 @@ import Navbar from "@/components/Navbar";
 import { ToastProvider } from "@/context/ToastContext";
 import { getSiteSettings } from "@/lib/content";
 import type { Metadata } from "next";
-import { Fredoka, Nunito } from "next/font/google";
 import "./globals.css";
-
-const fredoka = Fredoka({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-fredoka",
-  display: "swap",
-});
-
-const nunito = Nunito({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-nunito",
-  display: "swap",
-});
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const viewport = {
-  themeColor: "#2E1065",
+  themeColor: "#FFFFFF",
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -53,7 +38,7 @@ export default async function RootLayout({
   const settings = await getSiteSettings();
 
   return (
-    <html lang="en" className={`${fredoka.variable} ${nunito.variable}`}>
+    <html lang="en">
       <body>
         <ToastProvider>
           <a className="skip-link" href="#main">

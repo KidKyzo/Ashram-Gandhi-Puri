@@ -94,7 +94,7 @@ export default function Footer({ settings }: FooterProps) {
   };
 
   return (
-    <footer className="site-footer on-dark" id="contact">
+    <footer className="site-footer" id="contact">
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">

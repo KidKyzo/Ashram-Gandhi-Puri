@@ -90,17 +90,9 @@ export default function VolunteerPage() {
 
   return (
     <>
-      <section className="page-hero on-dark" aria-labelledby="page-title">
-        <Image
-          className="page-hero__bg"
-          src="/assets/hero-photo-3.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-        />
+      <section className="page-hero" aria-labelledby="page-title">
         <div className="container">
-          <p className="eyebrow eyebrow--light">Vishramapuri Volunteer Program</p>
+          <p className="eyebrow">Vishramapuri Volunteer Program</p>
           <h1 id="page-title">Become a Volunteer</h1>
           <p>
             Join our Vishramapuri Volunteer Program to empower the community and make a positive

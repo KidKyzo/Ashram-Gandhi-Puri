@@ -41,7 +41,7 @@ src/
   collections/    CMS models: Users, Media, Milestones, GalleryItems
   components/     Shared UI (Navbar, Footer, DonationModal, GalleryView)
   context/        React context providers (Toast)
-  content/        Original static content (used only by the seed script)
+  content/        Static seed content and CMS fallback data
   lib/content.ts  The ONLY way pages read content (queries the CMS)
   scripts/        seed.ts
   styles/         Global CSS
@@ -49,7 +49,6 @@ src/
 public/assets/    Static site images
 data/, media/     Local SQLite DB and CMS uploads (git-ignored)
 docs/             Design system (MASTER.md)
-archive/          Legacy vanilla HTML/CSS/JS version (reference only)
 ```
 
 ## CMS Notes

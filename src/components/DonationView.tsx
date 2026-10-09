@@ -3,7 +3,6 @@
 import { useToast } from "@/context/ToastContext";
 import type { SiteSettingsData } from "@/types/content";
 import type { DonationRecord, DonationSummary } from "@/lib/donations";
-import Image from "next/image";
 import React, { useState } from "react";
 import DonationModal from "@/components/DonationModal";
 import DonationTransparency from "@/components/DonationTransparency";
@@ -57,17 +56,9 @@ export default function DonationView({
   return (
     <>
       {/* Hero Section */}
-      <section className="page-hero on-dark" aria-labelledby="page-title">
-        <Image
-          className="page-hero__bg"
-          src="/assets/hero-photo-3.jpg"
-          alt="Ashram Gandhi Puri Bali"
-          fill
-          priority
-          sizes="100vw"
-        />
+      <section className="page-hero" aria-labelledby="page-title">
         <div className="container">
-          <p className="eyebrow eyebrow--light">Dana Punia & Donasi</p>
+          <p className="eyebrow">Dana Punia & Donasi</p>
           <h1 id="page-title">Mari Berbagi Kebaikan & Kebijaksanaan</h1>
           <p>
             Setiap punia dan kebaikan yang Anda berikan mengalir untuk kelangsungan pendidikan

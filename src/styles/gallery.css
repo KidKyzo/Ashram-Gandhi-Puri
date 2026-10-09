@@ -17,7 +17,7 @@
   flex-direction: column;
   overflow: hidden;
   background: var(--color-surface);
-  border: 1px solid var(--color-tint);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
   color: var(--color-text);
@@ -28,7 +28,7 @@
 
 .gallery-card:hover {
   box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
+  transform: none;
   color: var(--color-text);
 }
 
@@ -46,7 +46,7 @@
 }
 
 .gallery-card:hover .gallery-card__media img {
-  transform: scale(1.04);
+  transform: none;
 }
 
 .gallery-card__body {
@@ -64,7 +64,7 @@
   align-self: flex-start;
   padding: 2px var(--space-sm) 2px 0;
   font-size: 0.875rem;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--color-primary-dark);
 }
@@ -96,8 +96,8 @@
   gap: var(--space-sm);
   margin-top: auto;
   padding-top: var(--space-sm);
-  font-weight: 800;
-  color: var(--color-primary);
+  font-weight: 600;
+  color: var(--color-deep);
 }
 
 .gallery-card__more .icon {
@@ -125,7 +125,7 @@
   margin-bottom: var(--space-md);
   padding: var(--space-lg);
   background: var(--color-surface);
-  border: 1px solid var(--color-tint);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
 }
@@ -162,7 +162,7 @@ select.input {
 .gallery-status {
   margin-bottom: var(--space-xl);
   font-size: 0.9375rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--color-text-muted);
 }
 
