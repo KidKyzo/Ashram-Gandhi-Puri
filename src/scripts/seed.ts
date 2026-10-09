@@ -5,7 +5,8 @@ import path from "path";
 
 import { galleryData } from "../content/gallery";
 import { milestonesData } from "../content/milestones";
-import { DEFAULT_SITE_SETTINGS } from "../lib/content";
+import { DEFAULT_SITE_SETTINGS, getDefaultSettings } from "../lib/content";
+import { indonesianMilestones, indonesianGallery } from "../content/indonesian";
 
 /**
  * One-time import of the original static content into the CMS.
@@ -20,7 +21,7 @@ async function seed() {
   if (email && password) {
     const existing = await payload.find({ collection: "users", limit: 1 });
     if (existing.totalDocs === 0) {
-      await payload.create({ collection: "users", data: { email, password } });
+      await payload.create({ collection: "users", data: { email, password, role: "admin" } });
       console.log(`Created admin user ${email}`);
     }
   }
@@ -28,7 +29,9 @@ async function seed() {
   const ms = await payload.count({ collection: "milestones" });
   if (ms.totalDocs === 0) {
     for (const m of milestonesData) {
-      await payload.create({ collection: "milestones", data: m });
+      const doc = await payload.create({ collection: "milestones", locale: "en", data: { ...m, _status: "published" } });
+      const translation = indonesianMilestones.find((item) => item.year === m.year);
+      if (translation) await payload.update({ collection: "milestones", id: doc.id, locale: "id", data: translation });
     }
     console.log(`Seeded ${milestonesData.length} milestones`);
   }
@@ -39,12 +42,17 @@ async function seed() {
       const file = path.resolve(process.cwd(), "public", g.image.replace(/^\//, ""));
       const media = await payload.create({
         collection: "media",
+        locale: "en",
         data: { alt: g.title },
         filePath: file,
       });
-      await payload.create({
+      const translation = indonesianGallery[g.id];
+      if (translation) await payload.update({ collection: "media", id: media.id, locale: "id", data: { alt: translation.title } });
+      const doc = await payload.create({
         collection: "gallery-items",
+        locale: "en",
         data: {
+          _status: "published",
           title: g.title,
           image: media.id,
           date: g.date,
@@ -52,17 +60,20 @@ async function seed() {
           source: g.source,
         },
       });
+      if (translation) await payload.update({ collection: "gallery-items", id: doc.id, locale: "id", data: translation });
     }
     console.log(`Seeded ${galleryData.length} gallery items`);
   }
 
   try {
     const existingSettings = await payload.findGlobal({ slug: "site-settings" });
-    if (!existingSettings || !existingSettings.siteTitle) {
+    if (!existingSettings?.id) {
       await payload.updateGlobal({
         slug: "site-settings",
-        data: DEFAULT_SITE_SETTINGS,
+        locale: "en",
+        data: { ...DEFAULT_SITE_SETTINGS, _status: "published" },
       });
+      await payload.updateGlobal({ slug: "site-settings", locale: "id", data: { ...getDefaultSettings("id"), _status: "published" } });
       console.log("Seeded site-settings global");
     }
   } catch (err) {

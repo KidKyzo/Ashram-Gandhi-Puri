@@ -25,6 +25,13 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return ["/", "/gallery", "/donation", "/volunteer"].map((source) => ({
+      source,
+      destination: source === "/" ? "/en" : `/en${source}`,
+      permanent: true,
+    }));
+  },
   compress: true,
   images: {
     formats: ["image/avif", "image/webp"],

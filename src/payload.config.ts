@@ -6,6 +6,7 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
 import { buildConfig } from "payload";
 import sharp from "sharp";
+import { resolvePayloadSecret } from "./lib/cms-secret";
 
 import { GalleryItems } from "./collections/GalleryItems";
 import { Media } from "./collections/Media";
@@ -54,15 +55,7 @@ const s3Region =
 
 const s3PublicUrl = process.env.S3_PUBLIC_URL || process.env.R2_PUBLIC_URL;
 
-const payloadSecret =
-  process.env.PAYLOAD_SECRET ||
-  "temp-payload-secret-change-in-production-env";
-
-if (!process.env.PAYLOAD_SECRET && process.env.NODE_ENV === "production") {
-  console.warn(
-    "[SECURITY WARNING] PAYLOAD_SECRET environment variable is not set. A temporary fallback is being used. Please configure PAYLOAD_SECRET in your production deployment settings."
-  );
-}
+const payloadSecret = resolvePayloadSecret(process.env.PAYLOAD_SECRET, process.env.NODE_ENV === "production");
 
 export default buildConfig({
   admin: {
@@ -72,16 +65,25 @@ export default buildConfig({
   },
   collections: [Users, Media, Milestones, GalleryItems],
   globals: [SiteSettings],
+  localization: {
+    locales: [{ label: "English", code: "en" }, { label: "Bahasa Indonesia", code: "id" }],
+    defaultLocale: "en",
+    fallback: true,
+  },
   editor: lexicalEditor(),
   secret: payloadSecret,
   typescript: { outputFile: path.resolve(dirname, "payload-types.ts") },
   db: isPostgres
     ? postgresAdapter({
+        push: false,
+        migrationDir: path.resolve(dirname, "migrations/postgres"),
         pool: {
           connectionString: dbUri,
         },
       })
     : sqliteAdapter({
+        push: false,
+        migrationDir: path.resolve(dirname, "migrations/sqlite"),
         client: { url: dbUri },
       }),
   plugins: [

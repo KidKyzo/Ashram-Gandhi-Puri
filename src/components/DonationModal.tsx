@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/context/LocaleContext";
+
 import React, { useState, useEffect, useRef } from "react";
 import { X, Upload, CheckCircle2, Loader2 } from "lucide-react";
 import { useToast } from "@/context/ToastContext";
@@ -10,6 +12,7 @@ interface DonationModalProps {
 }
 
 export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
+  const { locale, t } = useTranslation();
   const { showToast } = useToast();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -64,17 +67,17 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !amount) {
-      showToast("Mohon lengkapi semua data wajib sebelum konfirmasi.", "error");
+      showToast(t("Mohon lengkapi semua data wajib sebelum konfirmasi."), "error");
       return;
     }
     if (!proofFile) {
-      showToast("Mohon lampirkan foto/screenshot bukti transfer bank.", "error");
+      showToast(t("Mohon lampirkan foto/screenshot bukti transfer bank."), "error");
       return;
     }
 
     const numAmount = parseInt(amount, 10);
     if (isNaN(numAmount) || numAmount < 10000) {
-      showToast("Nominal donasi minimal Rp 10.000.", "error");
+      showToast(t("Nominal donasi minimal Rp 10.000."), "error");
       return;
     }
 
@@ -97,19 +100,23 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || "Gagal memproses konfirmasi donasi.");
+        throw new Error(result.error || t("Gagal memproses konfirmasi donasi."));
       }
 
       const formattedAmount = numAmount.toLocaleString("id-ID");
 
       if (!result.donorEmailSent) {
         showToast(
-          `Konfirmasi donasi IDR ${formattedAmount} telah dikirim ke bendahara (Ref: ${result.transactionId}), tetapi email ke ${email} belum terkirim. Mohon hubungi yayasan jika memerlukan bantuan.`,
+          locale === "id"
+            ? `Konfirmasi donasi IDR ${formattedAmount} telah dikirim ke bendahara (Ref: ${result.transactionId}), tetapi email ke ${email} belum terkirim. Mohon hubungi yayasan jika memerlukan bantuan.`
+            : `Your donation confirmation for IDR ${formattedAmount} was sent to the treasurer (Ref: ${result.transactionId}), but the email to ${email} could not be delivered. Please contact the foundation if you need help.`,
           "info"
         );
       } else {
         showToast(
-          `Matur Suksma, ${name}! Konfirmasi donasi IDR ${formattedAmount} diterima. Email penerimaan telah dikirim ke ${email}; transfer masih menunggu verifikasi bendahara.`,
+          locale === "id"
+            ? `Matur Suksma, ${name}! Konfirmasi donasi IDR ${formattedAmount} diterima. Email penerimaan telah dikirim ke ${email}; transfer masih menunggu verifikasi bendahara.`
+            : `Matur Suksma, ${name}! Your donation confirmation for IDR ${formattedAmount} was received. An acknowledgment was sent to ${email}; the transfer is awaiting verification by the treasurer.`,
           "success"
         );
       }
@@ -123,8 +130,8 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
       setProofFile(null);
       onClose();
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Terjadi kesalahan koneksi";
-      showToast(msg, "error");
+      const msg = err instanceof Error ? err.message : t("Terjadi kesalahan koneksi");
+      showToast(t(msg), "error");
     } finally {
       setIsSubmitting(false);
     }
@@ -147,17 +154,13 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         {/* Header */}
         <div className="bg-white border-b border-[var(--color-border)] text-[var(--color-text)] px-6 py-5 flex items-center justify-between sticky top-0 z-10">
           <div>
-            <h2 id="donation-modal-title" className="donation-modal__title font-heading font-semibold text-xl">
-              Konfirmasi Donasi / Dana Punia
-            </h2>
-            <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
-              Yayasan Ashram Gandhi Puri Sevagram
-            </p>
+            <h2 id="donation-modal-title" className="donation-modal__title font-heading font-semibold text-xl">{t(" Konfirmasi Donasi / Dana Punia ")}</h2>
+            <p className="text-xs text-[var(--color-text-muted)] mt-0.5">{t(" Yayasan Ashram Gandhi Puri Sevagram ")}</p>
           </div>
           <button
             onClick={onClose}
             className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-tint)] transition-colors cursor-pointer"
-            aria-label="Tutup form donasi"
+            aria-label={t("Tutup form donasi")}
           >
             <X className="w-5 h-5" />
           </button>
@@ -166,14 +169,13 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4 text-gray-800">
           <div>
-            <label htmlFor="donor-name" className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-              Nama Lengkap / Inisial Donatur <span className="text-red-500">*</span>
+            <label htmlFor="donor-name" className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">{t(" Nama Lengkap / Inisial Donatur ")}<span className="text-red-500">*</span>
             </label>
             <input
               id="donor-name"
               type="text"
               required
-              placeholder="Contoh: Ketut Suastika / Hamba Tuhan"
+              placeholder={t("Contoh: Ketut Suastika / Hamba Tuhan")}
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-2.5 rounded-md border border-gray-200 focus:border-[var(--color-deep)] focus:ring-2 focus:ring-[var(--color-deep)] text-sm transition-all outline-none"
@@ -181,27 +183,23 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           </div>
 
           <div>
-            <label htmlFor="donor-email" className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-              Alamat Email (Untuk Tanda Terima) <span className="text-red-500">*</span>
+            <label htmlFor="donor-email" className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">{t(" Alamat Email (Untuk Tanda Terima) ")}<span className="text-red-500">*</span>
             </label>
             <input
               id="donor-email"
               type="email"
               required
-              placeholder="emailanda@example.com"
+              placeholder={t("emailanda@example.com")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2.5 rounded-md border border-gray-200 focus:border-[var(--color-deep)] focus:ring-2 focus:ring-[var(--color-deep)] text-sm transition-all outline-none"
             />
-            <p className="text-[11px] text-[var(--color-text-muted)] mt-1">
-              Data donatur dan bukti transfer digunakan untuk memeriksa konfirmasi donasi.
-            </p>
+            <p className="text-[11px] text-[var(--color-text-muted)] mt-1">{t(" Data donatur dan bukti transfer digunakan untuk memeriksa konfirmasi donasi. ")}</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label htmlFor="donor-amount" className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                Nominal Transfer (IDR) <span className="text-red-500">*</span>
+              <label htmlFor="donor-amount" className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">{t(" Nominal Transfer (IDR) ")}<span className="text-red-500">*</span>
               </label>
               <input
                 id="donor-amount"
@@ -209,7 +207,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 min="10000"
                 step="5000"
                 required
-                placeholder="Contoh: 100000"
+                placeholder={t("Contoh: 100000")}
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-md border border-gray-200 focus:border-[var(--color-deep)] focus:ring-2 focus:ring-[var(--color-deep)] text-sm transition-all outline-none"
@@ -217,32 +215,28 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
             </div>
 
             <div>
-              <label htmlFor="donor-category" className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                Peruntukan Program
-              </label>
+              <label htmlFor="donor-category" className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">{t(" Peruntukan Program ")}</label>
               <select
                 id="donor-category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-md border border-gray-200 focus:border-[var(--color-deep)] focus:ring-2 focus:ring-[var(--color-deep)] text-sm transition-all outline-none bg-white cursor-pointer"
               >
-                <option value="Pendidikan & Yoga">Pendidikan & Yoga</option>
-                <option value="Operasional Ashram">Operasional Ashram</option>
-                <option value="Konservasi Lingkungan">Konservasi Lingkungan</option>
-                <option value="Dana Punia Umum">Dana Punia Umum</option>
-                <option value="Bakti Sosial & Kemanusiaan">Bakti Sosial & Kemanusiaan</option>
+                <option value="Pendidikan & Yoga">{t("Pendidikan & Yoga")}</option>
+                <option value="Operasional Ashram">{t("Operasional Ashram")}</option>
+                <option value="Konservasi Lingkungan">{t("Konservasi Lingkungan")}</option>
+                <option value="Dana Punia Umum">{t("Dana Punia Umum")}</option>
+                <option value="Bakti Sosial & Kemanusiaan">{t("Bakti Sosial & Kemanusiaan")}</option>
               </select>
             </div>
           </div>
 
           <div>
-            <label htmlFor="donor-notes" className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-              Doa / Pesan / Catatan (Opsional)
-            </label>
+            <label htmlFor="donor-notes" className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">{t(" Doa / Pesan / Catatan (Opsional) ")}</label>
             <input
               id="donor-notes"
               type="text"
-              placeholder="Contoh: Untuk beasiswa santri yoga pasraman"
+              placeholder={t("Contoh: Untuk beasiswa santri yoga pasraman")}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               className="w-full px-4 py-2.5 rounded-md border border-gray-200 focus:border-[var(--color-deep)] focus:ring-2 focus:ring-[var(--color-deep)] text-sm transition-all outline-none"
@@ -250,8 +244,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-              Upload Bukti Transfer Bank <span className="text-red-500">*</span>
+            <label htmlFor="donor-proof" className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">{t(" Upload Bukti Transfer Bank ")}<span className="text-red-500">*</span>
             </label>
             <div className="relative border-2 border-dashed border-[var(--color-border)] rounded-md p-4 hover:border-[var(--color-border)] bg-[var(--color-tint)] transition-colors text-center cursor-pointer">
               <input
@@ -275,12 +268,8 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   </span>
                 ) : (
                   <>
-                    <span className="text-xs font-medium text-[var(--color-text)]">
-                      Klik untuk mengunggah tangkapan layar / struk transfer
-                    </span>
-                    <span className="text-[11px] text-gray-500">
-                      Format didukung: JPG, PNG, WEBP, PDF (Maks. 5 MB)
-                    </span>
+                    <span className="text-xs font-medium text-[var(--color-text)]">{t(" Klik untuk mengunggah tangkapan layar / struk transfer ")}</span>
+                    <span className="text-[11px] text-gray-500">{t(" Format didukung: JPG, PNG, WEBP, PDF (Maks. 5 MB) ")}</span>
                   </>
                 )}
               </div>
@@ -296,15 +285,13 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
               {isSubmitting ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Memproses & Mengirimkan Email...</span>
+                  <span>{t("Memproses & Mengirimkan Email...")}</span>
                 </>
               ) : (
-                <span>Konfirmasi Donasi Saya</span>
+                <span>{t("Konfirmasi Donasi Saya")}</span>
               )}
             </button>
-            <p className="text-[11px] text-center text-gray-500 mt-2">
-              Bendahara akan memeriksa mutasi bank sebelum mengonfirmasi donasi Anda.
-            </p>
+            <p className="text-[11px] text-center text-gray-500 mt-2">{t(" Bendahara akan memeriksa mutasi bank sebelum mengonfirmasi donasi Anda. ")}</p>
           </div>
         </form>
       </div>

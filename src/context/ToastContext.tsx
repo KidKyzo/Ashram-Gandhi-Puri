@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useCallback } from "react";
 import { CheckCircle2, AlertCircle, X } from "lucide-react";
+import { useTranslation } from "./LocaleContext";
 
 interface Toast {
   id: string;
@@ -16,6 +17,7 @@ interface ToastContextType {
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
+  const { locale } = useTranslation();
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   const showToast = useCallback(
@@ -60,7 +62,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             <button
               onClick={() => removeToast(toast.id)}
               className="text-purple-300 hover:text-white p-1 rounded-lg transition-colors"
-              aria-label="Close notification"
+              aria-label={locale === "id" ? "Tutup pemberitahuan" : "Close notification"}
             >
               <X className="w-4 h-4" />
             </button>

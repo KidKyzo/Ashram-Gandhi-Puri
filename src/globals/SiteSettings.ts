@@ -1,10 +1,14 @@
 import type { GlobalConfig } from "payload";
+import { adminField, publishedOrStaff, staffOnly } from "../lib/cms-access";
 
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
-  label: "Site Settings",
+  label: "Website settings",
+  admin: { group: "Website content", description: "Select English or Bahasa Indonesia before editing. Save a draft, then publish when ready. Bank details are shared between languages and editable by admins only." },
+  versions: { drafts: { autosave: { interval: 1000 } }, max: 30 },
   access: {
-    read: () => true,
+    read: publishedOrStaff,
+    update: staffOnly,
   },
   fields: [
     {
@@ -15,6 +19,7 @@ export const SiteSettings: GlobalConfig = {
           fields: [
             {
               name: "siteTitle",
+              localized: true,
               label: "Site Title",
               type: "text",
               defaultValue:
@@ -22,6 +27,7 @@ export const SiteSettings: GlobalConfig = {
             },
             {
               name: "siteDescription",
+              localized: true,
               label: "Meta Description",
               type: "textarea",
               defaultValue:
@@ -42,6 +48,11 @@ export const SiteSettings: GlobalConfig = {
             },
             {
               name: "googleMapsUrl",
+              validate: (value: string | null | undefined) => {
+                if (!value) return true;
+                try { return ["https:", "http:"].includes(new URL(value).protocol) || "Use an http:// or https:// URL."; }
+                catch { return "Enter a valid URL."; }
+              },
               label: "Google Maps URL",
               type: "text",
               defaultValue:
@@ -49,12 +60,22 @@ export const SiteSettings: GlobalConfig = {
             },
             {
               name: "facebookUrl",
+              validate: (value: string | null | undefined) => {
+                if (!value) return true;
+                try { return ["https:", "http:"].includes(new URL(value).protocol) || "Use an http:// or https:// URL."; }
+                catch { return "Enter a valid URL."; }
+              },
               label: "Facebook URL",
               type: "text",
               defaultValue: "https://www.facebook.com/profile.php?id=100078784072776",
             },
             {
               name: "instagramUrl",
+              validate: (value: string | null | undefined) => {
+                if (!value) return true;
+                try { return ["https:", "http:"].includes(new URL(value).protocol) || "Use an http:// or https:// URL."; }
+                catch { return "Enter a valid URL."; }
+              },
               label: "Instagram URL",
               type: "text",
               defaultValue: "https://www.instagram.com/ashramgandhipuri/",
@@ -66,18 +87,21 @@ export const SiteSettings: GlobalConfig = {
           fields: [
             {
               name: "heroEyebrow",
+              localized: true,
               label: "Hero Eyebrow",
               type: "text",
               defaultValue: "Klungkung, Bali · Since 1997",
             },
             {
               name: "heroTitle",
+              localized: true,
               label: "Hero Heading",
               type: "text",
               defaultValue: "Soul by Soul, We Build a Peaceful World",
             },
             {
               name: "heroSubtitle",
+              localized: true,
               label: "Hero Lead Paragraph",
               type: "textarea",
               defaultValue:
@@ -85,18 +109,21 @@ export const SiteSettings: GlobalConfig = {
             },
             {
               name: "heroFact1",
+              localized: true,
               label: "Quick Fact 1",
               type: "text",
               defaultValue: "Sevagram, Klungkung",
             },
             {
               name: "heroFact2",
+              localized: true,
               label: "Quick Fact 2",
               type: "text",
               defaultValue: "Serving since 1997",
             },
             {
               name: "heroFact3",
+              localized: true,
               label: "Quick Fact 3",
               type: "text",
               defaultValue: "Open to every volunteer",
@@ -108,6 +135,7 @@ export const SiteSettings: GlobalConfig = {
           fields: [
             {
               name: "founderEyebrow",
+              localized: true,
               label: "Founder Eyebrow",
               type: "text",
               defaultValue: "The Founder",
@@ -120,6 +148,7 @@ export const SiteSettings: GlobalConfig = {
             },
             {
               name: "founderBio",
+              localized: true,
               label: "Founder Biography",
               type: "textarea",
               defaultValue:
@@ -149,24 +178,28 @@ export const SiteSettings: GlobalConfig = {
           fields: [
             {
               name: "bankName",
+              access: { update: adminField },
               label: "Bank Name",
               type: "text",
               defaultValue: "Bank Mandiri",
             },
             {
               name: "accountNumber",
+              access: { update: adminField },
               label: "Account Number",
               type: "text",
               defaultValue: "1450018046181",
             },
             {
               name: "accountName",
+              access: { update: adminField },
               label: "Account Name",
               type: "text",
               defaultValue: "Yayasan Ashram Gandhi Puri",
             },
             {
               name: "donationSubtitle",
+              localized: true,
               label: "Donation Subtitle",
               type: "textarea",
               defaultValue:

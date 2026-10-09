@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/context/LocaleContext";
+
 import { useToast } from "@/context/ToastContext";
 import type { SiteSettingsData } from "@/types/content";
 import React, { useState } from "react";
@@ -10,22 +12,23 @@ interface DonationViewProps {
 }
 
 export default function DonationView({ settings }: DonationViewProps) {
+  const { t } = useTranslation();
   const { showToast } = useToast();
-  const [copyLabel, setCopyLabel] = useState("Copy account number");
+  const [copyLabel, setCopyLabel] = useState(t("Copy account number"));
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const accountNumber = settings.accountNumber || "1450018046181";
 
   const handleCopy = () => {
     const done = () => {
-      setCopyLabel("Copied!");
-      showToast("Nomor rekening berhasil disalin.");
-      setTimeout(() => setCopyLabel("Copy account number"), 2000);
+      setCopyLabel(t("Copied!"));
+      showToast(t("Account number copied."));
+      setTimeout(() => setCopyLabel(t("Copy account number")), 2000);
     };
 
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(accountNumber).then(done, () => {
-        showToast("Gagal menyalin otomatis. Silakan salin manual.");
+        showToast(t("Could not copy automatically. Please copy manually."));
       });
     } else {
       const helper = document.createElement("textarea");
@@ -39,7 +42,7 @@ export default function DonationView({ settings }: DonationViewProps) {
         document.execCommand("copy");
         done();
       } catch {
-        showToast("Gagal menyalin otomatis. Silakan salin manual.");
+        showToast(t("Could not copy automatically. Please copy manually."));
       }
       helper.remove();
     }
@@ -50,25 +53,19 @@ export default function DonationView({ settings }: DonationViewProps) {
       {/* Hero Section */}
       <section className="page-hero" aria-labelledby="page-title">
         <div className="container">
-          <p className="eyebrow">Dana Punia & Donasi</p>
-          <h1 id="page-title">Mari Berbagi Kebaikan & Kebijaksanaan</h1>
-          <p>
-            Setiap punia dan kebaikan yang Anda berikan mengalir untuk kelangsungan pendidikan
-            spiritual, pembinaan santri yoga, dan kelestarian lingkungan Ashram Gandhi Puri.
-          </p>
+          <p className="eyebrow">{t("Dana Punia & Donasi")}</p>
+          <h1 id="page-title">{t("Mari Berbagi Kebaikan & Kebijaksanaan")}</h1>
+          <p>{t(" Setiap punia dan kebaikan yang Anda berikan mengalir untuk kelangsungan pendidikan spiritual, pembinaan santri yoga, dan kelestarian lingkungan Ashram Gandhi Puri. ")}</p>
         </div>
       </section>
 
       {/* Donation Details & Bank Account Info */}
-      <section className="section section--tint" aria-label="Donation details">
+      <section className="section section--tint" aria-label={t("Donation details")}>
         <div className="container donate-layout">
           <div className="donate-copy">
-            <p className="eyebrow">Penyaluran Dana Punia</p>
-            <h2>Menjaga Amanah & Dedikasi Ashram</h2>
-            <p>
-              Dukungan Anda memberikan napas bagi keberlangsungan pelayanan sosial dan pembinaan
-              generasi muda di Ashram Gandhi Puri Sevagram, Klungkung, Bali.
-            </p>
+            <p className="eyebrow">{t("Penyaluran Dana Punia")}</p>
+            <h2>{t("Menjaga Amanah & Dedikasi Ashram")}</h2>
+            <p>{t(" Dukungan Anda memberikan napas bagi keberlangsungan pelayanan sosial dan pembinaan generasi muda di Ashram Gandhi Puri Sevagram, Klungkung, Bali. ")}</p>
             <ul className="check-list">
               <li>
                 <span className="check-list__icon">
@@ -77,9 +74,7 @@ export default function DonationView({ settings }: DonationViewProps) {
                   </svg>
                 </span>
                 <span>
-                  <strong>Pendidikan Spiritual & Yoga.</strong> Beasiswa dan biaya pembinaan santri
-                  pasraman, modul yoga, dan nilai-nilai luhur Mahatma Gandhi.
-                </span>
+                  <strong>{t("Pendidikan Spiritual & Yoga.")}</strong>{t(" Beasiswa dan biaya pembinaan santri pasraman, modul yoga, dan nilai-nilai luhur Mahatma Gandhi. ")}</span>
               </li>
               <li>
                 <span className="check-list__icon">
@@ -88,9 +83,7 @@ export default function DonationView({ settings }: DonationViewProps) {
                   </svg>
                 </span>
                 <span>
-                  <strong>Pemberdayaan Masyarakat & Relawan.</strong> Program pelatihan pemuda, bakti
-                  sosial kemanusiaan, serta dialog persaudaraan lintas budaya.
-                </span>
+                  <strong>{t("Pemberdayaan Masyarakat & Relawan.")}</strong>{t(" Program pelatihan pemuda, bakti sosial kemanusiaan, serta dialog persaudaraan lintas budaya. ")}</span>
               </li>
               <li>
                 <span className="check-list__icon">
@@ -99,9 +92,7 @@ export default function DonationView({ settings }: DonationViewProps) {
                   </svg>
                 </span>
                 <span>
-                  <strong>Konservasi Lingkungan Organik.</strong> Penanaman pohon, pemeliharaan kebun
-                  organik, dan pengelolaan sampah pasraman yang berkelanjutan.
-                </span>
+                  <strong>{t("Konservasi Lingkungan Organik.")}</strong>{t(" Penanaman pohon, pemeliharaan kebun organik, dan pengelolaan sampah pasraman yang berkelanjutan. ")}</span>
               </li>
               <li>
                 <span className="check-list__icon">
@@ -110,31 +101,29 @@ export default function DonationView({ settings }: DonationViewProps) {
                   </svg>
                 </span>
                 <span>
-                  <strong>Verifikasi Donasi.</strong> Seluruh transfer masuk langsung ke rekening
-                  resmi yayasan dan bukti transfer diperiksa oleh bendahara sebelum donasi dikonfirmasi.
-                </span>
+                  <strong>{t("Verifikasi Donasi.")}</strong>{t(" Seluruh transfer masuk langsung ke rekening resmi yayasan dan bukti transfer diperiksa oleh bendahara sebelum donasi dikonfirmasi. ")}</span>
               </li>
             </ul>
           </div>
 
           <div className="donation-card">
-            <h2>Bagian dari Japa Malamitra</h2>
+            <h2>{t("Bagian dari Japa Malamitra")}</h2>
             <p>{settings.donationSubtitle}</p>
 
             <div className="bank-info">
-              <h3>Transfer ke Rekening Resmi</h3>
+              <h3>{t("Transfer ke Rekening Resmi")}</h3>
               <div className="bank-detail">
-                <span className="bank-label">Bank</span>
+                <span className="bank-label">{t("Bank")}</span>
                 <span className="bank-value">{settings.bankName}</span>
               </div>
               <div className="bank-detail">
-                <span className="bank-label">Nomor Rekening</span>
+                <span className="bank-label">{t("Nomor Rekening")}</span>
                 <span className="bank-value" id="account-number">
                   {accountNumber}
                 </span>
               </div>
               <div className="bank-detail">
-                <span className="bank-label">Nama Pemilik Rekening</span>
+                <span className="bank-label">{t("Nama Pemilik Rekening")}</span>
                 <span className="bank-value">{settings.accountName}</span>
               </div>
               <button
@@ -157,12 +146,8 @@ export default function DonationView({ settings }: DonationViewProps) {
               id="donate-btn"
               aria-haspopup="dialog"
               onClick={() => setIsModalOpen(true)}
-            >
-              Saya sudah transfer — Konfirmasi Donasi
-            </button>
-            <p className="donation-note">
-              Anda akan diminta mengunggah struk atau foto bukti transfer bank.
-            </p>
+            >{t(" Saya sudah transfer — Konfirmasi Donasi ")}</button>
+            <p className="donation-note">{t(" Anda akan diminta mengunggah struk atau foto bukti transfer bank. ")}</p>
           </div>
         </div>
       </section>

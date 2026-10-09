@@ -1,13 +1,15 @@
 import type { CollectionConfig } from "payload";
+import { adminOnly, staffOnly } from "../lib/cms-access";
 
 export const Media: CollectionConfig = {
   slug: "media",
   access: {
     read: () => true,
-    create: ({ req: { user } }) => Boolean(user),
-    update: ({ req: { user } }) => Boolean(user),
-    delete: ({ req: { user } }) => Boolean(user),
+    create: staffOnly,
+    update: staffOnly,
+    delete: adminOnly,
   },
+  admin: { group: "Website content", description: "Upload website images and add a description in each language." },
   upload: {
     staticDir: "media",
     mimeTypes: ["image/*"],
@@ -40,6 +42,7 @@ export const Media: CollectionConfig = {
   fields: [
     {
       name: "alt",
+      localized: true,
       type: "text",
       required: true,
       admin: { description: "Short description of the image, for accessibility." },
