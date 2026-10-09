@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useToast } from "@/context/ToastContext";
-import emailjs from "@emailjs/browser";
 
 export default function VolunteerPage() {
   const { showToast } = useToast();
@@ -19,17 +18,6 @@ export default function VolunteerPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Anti-bot honeypot protection: bots auto-fill hidden fields
-    if (honeypot) {
-      showToast(
-        `Thank you, ${formData.name}! Your volunteer application has been submitted. We will contact you soon.`,
-        "success"
-      );
-      setFormData({ name: "", email: "", phone: "", nationality: "" });
-      setHoneypot("");
-      return;
-    }
-
     if (!formData.name || !formData.email || !formData.phone || !formData.nationality) {
       showToast("Please fill in all fields before submitting.", "error");
       return;
@@ -43,44 +31,23 @@ export default function VolunteerPage() {
 
     setIsSubmitting(true);
     try {
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_VOLUNTEER_TEMPLATE_ID;
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-      const staffEmail = process.env.NEXT_PUBLIC_STAFF_EMAIL || "ashramgandhipuriorg@gmail.com";
-
-      if (!serviceId || !templateId || !publicKey) {
-        console.error("EmailJS credentials are missing in environment variables.");
-        showToast("Email service is currently misconfigured. Please email us directly at " + staffEmail, "error");
-        return;
-      }
-
-      const templateParams = {
-        name: formData.name,
-        from_name: formData.name,
-        email: formData.email,
-        from_email: formData.email,
-        reply_to: formData.email,
-        phone: formData.phone,
-        nationality: formData.nationality,
-        subject: `Volunteer Application from ${formData.name}`,
-        form_title: "Volunteer Application",
-        message: `Volunteer Application Details:\n- Name: ${formData.name}\n- Email: ${formData.email}\n- Phone: ${formData.phone}\n- Nationality: ${formData.nationality}`,
-        to_email: staffEmail,
-        recipient_email: staffEmail,
-        to_name: "Ashram Gandhi Puri Staff",
-      };
-
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      const response = await fetch("/api/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind: "volunteer", ...formData, honeypot }),
+      });
+      if (!response.ok) throw new Error("Volunteer application could not be sent.");
 
       showToast(
         `Thank you, ${formData.name}! Your volunteer application has been submitted. We will contact you soon.`,
         "success"
       );
       setFormData({ name: "", email: "", phone: "", nationality: "" });
+      setHoneypot("");
     } catch (error) {
       console.error("Volunteer application submission error:", error);
       showToast(
-        "Could not send application right now. Please try again or email us directly at " + (process.env.NEXT_PUBLIC_STAFF_EMAIL || "ashramgandhipuriorg@gmail.com") + ".",
+        "Could not send application right now. Please try again or email us directly at ashramgandhipuriorg@gmail.com.",
         "error"
       );
     } finally {

@@ -61,3 +61,7 @@ docs/             Design system (MASTER.md)
   - **Database (Neon PostgreSQL):** Create a free project at [neon.tech](https://neon.tech), copy your connection string, and set `DATABASE_URI=postgresql://...` in your deployment environment variables. Payload automatically switches from SQLite to PostgreSQL.
   - **Media Storage (Neon Object Storage - Recommended):** You can use Neon's built-in **Object Storage** (5 GB free per project). Create a bucket in Neon, copy the S3 credentials, and set `S3_BUCKET`, `S3_ENDPOINT`, `S3_ACCESS_KEY_ID`, and `S3_SECRET_ACCESS_KEY`. This keeps your database and file storage in one single dashboard!
   - **Alternative Media Storage (Cloudflare R2):** If you prefer Cloudflare, set `R2_BUCKET`, `R2_ENDPOINT`, `R2_ACCESS_KEY_ID`, and `R2_SECRET_ACCESS_KEY` (10 GB free).
+
+## Email setup
+
+All public forms send email through Resend on the server. Set `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, and `STAFF_EMAIL` in the deployment environment; the sender address needs a verified Resend domain. See [the email setup guide](docs/email-templates/SETUP_GUIDE.md) for the test flow. The donation email acknowledges receipt of a transfer proof while the treasurer checks the bank transaction.

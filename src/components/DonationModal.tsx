@@ -102,14 +102,14 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
 
       const formattedAmount = numAmount.toLocaleString("id-ID");
 
-      if (result.simulated) {
+      if (!result.donorEmailSent) {
         showToast(
-          `Matur Suksma, ${name}! Konfirmasi donasi IDR ${formattedAmount} telah dicatat (Ref: ${result.transactionId}). Harap atur kredensial SMTP di .env untuk pengiriman email langsung.`,
+          `Konfirmasi donasi IDR ${formattedAmount} telah dikirim ke bendahara (Ref: ${result.transactionId}), tetapi email ke ${email} belum terkirim. Mohon hubungi yayasan jika memerlukan bantuan.`,
           "info"
         );
       } else {
         showToast(
-          `Matur Suksma, ${name}! Konfirmasi donasi IDR ${formattedAmount} diterima. Tanda terima resmi telah dikirim ke ${email}.`,
+          `Matur Suksma, ${name}! Konfirmasi donasi IDR ${formattedAmount} diterima. Email penerimaan telah dikirim ke ${email}; transfer masih menunggu verifikasi bendahara.`,
           "success"
         );
       }
@@ -194,7 +194,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
               className="w-full px-4 py-2.5 rounded-md border border-gray-200 focus:border-[var(--color-deep)] focus:ring-2 focus:ring-[var(--color-deep)] text-sm transition-all outline-none"
             />
             <p className="text-[11px] text-[var(--color-text-muted)] mt-1">
-              🔒 Email akan disensor otomatis (contoh: ke***a@gmail.com) dalam laporan publik bulanan.
+              Data donatur dan bukti transfer digunakan untuk memeriksa konfirmasi donasi.
             </p>
           </div>
 
@@ -257,7 +257,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
               <input
                 id="donor-proof"
                 type="file"
-                accept="image/*,.pdf"
+                accept="image/jpeg,image/png,image/webp,application/pdf"
                 required
                 onChange={(e) => {
                   if (e.target.files && e.target.files[0]) {
@@ -303,7 +303,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
               )}
             </button>
             <p className="text-[11px] text-center text-gray-500 mt-2">
-              Bendahara akan memeriksa mutasi bank dan mencatat donasi ke laporan kas publik bulanan.
+              Bendahara akan memeriksa mutasi bank sebelum mengonfirmasi donasi Anda.
             </p>
           </div>
         </form>
