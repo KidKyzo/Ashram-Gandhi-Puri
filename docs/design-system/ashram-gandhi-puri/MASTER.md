@@ -33,7 +33,7 @@ Use dark purple text on saffron buttons. White on saffron fails text contrast. G
 - Buttons: 6px radius, minimum 44px touch targets, solid saffron primary and neutral outlined secondary.
 - Cards and images: 8px radius, thin borders, no decorative shapes or pronounced shadows.
 - Footer: neutral light surface with the same readable forms and links as the rest of the site.
-- Donation report and modal: shared CSS tokens through Tailwind arbitrary values; green verification status.
+- Donation form and modal: shared CSS tokens through Tailwind arbitrary values; clear pending-verification status.
 - Avoid gradients, photo scrims, oversized pills and moving cards on hover.
 
 ## Accessibility and verification

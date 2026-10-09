@@ -2,22 +2,14 @@
 
 import { useToast } from "@/context/ToastContext";
 import type { SiteSettingsData } from "@/types/content";
-import type { DonationRecord, DonationSummary } from "@/lib/donations";
 import React, { useState } from "react";
 import DonationModal from "@/components/DonationModal";
-import DonationTransparency from "@/components/DonationTransparency";
 
 interface DonationViewProps {
   settings: SiteSettingsData;
-  initialDonations: DonationRecord[];
-  summary: DonationSummary;
 }
 
-export default function DonationView({
-  settings,
-  initialDonations,
-  summary,
-}: DonationViewProps) {
+export default function DonationView({ settings }: DonationViewProps) {
   const { showToast } = useToast();
   const [copyLabel, setCopyLabel] = useState("Copy account number");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -118,8 +110,8 @@ export default function DonationView({
                   </svg>
                 </span>
                 <span>
-                  <strong>Transparansi Terbuka.</strong> Seluruh transfer masuk langsung ke rekening
-                  resmi yayasan, diverifikasi, dan dicatat berkala dalam laporan publik di bawah ini.
+                  <strong>Verifikasi Donasi.</strong> Seluruh transfer masuk langsung ke rekening
+                  resmi yayasan dan bukti transfer diperiksa oleh bendahara sebelum donasi dikonfirmasi.
                 </span>
               </li>
             </ul>
@@ -174,12 +166,6 @@ export default function DonationView({
           </div>
         </div>
       </section>
-
-      {/* Laporan Transparansi Donasi Publik & Unduh CSV */}
-      <DonationTransparency
-        initialDonations={initialDonations}
-        summary={summary}
-      />
 
       {/* Modal Konfirmasi Donasi */}
       <DonationModal

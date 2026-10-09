@@ -2,7 +2,6 @@
 
 import { useToast } from "@/context/ToastContext";
 import type { SiteSettingsData } from "@/types/content";
-import emailjs from "@emailjs/browser";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -24,17 +23,6 @@ export default function Footer({ settings }: FooterProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Anti-bot honeypot protection: bots fill hidden inputs
-    if (honeypot) {
-      showToast(
-        `Thank you, ${formData.name}! Your message has been sent. We will get back to you soon.`,
-        "success"
-      );
-      setFormData({ name: "", email: "", message: "" });
-      setHoneypot("");
-      return;
-    }
-
     if (!formData.name || !formData.email || !formData.message) {
       showToast("Please fill in all fields before sending.", "error");
       return;
@@ -48,40 +36,19 @@ export default function Footer({ settings }: FooterProps) {
 
     setIsSubmitting(true);
     try {
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID;
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-      const staffEmail = process.env.NEXT_PUBLIC_STAFF_EMAIL || settings?.contactEmail || "ashramgandhipuriorg@gmail.com";
-
-      if (!serviceId || !templateId || !publicKey) {
-        console.error("EmailJS credentials are missing in environment variables.");
-        showToast("Email service is currently misconfigured. Please email us directly at " + staffEmail, "error");
-        return;
-      }
-
-      const templateParams = {
-        name: formData.name,
-        from_name: formData.name,
-        email: formData.email,
-        from_email: formData.email,
-        reply_to: formData.email,
-        phone: "-",
-        nationality: "-",
-        subject: `Contact Inquiry from ${formData.name}`,
-        form_title: "Contact Inquiry",
-        message: formData.message,
-        to_email: staffEmail,
-        recipient_email: staffEmail,
-        to_name: "Ashram Gandhi Puri Staff",
-      };
-
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      const response = await fetch("/api/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind: "contact", ...formData, honeypot }),
+      });
+      if (!response.ok) throw new Error("Contact message could not be sent.");
 
       showToast(
         `Thank you, ${formData.name}! Your message has been sent. We will get back to you soon.`,
         "success"
       );
       setFormData({ name: "", email: "", message: "" });
+      setHoneypot("");
     } catch (error) {
       console.error("Contact form submission error:", error);
       showToast(
