@@ -225,7 +225,7 @@ export default async function HomePage({ params }: LocaleParams) {
               <Link key={item.id} className="gallery-card" href={href("/gallery")}>
                 <div className="gallery-card__media">
                   <Image
-                    src={item.image}
+                    src={item.image.trim()}
                     alt={item.alt || item.title}
                     width={800}
                     height={500}

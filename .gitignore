@@ -21,6 +21,7 @@ desktop.ini
 # Agent / AI local workspace files
 .agent/
 .agents/
+.codex/
 
 # Logs
 npm-debug.log*

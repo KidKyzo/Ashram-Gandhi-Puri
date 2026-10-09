@@ -93,6 +93,8 @@ export const getGalleryItems = cache(async (locale: Locale = "en"): Promise<Gall
         imageUrl = doc.image;
       }
 
+      imageUrl = (imageUrl || "").trim();
+
       if (!imageUrl) {
         imageUrl = "/assets/activity-gallery-1.jpg";
       }

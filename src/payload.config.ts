@@ -53,7 +53,7 @@ const s3Region =
   process.env.AWS_REGION ||
   "auto";
 
-const s3PublicUrl = process.env.S3_PUBLIC_URL || process.env.R2_PUBLIC_URL;
+const s3PublicUrl = (process.env.S3_PUBLIC_URL || process.env.R2_PUBLIC_URL)?.trim();
 
 const payloadSecret = resolvePayloadSecret(process.env.PAYLOAD_SECRET, process.env.NODE_ENV === "production");
 
@@ -94,9 +94,9 @@ export default buildConfig({
               media: s3PublicUrl
                 ? {
                     generateFileURL: ({ filename, prefix }) => {
-                      const cleanBase = s3PublicUrl.replace(/\/$/, "");
+                      const cleanBase = s3PublicUrl.trim().replace(/\/$/, "");
                       const pathPrefix = prefix ? `${prefix.replace(/^\/|\/$/g, "")}/` : "";
-                      return `${cleanBase}/${pathPrefix}${filename}`;
+                      return `${cleanBase}/${pathPrefix}${filename}`.trim();
                     },
                   }
                 : true,

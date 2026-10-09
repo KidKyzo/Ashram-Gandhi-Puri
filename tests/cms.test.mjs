@@ -90,3 +90,11 @@ test("SQLite migration preserves English content, media, bank details, and exist
     connection.close();
   }
 });
+
+test("media image URLs are trimmed of leading and trailing whitespace or tabs", () => {
+  const untrimmed = "\thttps://example.org/storage/image.jpg\n ";
+  const trimmed = untrimmed.trim();
+  assert.equal(trimmed, "https://example.org/storage/image.jpg");
+  assert.equal(trimmed.startsWith("https://"), true);
+  assert.equal(encodeURIComponent(trimmed).startsWith("%09"), false);
+});

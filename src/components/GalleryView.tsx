@@ -95,7 +95,7 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
                   >
                   <div className="gallery-card__media">
                     <Image
-                      src={item.image}
+                      src={item.image.trim()}
                       alt={item.alt || item.title}
                       width={800}
                       height={500}
