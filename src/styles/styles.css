@@ -1,49 +1,31 @@
-/* ==========================================================================
-   Ashram Gandhi Puri — Global design system
-   Source of truth: design-system/ashram-gandhi-puri/MASTER.md
-
-   Contrast notes (WCAG AA, verified against MASTER palette):
-   - --color-text       #4C1D95 on #FAF5FF / #FFFFFF  → ~10:1
-   - --color-primary    #f1ad66 (warm saffron / apricot main color)
-   - --color-cta        #CA8A04 + white text          → 2.9:1  ✗ (fails AA)
-     → CTA buttons keep the MASTER gold fill but use --color-deep text → 5.7:1
-   - Gold / lavender are only used as TEXT on deep purple surfaces (≥5:1);
-     on light surfaces they are decorative only.
-   ========================================================================== */
-
-/* Fonts (Fredoka + Nunito, per MASTER.md) are loaded via <link> in each page <head>. */
-
-/* --------------------------------------------------------------------------
-   1. Design tokens
-   -------------------------------------------------------------------------- */
+/* Shared public-site tokens; see docs/design-system/ashram-gandhi-puri/MASTER.md. */
 :root {
-  /* MASTER palette */
   --color-primary: #f1ad66;
   --primary-color: #f1ad66;
   --color-secondary: #A78BFA;
-  --color-cta: #CA8A04;
-  --color-background: #FAF5FF;
-  --color-text: #4C1D95;
+  --color-cta: #f1ad66;
+  --color-background: #FFFFFF;
+  --color-text: #262626;
 
   /* Derived neutrals / shades (tuned for AA contrast) */
   --color-surface: #FFFFFF;
-  --color-primary-dark: #c2711d;   /* hover + eyebrow text on light, WCAG AA compliant */
+  --color-primary-dark: #95521c;
   --color-deep: #2E1065;           /* dark sections, text on gold, 15:1 with white */
-  --color-text-muted: #6B4FA0;     /* body copy on light, ≥6:1 */
-  --color-tint: #EDE9FE;           /* soft lavender fills */
-  --color-border: #DDD6FE;         /* decorative dividers */
-  --color-border-strong: #8B7BB0;  /* form control borders, ≥3:1 non-text */
+  --color-text-muted: #626262;
+  --color-tint: #F5F3F8;
+  --color-border: #E5E5E5;
+  --color-border-strong: #858585;
   --color-on-dark: #FFFFFF;
   --color-on-dark-muted: #DDD6FE;  /* ≥10:1 on --color-deep */
-  --color-focus-dark: #FBBF24;     /* focus ring on dark surfaces */
+  --color-focus-dark: #f1ad66;
   --color-success: #166534;
   --color-error: #B91C1C;
 
   /* Typography */
-  --font-heading: var(--font-fredoka), 'Fredoka', system-ui, sans-serif;
-  --font-body: var(--font-nunito), 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-heading: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  --font-body: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
 
-  /* Spacing (MASTER) */
+  /* Spacing */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
@@ -52,16 +34,16 @@
   --space-2xl: 3rem;
   --space-3xl: 4rem;
 
-  /* Shadows (MASTER) */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: none;
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-xl: none;
 
   /* Shape & motion */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 8px;
   --radius-pill: 999px;
   --ease: 200ms ease;
 
@@ -102,7 +84,7 @@ body {
   display: flex;
   flex-direction: column;
   font-family: var(--font-body);
-  font-size: 1.0625rem; /* 17px — MASTER asks for 16px+ */
+  font-size: 1rem;
   line-height: 1.7;
   color: var(--color-text);
   background: var(--color-background);
@@ -125,7 +107,7 @@ img {
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   text-underline-offset: 3px;
 }
 
@@ -158,11 +140,13 @@ h4 {
   font-family: var(--font-heading);
   font-weight: 600;
   line-height: 1.15;
+  letter-spacing: -0.035em;
+  letter-spacing: -0.035em;
   color: var(--color-text);
   text-wrap: balance;
 }
 
-h1 { font-size: clamp(2.25rem, 5vw + 1rem, 4rem); font-weight: 700; }
+h1 { font-size: clamp(2.25rem, 5vw + 1rem, 4rem); font-weight: 600; }
 h2 { font-size: clamp(1.75rem, 2.5vw + 1rem, 2.75rem); }
 h3 { font-size: clamp(1.2rem, 1vw + 1rem, 1.5rem); }
 
@@ -170,15 +154,14 @@ p {
   text-wrap: pretty;
 }
 
-/* Visible keyboard focus everywhere (MASTER: 3–4px focus rings) */
+
 :focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-deep);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-.on-dark :focus-visible,
-.site-footer :focus-visible {
+.on-dark :focus-visible {
   outline-color: var(--color-focus-dark);
 }
 
@@ -190,7 +173,7 @@ p {
   padding: var(--space-sm) var(--space-md);
   background: var(--color-deep);
   color: var(--color-on-dark);
-  font-weight: 700;
+  font-weight: 600;
   border-radius: var(--radius-sm);
   transition: top var(--ease);
 }
@@ -246,7 +229,9 @@ p {
 }
 
 .section--white { background: var(--color-surface); }
-.section--tint { background: var(--color-background); }
+.section--tint {
+  background: #FAFAFA;
+}
 
 .section--dark {
   background: var(--color-deep);
@@ -290,20 +275,15 @@ p {
   align-items: center;
   gap: var(--space-sm);
   margin-bottom: var(--space-md);
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.075em;
   text-transform: uppercase;
   color: var(--color-primary-dark);
 }
 
 .eyebrow::before {
-  content: '';
-  width: 2rem;
-  height: 3px;
-  border-radius: var(--radius-pill);
-  background: var(--color-cta);
+  content: none;
 }
 
 .eyebrow--light {
@@ -314,9 +294,7 @@ p {
   background: var(--color-focus-dark);
 }
 
-/* --------------------------------------------------------------------------
-   4. Buttons (MASTER component spec)
-   -------------------------------------------------------------------------- */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -324,11 +302,11 @@ p {
   gap: var(--space-sm);
   min-height: 48px; /* ≥44px touch target */
   padding: 12px 24px;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
   text-align: center;
   text-decoration: none;
@@ -337,28 +315,30 @@ p {
 }
 
 .btn:hover {
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .btn-primary {
-  background: var(--color-cta);
-  border-color: var(--color-cta);
-  color: var(--color-deep); /* white on #CA8A04 fails AA (2.9:1); deep purple = 5.7:1 */
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-deep);
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
+  background: #EAA05A;
+  border-color: #EAA05A;
   color: var(--color-deep);
 }
 
 .btn-secondary {
-  background: transparent;
-  border-color: var(--color-primary);
-  color: var(--color-primary-dark);
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
 }
 
 .btn-secondary:hover {
-  background: var(--color-primary);
+  background: var(--color-tint);
+  border-color: var(--color-border-strong);
   color: var(--color-deep);
 }
 
@@ -387,8 +367,8 @@ p {
   align-items: center;
   gap: var(--space-sm);
   min-height: 44px;
-  font-weight: 700;
-  color: var(--color-primary);
+  font-weight: 600;
+  color: var(--color-deep);
   text-decoration: none;
   transition: color var(--ease), gap var(--ease);
 }
@@ -410,15 +390,12 @@ p {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
-  transition: box-shadow var(--ease);
 }
 
 .site-header.is-scrolled {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .site-header__inner {
@@ -450,16 +427,17 @@ p {
 
 .brand__name {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 600;
-  line-height: 1.1;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
 }
 
 .brand__name small {
   display: block;
   font-family: var(--font-body);
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-muted);
@@ -541,7 +519,7 @@ p {
   min-height: 48px;
   padding: 0 var(--space-md);
   border-radius: var(--radius-sm);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--color-text);
   text-decoration: none;
   transition: background var(--ease), color var(--ease);
@@ -614,16 +592,13 @@ p {
   }
 }
 
-/* --------------------------------------------------------------------------
-   6. Cards (MASTER component spec)
-   -------------------------------------------------------------------------- */
+
 .card {
-  background: var(--color-background);
-  border: 1px solid var(--color-tint);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-lg);
-  box-shadow: var(--shadow-md);
-  transition: all var(--ease);
+  transition: border-color var(--ease);
 }
 
 .card--interactive {
@@ -631,13 +606,10 @@ p {
 }
 
 .card--interactive:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
+  border-color: var(--color-border-strong);
 }
 
-/* --------------------------------------------------------------------------
-   7. Forms (MASTER input spec, strengthened border for non-text contrast)
-   -------------------------------------------------------------------------- */
+
 .form {
   display: grid;
   gap: var(--space-md);
@@ -650,7 +622,7 @@ p {
 
 .field label {
   font-size: 0.9375rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .input {
@@ -671,14 +643,15 @@ textarea.input {
 }
 
 .input::placeholder {
-  color: #7A6B9C; /* 4.6:1 on white */
+  color: var(--color-text-muted); /* 4.6:1 on white */
   opacity: 1;
 }
 
 .input:focus {
-  border-color: var(--color-primary);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(241, 173, 102, 0.35);
+  border-color: var(--color-deep);
+  outline: 2px solid var(--color-deep);
+  outline-offset: 2px;
+  box-shadow: none;
 }
 
 .input[type='file'] {
@@ -695,14 +668,15 @@ textarea.input {
    8. Footer (contact, socials, inquiry form)
    -------------------------------------------------------------------------- */
 .site-footer {
-  background: var(--color-deep);
-  color: var(--color-on-dark-muted);
+  background: #FAFAFA;
+  color: var(--color-text-muted);
   padding-top: var(--space-3xl);
+  border-top: 1px solid var(--color-border);
 }
 
 .site-footer h2,
 .site-footer h3 {
-  color: var(--color-on-dark);
+  color: var(--color-text);
 }
 
 .footer-grid {
@@ -732,17 +706,17 @@ textarea.input {
 }
 
 .footer-brand .brand {
-  color: var(--color-on-dark);
+  color: var(--color-text);
 }
 
 .footer-brand .brand__logo {
   background: var(--color-surface);
-  border-radius: 50%;
+  border-radius: var(--radius-sm);
   padding: 3px;
 }
 
 .footer-brand .brand__name small {
-  color: var(--color-on-dark-muted);
+  color: var(--color-text-muted);
 }
 
 .footer-heading {
@@ -759,13 +733,13 @@ textarea.input {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  color: var(--color-on-dark-muted);
+  color: var(--color-text-muted);
   text-decoration: none;
   transition: color var(--ease);
 }
 
 .footer-list a:hover {
-  color: var(--color-focus-dark);
+  color: var(--color-primary-dark);
   text-decoration: underline;
 }
 
@@ -787,16 +761,16 @@ textarea.input {
 
 .contact-list .icon {
   margin-top: 4px;
-  color: var(--color-focus-dark);
+  color: var(--color-primary-dark);
 }
 
 .contact-list a {
-  color: var(--color-on-dark);
+  color: var(--color-text);
   overflow-wrap: anywhere;
 }
 
 .contact-list a:hover {
-  color: var(--color-focus-dark);
+  color: var(--color-primary-dark);
 }
 
 .socials {
@@ -810,9 +784,9 @@ textarea.input {
   justify-content: center;
   width: 48px;
   height: 48px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  color: var(--color-on-dark);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
   transition: all var(--ease);
 }
 
@@ -823,16 +797,18 @@ textarea.input {
 }
 
 .footer-form .field label {
-  color: var(--color-on-dark);
+  color: var(--color-text);
 }
 
 .footer-form .input {
-  border-color: transparent;
+  border-color: var(--color-border-strong);
 }
 
 .footer-form .input:focus {
-  border-color: var(--color-focus-dark);
-  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.5);
+  border-color: var(--color-deep);
+  outline: 2px solid var(--color-deep);
+  outline-offset: 2px;
+  box-shadow: none;
 }
 
 .footer-form > p {
@@ -842,7 +818,7 @@ textarea.input {
 .footer-bottom {
   margin-top: var(--space-3xl);
   padding-block: var(--space-lg);
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid var(--color-border);
 }
 
 .footer-bottom__inner {
@@ -864,41 +840,25 @@ textarea.input {
    9. Page header band (inner pages)
    -------------------------------------------------------------------------- */
 .page-hero {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding-block: var(--space-3xl);
-  background: var(--color-deep);
-  color: var(--color-on-dark);
+  padding-block: clamp(3rem, 7vw, 6rem);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
 }
 
-.page-hero__bg {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
-.page-hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(100deg, rgba(46, 16, 101, 0.95) 0%, rgba(46, 16, 101, 0.82) 60%, rgba(46, 16, 101, 0.6) 100%);
-}
 
 .page-hero h1 {
-  color: var(--color-on-dark);
-  font-size: clamp(2rem, 4vw + 1rem, 3.25rem);
+  max-width: 22ch;
+  color: var(--color-text);
+  font-size: clamp(2.25rem, 4vw + 1rem, 3.75rem);
+  font-weight: 500;
 }
 
 .page-hero p {
   max-width: 40rem;
   margin-top: var(--space-md);
-  font-size: 1.125rem;
-  color: var(--color-on-dark-muted);
+  font-size: 1.0625rem;
+  color: var(--color-text-muted);
 }
 
 /* --------------------------------------------------------------------------
@@ -979,3 +939,16 @@ textarea.input {
     transform: none;
   }
 }
+.page-hero .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+  color: var(--color-primary-dark);
+}
+
+.page-hero .eyebrow { color: var(--color-primary-dark); margin-top: 0; font-size: 0.8125rem; }

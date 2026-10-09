@@ -22,17 +22,9 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
 
   return (
     <>
-      <section className="page-hero on-dark" aria-labelledby="page-title">
-        <Image
-          className="page-hero__bg"
-          src="/assets/hero-photo-4.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-        />
+      <section className="page-hero" aria-labelledby="page-title">
         <div className="container">
-          <p className="eyebrow eyebrow--light">Gallery</p>
+          <p className="eyebrow">Gallery</p>
           <h1 id="page-title">Activities &amp; Gallery</h1>
           <p>
             Stories from the ashram — retreats, trainings, celebrations and acts of service by our

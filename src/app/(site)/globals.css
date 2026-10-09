@@ -5,3 +5,7 @@
 @import "../../styles/gallery.css";
 @import "../../styles/volunteer.css";
 @import "../../styles/donation.css";
+
+@theme inline {
+  --font-heading: var(--font-body);
+}

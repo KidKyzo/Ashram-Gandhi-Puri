@@ -22,9 +22,26 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    if (!isOpen) return;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const focusableSelector = 'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href]';
+    modalRef.current?.querySelector<HTMLElement>(focusableSelector)?.focus();
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen && !isSubmitting) {
         onClose();
+      }
+      if (e.key === "Tab") {
+        const controls = modalRef.current?.querySelectorAll<HTMLElement>(focusableSelector);
+        if (!controls?.length) return;
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     };
 
@@ -38,6 +55,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
+      previousFocus?.focus();
     };
   }, [isOpen, onClose, isSubmitting]);
 
@@ -114,7 +132,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-purple-950/70 backdrop-blur-sm animate-in fade-in duration-200"
+      className="donation-modal fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -124,21 +142,21 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
     >
       <div
         ref={modalRef}
-        className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-purple-100 overflow-hidden animate-in zoom-in-95 duration-200 my-auto max-h-[90vh] overflow-y-auto"
+        className="relative w-full max-w-lg bg-white rounded-lg shadow-2xl border border-[var(--color-border)] overflow-hidden animate-in zoom-in-95 duration-200 my-auto max-h-[90vh] overflow-y-auto"
       >
         {/* Header */}
-        <div className="bg-[#2E1065] text-white px-6 py-5 flex items-center justify-between sticky top-0 z-10">
+        <div className="bg-white border-b border-[var(--color-border)] text-[var(--color-text)] px-6 py-5 flex items-center justify-between sticky top-0 z-10">
           <div>
-            <h2 id="donation-modal-title" className="font-heading font-semibold text-xl">
+            <h2 id="donation-modal-title" className="donation-modal__title font-heading font-semibold text-xl">
               Konfirmasi Donasi / Dana Punia
             </h2>
-            <p className="text-xs text-purple-200 mt-0.5">
+            <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
               Yayasan Ashram Gandhi Puri Sevagram
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-purple-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-tint)] transition-colors cursor-pointer"
             aria-label="Tutup form donasi"
           >
             <X className="w-5 h-5" />
@@ -158,7 +176,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
               placeholder="Contoh: Ketut Suastika / Hamba Tuhan"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#f1ad66] focus:ring-2 focus:ring-purple-200 text-sm transition-all outline-none"
+              className="w-full px-4 py-2.5 rounded-md border border-gray-200 focus:border-[var(--color-deep)] focus:ring-2 focus:ring-[var(--color-deep)] text-sm transition-all outline-none"
             />
           </div>
 
@@ -173,9 +191,9 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
               placeholder="emailanda@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#f1ad66] focus:ring-2 focus:ring-purple-200 text-sm transition-all outline-none"
+              className="w-full px-4 py-2.5 rounded-md border border-gray-200 focus:border-[var(--color-deep)] focus:ring-2 focus:ring-[var(--color-deep)] text-sm transition-all outline-none"
             />
-            <p className="text-[11px] text-purple-700/70 mt-1">
+            <p className="text-[11px] text-[var(--color-text-muted)] mt-1">
               🔒 Email akan disensor otomatis (contoh: ke***a@gmail.com) dalam laporan publik bulanan.
             </p>
           </div>
@@ -194,7 +212,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 placeholder="Contoh: 100000"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#f1ad66] focus:ring-2 focus:ring-purple-200 text-sm transition-all outline-none"
+                className="w-full px-4 py-2.5 rounded-md border border-gray-200 focus:border-[var(--color-deep)] focus:ring-2 focus:ring-[var(--color-deep)] text-sm transition-all outline-none"
               />
             </div>
 
@@ -206,7 +224,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 id="donor-category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#f1ad66] focus:ring-2 focus:ring-purple-200 text-sm transition-all outline-none bg-white cursor-pointer"
+                className="w-full px-4 py-2.5 rounded-md border border-gray-200 focus:border-[var(--color-deep)] focus:ring-2 focus:ring-[var(--color-deep)] text-sm transition-all outline-none bg-white cursor-pointer"
               >
                 <option value="Pendidikan & Yoga">Pendidikan & Yoga</option>
                 <option value="Operasional Ashram">Operasional Ashram</option>
@@ -227,7 +245,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
               placeholder="Contoh: Untuk beasiswa santri yoga pasraman"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#f1ad66] focus:ring-2 focus:ring-purple-200 text-sm transition-all outline-none"
+              className="w-full px-4 py-2.5 rounded-md border border-gray-200 focus:border-[var(--color-deep)] focus:ring-2 focus:ring-[var(--color-deep)] text-sm transition-all outline-none"
             />
           </div>
 
@@ -235,7 +253,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
             <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
               Upload Bukti Transfer Bank <span className="text-red-500">*</span>
             </label>
-            <div className="relative border-2 border-dashed border-purple-200 rounded-xl p-4 hover:border-purple-400 bg-purple-50/50 transition-colors text-center cursor-pointer">
+            <div className="relative border-2 border-dashed border-[var(--color-border)] rounded-md p-4 hover:border-[var(--color-border)] bg-[var(--color-tint)] transition-colors text-center cursor-pointer">
               <input
                 id="donor-proof"
                 type="file"
@@ -249,7 +267,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
               <div className="flex flex-col items-center gap-1.5">
-                <Upload className="w-7 h-7 text-[#f1ad66]" />
+                <Upload className="w-7 h-7 text-[var(--color-primary-dark)]" />
                 {proofFile ? (
                   <span className="text-xs font-medium text-emerald-700 flex items-center gap-1">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 inline" />
@@ -257,7 +275,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   </span>
                 ) : (
                   <>
-                    <span className="text-xs font-medium text-purple-900">
+                    <span className="text-xs font-medium text-[var(--color-text)]">
                       Klik untuk mengunggah tangkapan layar / struk transfer
                     </span>
                     <span className="text-[11px] text-gray-500">
@@ -273,7 +291,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3 px-4 rounded-xl font-heading font-semibold text-white bg-[#CA8A04] hover:bg-[#B45309] shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 rounded-md font-heading font-semibold text-[var(--color-deep)] bg-[var(--color-primary)] hover:bg-[#EAA05A] shadow-none transition-all duration-200 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>
