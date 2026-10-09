@@ -92,19 +92,23 @@ export async function POST(req: NextRequest) {
     }
 
     // Staff receives the transfer proof before the donor receives an acknowledgment.
-    const emailResult = await sendDonationEmails({
-      donorName: name,
-      donorEmail: email,
-      amount,
-      category,
-      notes,
-      transactionId,
-      proofAttachment: {
-        filename: proofFile.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 100),
-        content: buffer,
-        contentType: proofFile.type || "application/octet-stream",
+    const origin = req.headers.get("origin") || req.nextUrl.origin;
+    const emailResult = await sendDonationEmails(
+      {
+        donorName: name,
+        donorEmail: email,
+        amount,
+        category,
+        notes,
+        transactionId,
+        proofAttachment: {
+          filename: proofFile.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 100),
+          content: buffer,
+          contentType: proofFile.type || "application/octet-stream",
+        },
       },
-    });
+      origin
+    );
 
     if (!emailResult.staffSent) {
       return NextResponse.json(

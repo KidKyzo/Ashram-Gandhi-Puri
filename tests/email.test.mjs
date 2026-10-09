@@ -9,6 +9,7 @@ const originalEnv = {
   EMAILJS_INQUIRY_TEMPLATE_ID: process.env.EMAILJS_INQUIRY_TEMPLATE_ID,
   EMAILJS_DONATION_TEMPLATE_ID: process.env.EMAILJS_DONATION_TEMPLATE_ID,
   STAFF_EMAIL: process.env.STAFF_EMAIL,
+  EMAILJS_PRIVATE_KEY: process.env.EMAILJS_PRIVATE_KEY,
 };
 
 beforeEach(() => {
@@ -109,3 +110,31 @@ test("contact and volunteer inquiries use the same sender and escape user text",
   assert.match(bodies[0].template_params.message, /&lt;script&gt;/);
   assert.match(bodies[1].template_params.phone, /\+62 123/);
 });
+
+test("server email requests include Origin header and accessToken when private key is present", async () => {
+  let capturedOptions = null;
+  globalThis.fetch = async (_url, options) => {
+    capturedOptions = options;
+    return { ok: true };
+  };
+
+  process.env.EMAILJS_PRIVATE_KEY = "private-key-test";
+
+  const success = await sendStaffInquiry(
+    {
+      kind: "contact",
+      name: "Charlie",
+      email: "charlie@example.org",
+      message: "Testing origin",
+    },
+    "https://ashram-gandhi-puri.vercel.app"
+  );
+
+  assert.equal(success, true);
+  assert.ok(capturedOptions);
+  assert.equal(capturedOptions.headers.Origin, "https://ashram-gandhi-puri.vercel.app");
+  const parsedBody = JSON.parse(capturedOptions.body);
+  assert.equal(parsedBody.accessToken, "private-key-test");
+  assert.equal(parsedBody.user_id, "public-test");
+});
+
