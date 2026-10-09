@@ -539,6 +539,12 @@ p {
   margin-top: var(--space-sm);
 }
 
+.language-switcher { display: flex; align-items: center; gap: 2px; }
+.nav-links .language-switcher a { padding-inline: 12px; }
+.nav-links .language-switcher a[aria-current='true'] {
+  background: var(--color-tint); color: var(--color-primary-dark);
+}
+
 @media (min-width: 900px) {
   .nav-toggle { display: none; }
 

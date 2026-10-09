@@ -11,6 +11,9 @@ import type { Media } from "@/payload-types";
 import type { GalleryItem, Milestone, SiteSettingsData } from "@/types/content";
 import { galleryData } from "@/content/gallery";
 import { milestonesData } from "@/content/milestones";
+import { indonesianSettings, indonesianMilestones, indonesianGallery } from "@/content/indonesian";
+import { formatMonth, type Locale } from "./i18n";
+import { cache } from "react";
 
 export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
   siteTitle: "Ashram Gandhi Puri — Spiritual Education, Yoga & Community Service in Bali",
@@ -43,50 +46,45 @@ export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
     "By donating, you also join the Japa Malamitra philanthropy network that cares about humanity and peace.",
 };
 
-const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
-];
-
-function formatMonth(date?: string): string {
-  if (!date || typeof date !== "string") return "";
-  const [year, month] = date.split("-");
-  if (!month || !year) return date;
-  return `${MONTHS[Number(month) - 1] ?? month} ${year}`;
+export function getDefaultSettings(locale: Locale): SiteSettingsData {
+  return locale === "id" ? { ...DEFAULT_SITE_SETTINGS, ...indonesianSettings } : DEFAULT_SITE_SETTINGS;
 }
 
-export async function getMilestones(): Promise<Milestone[]> {
+export function getDefaultGallery(locale: Locale): GalleryItem[] {
+  return galleryData.map((item) => ({ ...item,
+    ...(locale === "id" ? indonesianGallery[item.id] : {}),
+    date_display: formatMonth(item.date, locale),
+  }));
+}
+
+export const getMilestones = cache(async (locale: Locale = "en"): Promise<Milestone[]> => {
   try {
     const payload = await getPayload({ config });
     const { docs } = await payload.find({
       collection: "milestones",
+      locale, fallbackLocale: "en", draft: false, overrideAccess: false,
       sort: "year",
       limit: 100,
       pagination: false,
     });
-    if (!docs || docs.length === 0) {
-      return milestonesData;
-    }
     return docs.map(({ year, title, description }) => ({ year, title, description }));
   } catch (err) {
     console.error("Failed to load milestones from CMS, falling back to static data:", err);
-    return milestonesData;
+    return locale === "id" ? indonesianMilestones : milestonesData;
   }
-}
+});
 
-export async function getGalleryItems(): Promise<GalleryItem[]> {
+export const getGalleryItems = cache(async (locale: Locale = "en"): Promise<GalleryItem[]> => {
   try {
     const payload = await getPayload({ config });
     const { docs } = await payload.find({
       collection: "gallery-items",
+      locale, fallbackLocale: "en", draft: false, overrideAccess: false,
       sort: "-date",
       depth: 1,
       limit: 500,
       pagination: false,
     });
-    if (!docs || docs.length === 0) {
-      return galleryData;
-    }
     return docs.map((doc) => {
       let imageUrl = "";
       if (typeof doc.image === "object" && doc.image) {
@@ -103,58 +101,61 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
       return {
         id: String(doc.id),
         image: imageUrl,
+        alt: typeof doc.image === "object" && doc.image ? doc.image.alt : doc.title,
         title: doc.title,
         date: dateStr,
-        date_display: formatMonth(dateStr),
+        date_display: formatMonth(dateStr, locale),
         description: doc.description,
         source: doc.source,
       };
     });
   } catch (err) {
     console.error("Failed to load gallery items from CMS, falling back to static data:", err);
-    return galleryData;
+    return getDefaultGallery(locale);
   }
-}
+});
 
-export async function getSiteSettings(): Promise<SiteSettingsData> {
+export const getSiteSettings = cache(async (locale: Locale = "en"): Promise<SiteSettingsData> => {
+  const defaults = getDefaultSettings(locale);
   try {
     const payload = await getPayload({ config });
     const settings = (await payload.findGlobal({
       slug: "site-settings",
+      locale, fallbackLocale: "en", draft: false, overrideAccess: false,
     })) as Partial<SiteSettingsData> | null;
 
     if (!settings) {
-      return DEFAULT_SITE_SETTINGS;
+      return defaults;
     }
 
     return {
-      siteTitle: settings.siteTitle ?? DEFAULT_SITE_SETTINGS.siteTitle,
-      siteDescription: settings.siteDescription ?? DEFAULT_SITE_SETTINGS.siteDescription,
-      contactEmail: settings.contactEmail ?? DEFAULT_SITE_SETTINGS.contactEmail,
-      address: settings.address ?? DEFAULT_SITE_SETTINGS.address,
-      googleMapsUrl: settings.googleMapsUrl ?? DEFAULT_SITE_SETTINGS.googleMapsUrl,
-      facebookUrl: settings.facebookUrl ?? DEFAULT_SITE_SETTINGS.facebookUrl,
-      instagramUrl: settings.instagramUrl ?? DEFAULT_SITE_SETTINGS.instagramUrl,
-      heroEyebrow: settings.heroEyebrow ?? DEFAULT_SITE_SETTINGS.heroEyebrow,
-      heroTitle: settings.heroTitle ?? DEFAULT_SITE_SETTINGS.heroTitle,
-      heroSubtitle: settings.heroSubtitle ?? DEFAULT_SITE_SETTINGS.heroSubtitle,
-      heroFact1: settings.heroFact1 ?? DEFAULT_SITE_SETTINGS.heroFact1,
-      heroFact2: settings.heroFact2 ?? DEFAULT_SITE_SETTINGS.heroFact2,
-      heroFact3: settings.heroFact3 ?? DEFAULT_SITE_SETTINGS.heroFact3,
-      founderEyebrow: settings.founderEyebrow ?? DEFAULT_SITE_SETTINGS.founderEyebrow,
-      founderName: settings.founderName ?? DEFAULT_SITE_SETTINGS.founderName,
-      founderBio: settings.founderBio ?? DEFAULT_SITE_SETTINGS.founderBio,
+      siteTitle: settings.siteTitle ?? defaults.siteTitle,
+      siteDescription: settings.siteDescription ?? defaults.siteDescription,
+      contactEmail: settings.contactEmail ?? defaults.contactEmail,
+      address: settings.address ?? defaults.address,
+      googleMapsUrl: settings.googleMapsUrl ?? defaults.googleMapsUrl,
+      facebookUrl: settings.facebookUrl ?? defaults.facebookUrl,
+      instagramUrl: settings.instagramUrl ?? defaults.instagramUrl,
+      heroEyebrow: settings.heroEyebrow ?? defaults.heroEyebrow,
+      heroTitle: settings.heroTitle ?? defaults.heroTitle,
+      heroSubtitle: settings.heroSubtitle ?? defaults.heroSubtitle,
+      heroFact1: settings.heroFact1 ?? defaults.heroFact1,
+      heroFact2: settings.heroFact2 ?? defaults.heroFact2,
+      heroFact3: settings.heroFact3 ?? defaults.heroFact3,
+      founderEyebrow: settings.founderEyebrow ?? defaults.founderEyebrow,
+      founderName: settings.founderName ?? defaults.founderName,
+      founderBio: settings.founderBio ?? defaults.founderBio,
       founderAwards:
         Array.isArray(settings.founderAwards) && settings.founderAwards.length > 0
           ? settings.founderAwards
-          : DEFAULT_SITE_SETTINGS.founderAwards,
-      bankName: settings.bankName ?? DEFAULT_SITE_SETTINGS.bankName,
-      accountNumber: settings.accountNumber ?? DEFAULT_SITE_SETTINGS.accountNumber,
-      accountName: settings.accountName ?? DEFAULT_SITE_SETTINGS.accountName,
-      donationSubtitle: settings.donationSubtitle ?? DEFAULT_SITE_SETTINGS.donationSubtitle,
+          : defaults.founderAwards,
+      bankName: settings.bankName ?? defaults.bankName,
+      accountNumber: settings.accountNumber ?? defaults.accountNumber,
+      accountName: settings.accountName ?? defaults.accountName,
+      donationSubtitle: settings.donationSubtitle ?? defaults.donationSubtitle,
     };
   } catch (err) {
     console.error("Failed to load site settings from CMS:", err);
-    return DEFAULT_SITE_SETTINGS;
+    return defaults;
   }
-}
+});

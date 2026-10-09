@@ -1,3 +1,6 @@
+import { getPageMetadata } from "@/lib/page-metadata";
+import { getRequestLocale, type LocaleParams } from "@/lib/request-locale";
+import { localizedPath, translate } from "@/lib/i18n";
 import { getGalleryItems, getMilestones, getSiteSettings } from "@/lib/content";
 import Image from "next/image";
 import Link from "next/link";
@@ -5,11 +8,18 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export default async function HomePage() {
+export async function generateMetadata({ params }: LocaleParams) {
+  return getPageMetadata(await getRequestLocale(params), "/");
+}
+
+export default async function HomePage({ params }: LocaleParams) {
+  const locale = await getRequestLocale(params);
+  const t = (text: string) => translate(locale, text);
+  const href = (path: string) => localizedPath(locale, path);
   const [milestones, settings, galleryItems] = await Promise.all([
-    getMilestones(),
-    getSiteSettings(),
-    getGalleryItems(),
+    getMilestones(locale),
+    getSiteSettings(locale),
+    getGalleryItems(locale),
   ]);
   return (
     <>
@@ -21,15 +31,11 @@ export default async function HomePage() {
             <h1 id="hero-title">{settings.heroTitle}</h1>
             <p className="hero__lead">{settings.heroSubtitle}</p>
             <div className="hero__actions">
-              <Link className="btn btn-primary" href="/donation">
-                Donate Now
-              </Link>
-              <Link className="btn btn-secondary" href="/volunteer">
-                Become a Volunteer
-              </Link>
+              <Link className="btn btn-primary" href={href("/donation")}>{t(" Donate Now ")}</Link>
+              <Link className="btn btn-secondary" href={href("/volunteer")}>{t(" Become a Volunteer ")}</Link>
             </div>
             {(Boolean(settings.heroFact1) || Boolean(settings.heroFact2) || Boolean(settings.heroFact3)) && (
-              <ul className="hero__meta" aria-label="Quick facts">
+              <ul className="hero__meta" aria-label={t("Quick facts")}>
                 {Boolean(settings.heroFact1) && (
                   <li>
                     <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -62,13 +68,13 @@ export default async function HomePage() {
           <figure className="hero__media">
             <Image
               src="/assets/hero-photo-5.jpg"
-              alt="A golden statue in meditation among the trees at Ashram Gandhi Puri"
+              alt={t("A golden statue in meditation among the trees at Ashram Gandhi Puri")}
               width={1080}
               height={1200}
               priority
               sizes="(max-width: 899px) 100vw, 45vw"
             />
-            <figcaption>A life of learning, service and community.</figcaption>
+            <figcaption>{t("A life of learning, service and community.")}</figcaption>
           </figure>
         </div>
       </section>
@@ -77,57 +83,40 @@ export default async function HomePage() {
       <section className="section section--white" id="about" aria-labelledby="about-title">
         <div className="container split">
           <div className="about__copy">
-            <p className="eyebrow">About Us</p>
-            <h2 id="about-title">Where religious theory meets daily practice</h2>
-            <p className="lead">
-              Ashram Gandhi Puri is a non-formal educational institution that provides deliberate
-              religious coaching — balancing the theory learned in formal schools with the practice
-              the religion itself calls for.
-            </p>
-            <p>
-              At Ashram Gandhi Puri Klungkung, residents are forged through spiritual sadhana such
-              as Puja, Gita chanting, Sarirashrama, Upanishads and Yoga. Students are also
-              introduced to organic farming and a healthy, simple lifestyle, so they are ready to
-              step into society.
-            </p>
+            <p className="eyebrow">{t("About Us")}</p>
+            <h2 id="about-title">{t("Where religious theory meets daily practice")}</h2>
+            <p className="lead">{t(" Ashram Gandhi Puri is a non-formal educational institution that provides deliberate religious coaching — balancing the theory learned in formal schools with the practice the religion itself calls for. ")}</p>
+            <p>{t(" At Ashram Gandhi Puri Klungkung, residents are forged through spiritual sadhana such as Puja, Gita chanting, Sarirashrama, Upanishads and Yoga. Students are also introduced to organic farming and a healthy, simple lifestyle, so they are ready to step into society. ")}</p>
 
-            <ul className="pillars" aria-label="What residents practise">
+            <ul className="pillars" aria-label={t("What residents practise")}>
               <li>
                 <span className="pillars__icon">
                   <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M20 6 9 17l-5-5" />
                   </svg>
-                </span>
-                Puja &amp; Gita chanting
-              </li>
+                </span>{t(" Puja & Gita chanting ")}</li>
               <li>
                 <span className="pillars__icon">
                   <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M20 6 9 17l-5-5" />
                   </svg>
-                </span>
-                Yoga &amp; Sarirashrama
-              </li>
+                </span>{t(" Yoga & Sarirashrama ")}</li>
               <li>
                 <span className="pillars__icon">
                   <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M20 6 9 17l-5-5" />
                   </svg>
-                </span>
-                Upanishads study
-              </li>
+                </span>{t(" Upanishads study ")}</li>
               <li>
                 <span className="pillars__icon">
                   <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M20 6 9 17l-5-5" />
                   </svg>
-                </span>
-                Organic farming &amp; simple living
-              </li>
+                </span>{t(" Organic farming & simple living ")}</li>
             </ul>
 
             <a className="link-arrow" href="#founder">
-              <span>Meet our founder</span>
+              <span>{t("Meet our founder")}</span>
               <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M5 12h14" />
                 <path d="m12 5 7 7-7 7" />
@@ -138,7 +127,7 @@ export default async function HomePage() {
           <figure className="media-frame">
             <Image
               src="/assets/hero-photo-2.jpg"
-              alt="Ashram residents, teachers and guests gathered with young dancers inside an open Balinese pavilion"
+              alt={t("Ashram residents, teachers and guests gathered with young dancers inside an open Balinese pavilion")}
               width={1068}
               height={801}
               sizes="(max-width: 768px) 100vw, 50vw"
@@ -146,11 +135,7 @@ export default async function HomePage() {
             />
             <div className="media-badge">
               <strong>1997</strong>
-              <span>
-                Founded in
-                <br />
-                Klungkung, Bali
-              </span>
+              <span>{t(" Founded in ")}<br />{t(" Klungkung, Bali ")}</span>
             </div>
           </figure>
         </div>
@@ -164,32 +149,30 @@ export default async function HomePage() {
       >
         <div className="container">
           <div className="section-head">
-            <p className="eyebrow">Our Impact</p>
-            <h2 id="impact-title">Nearly three decades of service, in numbers</h2>
-            <p>Every figure below comes from activities we have published on this site.</p>
+            <p className="eyebrow">{t("Our Impact")}</p>
+            <h2 id="impact-title">{t("Nearly three decades of service, in numbers")}</h2>
+            <p>{t("Every figure below comes from activities we have published on this site.")}</p>
           </div>
           <ul className="stats">
             <li className="stat">
               <p className="stat__value">28+</p>
-              <p className="stat__label">Years of service</p>
-              <p className="stat__note">Since our founding on 6 September 1997.</p>
+              <p className="stat__label">{t("Years of service")}</p>
+              <p className="stat__note">{t("Since our founding on 6 September 1997.")}</p>
             </li>
             <li className="stat">
               <p className="stat__value">25</p>
-              <p className="stat__label">Shantisena sent abroad</p>
-              <p className="stat__note">Sent to Turkey, Dubai, Poland and India in 2022.</p>
+              <p className="stat__label">{t("Shantisena sent abroad")}</p>
+              <p className="stat__note">{t("Sent to Turkey, Dubai, Poland and India in 2022.")}</p>
             </li>
             <li className="stat">
               <p className="stat__value">1,000</p>
-              <p className="stat__label">Trees planted</p>
-              <p className="stat__note">
-                Planted in 2024 to protect the environment for the community.
-              </p>
+              <p className="stat__label">{t("Trees planted")}</p>
+              <p className="stat__note">{t(" Planted in 2024 to protect the environment for the community. ")}</p>
             </li>
             <li className="stat">
               <p className="stat__value">30</p>
-              <p className="stat__label">Yoga teachers in training</p>
-              <p className="stat__note">Joined our 100-hour course in December 2025.</p>
+              <p className="stat__label">{t("Yoga teachers in training")}</p>
+              <p className="stat__note">{t("Joined our 100-hour course in December 2025.")}</p>
             </li>
           </ul>
         </div>
@@ -199,8 +182,8 @@ export default async function HomePage() {
       <section className="section section--white" id="milestones" aria-labelledby="milestones-title">
         <div className="container">
           <div className="section-head">
-            <p className="eyebrow">Historical Journey</p>
-            <h2 id="milestones-title">Important milestones of Ashram Gandhi Puri</h2>
+            <p className="eyebrow">{t("Historical Journey")}</p>
+            <h2 id="milestones-title">{t("Important milestones of Ashram Gandhi Puri")}</h2>
           </div>
 
           <ol className="timeline">
@@ -225,11 +208,11 @@ export default async function HomePage() {
         <div className="container">
           <div className="section-head section-head--split">
             <div>
-              <p className="eyebrow">Activities</p>
-              <h2 id="activities-title">Life and learning at the ashram</h2>
+              <p className="eyebrow">{t("Activities")}</p>
+              <h2 id="activities-title">{t("Life and learning at the ashram")}</h2>
             </div>
-            <Link className="link-arrow" href="/gallery">
-              <span>View all activities</span>
+            <Link className="link-arrow" href={href("/gallery")}>
+              <span>{t("View all activities")}</span>
               <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M5 12h14" />
                 <path d="m12 5 7 7-7 7" />
@@ -239,11 +222,11 @@ export default async function HomePage() {
 
           <div className="gallery-grid">
             {galleryItems.slice(0, 3).map((item) => (
-              <Link key={item.id} className="gallery-card" href="/gallery">
+              <Link key={item.id} className="gallery-card" href={href("/gallery")}>
                 <div className="gallery-card__media">
                   <Image
                     src={item.image}
-                    alt={item.title}
+                    alt={item.alt || item.title}
                     width={800}
                     height={500}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -260,9 +243,7 @@ export default async function HomePage() {
                   </span>
                   <h3 className="gallery-card__title">{item.title}</h3>
                   <p className="gallery-card__text">{item.description}</p>
-                  <span className="gallery-card__more">
-                    See in gallery
-                    <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <span className="gallery-card__more">{t(" See in gallery ")}<svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M5 12h14" />
                       <path d="m12 5 7 7-7 7" />
                     </svg>
@@ -281,7 +262,7 @@ export default async function HomePage() {
             <p className="eyebrow">{settings.founderEyebrow}</p>
             <h2 id="founder-title">{settings.founderName}</h2>
             <p style={{ whiteSpace: "pre-line" }}>{settings.founderBio}</p>
-            <ul className="award-list" aria-label="Awards">
+            <ul className="award-list" aria-label={t("Awards")}>
               {settings.founderAwards.map((item, idx) => (
                 <li key={idx}>
                   <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -293,7 +274,7 @@ export default async function HomePage() {
               ))}
             </ul>
             <a className="link-arrow" href="#milestones">
-              <span>Read the full journey</span>
+              <span>{t("Read the full journey")}</span>
               <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M5 12h14" />
                 <path d="m12 5 7 7-7 7" />
@@ -304,13 +285,13 @@ export default async function HomePage() {
           <figure className="media-frame split__media">
             <Image
               src="/assets/hero-photo-1.jpg"
-              alt="Ida Rsi Putra Manuaba, in white, receiving the Padma Shri award from the President of India"
+              alt={t("Ida Rsi Putra Manuaba, in white, receiving the Padma Shri award from the President of India")}
               width={1080}
               height={700}
               sizes="(max-width: 768px) 100vw, 50vw"
               loading="lazy"
             />
-            <figcaption>Receiving the Padma Shri at Rashtrapati Bhavan, 2020.</figcaption>
+            <figcaption>{t("Receiving the Padma Shri at Rashtrapati Bhavan, 2020.")}</figcaption>
           </figure>
         </div>
       </section>
@@ -318,18 +299,11 @@ export default async function HomePage() {
       {/* ============ JOIN CTA ============ */}
       <section className="cta-band" aria-labelledby="cta-title">
         <div className="container">
-          <h2 id="cta-title">Be part of the story</h2>
-          <p>
-            Your gift or your time keeps education, community empowerment and environmental care
-            alive at Ashram Gandhi Puri.
-          </p>
+          <h2 id="cta-title">{t("Be part of the story")}</h2>
+          <p>{t(" Your gift or your time keeps education, community empowerment and environmental care alive at Ashram Gandhi Puri. ")}</p>
           <div className="cta-band__actions">
-            <Link className="btn btn-primary" href="/donation">
-              Donate Now
-            </Link>
-            <Link className="btn btn-secondary" href="/volunteer">
-              Become a Volunteer
-            </Link>
+            <Link className="btn btn-primary" href={href("/donation")}>{t(" Donate Now ")}</Link>
+            <Link className="btn btn-secondary" href={href("/volunteer")}>{t(" Become a Volunteer ")}</Link>
           </div>
         </div>
       </section>

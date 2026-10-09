@@ -1,10 +1,13 @@
 "use client";
 
+import { useTranslation } from "@/context/LocaleContext";
+
 import type { GalleryItem } from "@/types/content";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 
 export default function GalleryView({ items }: { items: GalleryItem[] }) {
+  const { locale, t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
 
@@ -24,20 +27,17 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
     <>
       <section className="page-hero" aria-labelledby="page-title">
         <div className="container">
-          <p className="eyebrow">Gallery</p>
-          <h1 id="page-title">Activities &amp; Gallery</h1>
-          <p>
-            Stories from the ashram — retreats, trainings, celebrations and acts of service by our
-            community.
-          </p>
+          <p className="eyebrow">{t("Gallery")}</p>
+          <h1 id="page-title">{t("Activities & Gallery")}</h1>
+          <p>{t(" Stories from the ashram — retreats, trainings, celebrations and acts of service by our community. ")}</p>
         </div>
       </section>
 
-      <section className="section section--tint" aria-label="Browse activities">
+      <section className="section section--tint" aria-label={t("Browse activities")}>
         <div className="container">
           <form className="gallery-controls" role="search" onSubmit={(e) => e.preventDefault()}>
             <div className="field search-field">
-              <label htmlFor="search-input">Search activities</label>
+              <label htmlFor="search-input">{t("Search activities")}</label>
               <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.3-4.3" />
@@ -46,35 +46,37 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
                 className="input"
                 type="search"
                 id="search-input"
-                placeholder="Search by title…"
+                placeholder={t("Search by title…")}
                 autoComplete="off"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             <div className="field">
-              <label htmlFor="sort-select">Sort by</label>
+              <label htmlFor="sort-select">{t("Sort by")}</label>
               <select
                 className="input"
                 id="sort-select"
                 value={sortOrder}
                 onChange={(e) => setSortOrder(e.target.value as "newest" | "oldest")}
               >
-                <option value="newest">Newest first</option>
-                <option value="oldest">Oldest first</option>
+                <option value="newest">{t("Newest first")}</option>
+                <option value="oldest">{t("Oldest first")}</option>
               </select>
             </div>
           </form>
 
           <p className="gallery-status" id="gallery-status" role="status" aria-live="polite">
-            Showing {filteredData.length} of {items.length} activities
+            {locale === "id"
+              ? `Menampilkan ${filteredData.length} dari ${items.length} kegiatan`
+              : `Showing ${filteredData.length} of ${items.length} activities`}
           </p>
 
           <div className="gallery-grid" id="gallery-container">
             {filteredData.length === 0 ? (
               <div className="gallery-empty">
-                <h2>No activities found</h2>
-                <p>Try a different search term to see more of our activities.</p>
+                <h2>{t("No activities found")}</h2>
+                <p>{t("Try a different search term to see more of our activities.")}</p>
               </div>
             ) : (
               filteredData.map((item) => {
@@ -94,7 +96,7 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
                   <div className="gallery-card__media">
                     <Image
                       src={item.image}
-                      alt={item.title}
+                      alt={item.alt || item.title}
                       width={800}
                       height={500}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -111,8 +113,7 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
                     </span>
                     <h3 className="gallery-card__title">{item.title}</h3>
                     <p className="gallery-card__text">{item.description}</p>
-                    <span className="gallery-card__more">
-                      Read the story<span className="sr-only"> (opens in a new tab)</span>
+                    <span className="gallery-card__more">{t(" Read the story")}<span className="sr-only">{t(" (opens in a new tab)")}</span>
                       <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M5 12h14" />
                         <path d="m12 5 7 7-7 7" />

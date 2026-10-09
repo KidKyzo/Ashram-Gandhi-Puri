@@ -90,14 +90,14 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'id') | ('en' | 'id')[];
   globals: {
     'site-settings': SiteSetting;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
-  locale: null;
+  locale: 'en' | 'id';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -126,11 +126,14 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Admins manage accounts and donation settings. Editors manage website content.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
   id: number;
+  role: 'admin' | 'editor';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -152,6 +155,8 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Upload website images and add a description in each language.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -161,7 +166,6 @@ export interface Media {
    * Short description of the image, for accessibility.
    */
   alt: string;
-  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -213,6 +217,7 @@ export interface Milestone {
   description: string;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * Activities shown on the Gallery page.
@@ -235,6 +240,7 @@ export interface GalleryItem {
   source: string;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -323,6 +329,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -347,7 +354,6 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -404,6 +410,7 @@ export interface MilestonesSelect<T extends boolean = true> {
   description?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -417,6 +424,7 @@ export interface GalleryItemsSelect<T extends boolean = true> {
   source?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -459,6 +467,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Select English or Bahasa Indonesia before editing. Save a draft, then publish when ready. Bank details are shared between languages and editable by admins only.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
@@ -490,6 +500,7 @@ export interface SiteSetting {
   accountNumber?: string | null;
   accountName?: string | null;
   donationSubtitle?: string | null;
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -524,6 +535,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   accountNumber?: T;
   accountName?: T;
   donationSubtitle?: T;
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

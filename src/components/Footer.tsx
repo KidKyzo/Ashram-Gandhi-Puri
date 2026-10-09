@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "@/context/LocaleContext";
+
 import { useToast } from "@/context/ToastContext";
 import type { SiteSettingsData } from "@/types/content";
 import Image from "next/image";
@@ -11,6 +13,7 @@ interface FooterProps {
 }
 
 export default function Footer({ settings }: FooterProps) {
+  const { locale, t, href } = useTranslation();
   const { showToast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -24,13 +27,13 @@ export default function Footer({ settings }: FooterProps) {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.message) {
-      showToast("Please fill in all fields before sending.", "error");
+      showToast(t("Please fill in all fields before sending."), "error");
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      showToast("Please enter a valid email address.", "error");
+      showToast(t("Please enter a valid email address."), "error");
       return;
     }
 
@@ -44,7 +47,9 @@ export default function Footer({ settings }: FooterProps) {
       if (!response.ok) throw new Error("Contact message could not be sent.");
 
       showToast(
-        `Thank you, ${formData.name}! Your message has been sent. We will get back to you soon.`,
+        locale === "id"
+          ? `Terima kasih, ${formData.name}! Pesan Anda telah dikirim. Kami akan segera menghubungi Anda.`
+          : `Thank you, ${formData.name}! Your message has been sent. We will get back to you soon.`,
         "success"
       );
       setFormData({ name: "", email: "", message: "" });
@@ -52,7 +57,7 @@ export default function Footer({ settings }: FooterProps) {
     } catch (error) {
       console.error("Contact form submission error:", error);
       showToast(
-        "Could not send message right now. Please try again or contact us directly.",
+        t("Could not send message right now. Please try again or contact us directly."),
         "error"
       );
     } finally {
@@ -65,24 +70,20 @@ export default function Footer({ settings }: FooterProps) {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <Link className="brand" href="/" aria-label="Ashram Gandhi Puri — home">
+            <Link className="brand" href={href("/")} aria-label={t("Ashram Gandhi Puri — home")}>
               <Image
                 className="brand__logo"
                 src="/assets/logo-ngo-96.webp"
-                alt="Ashram Gandhi Puri Logo"
+                alt={t("Ashram Gandhi Puri Logo")}
                 width={48}
                 height={48}
                 loading="lazy"
               />
-              <span className="brand__name">
-                Ashram Gandhi Puri<small>Klungkung · Bali</small>
+              <span className="brand__name">{t(" Ashram Gandhi Puri")}<small>{t("Klungkung · Bali")}</small>
               </span>
             </Link>
-            <p>
-              Spiritual education, yoga and community service — nurturing minds, hearts and
-              communities since 1997.
-            </p>
-            <h2 className="footer-heading">Contact</h2>
+            <p>{t(" Spiritual education, yoga and community service — nurturing minds, hearts and communities since 1997. ")}</p>
+            <h2 className="footer-heading">{t("Contact")}</h2>
             <ul className="contact-list">
               <li>
                 <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -99,8 +100,7 @@ export default function Footer({ settings }: FooterProps) {
                     }
                     target="_blank"
                     rel="noopener noreferrer"
-                  >
-                    View on Google Maps<span className="sr-only"> (opens in a new tab)</span>
+                  >{t(" View on Google Maps")}<span className="sr-only">{t(" (opens in a new tab)")}</span>
                   </a>
                 </address>
               </li>
@@ -126,7 +126,7 @@ export default function Footer({ settings }: FooterProps) {
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Facebook (opens in a new tab)"
+                aria-label={t("Facebook (opens in a new tab)")}
               >
                 <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
@@ -139,7 +139,7 @@ export default function Footer({ settings }: FooterProps) {
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram (opens in a new tab)"
+                aria-label={t("Instagram (opens in a new tab)")}
               >
                 <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                   <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
@@ -150,39 +150,34 @@ export default function Footer({ settings }: FooterProps) {
             </div>
           </div>
 
-          <nav aria-label="Footer">
-            <h2 className="footer-heading">Explore</h2>
+          <nav aria-label={t("Footer")}>
+            <h2 className="footer-heading">{t("Explore")}</h2>
             <ul className="footer-list">
               <li>
-                <Link href="/">Home</Link>
+                <Link href={href("/")}>{t("Home")}</Link>
               </li>
               <li>
-                <Link href="/gallery">Gallery</Link>
+                <Link href={href("/gallery")}>{t("Gallery")}</Link>
               </li>
               <li>
-                <Link href="/volunteer">Volunteer</Link>
+                <Link href={href("/volunteer")}>{t("Volunteer")}</Link>
               </li>
               <li>
-                <Link href="/donation">Donate</Link>
+                <Link href={href("/donation")}>{t("Donate")}</Link>
               </li>
             </ul>
           </nav>
 
           <div className="footer-form">
-            <h2 className="footer-heading" id="footer-form-title">
-              Send us a message
-            </h2>
-            <p>
-              Questions about visiting, volunteering or giving? Leave a note and we will reply by
-              email.
-            </p>
+            <h2 className="footer-heading" id="footer-form-title">{t(" Send us a message ")}</h2>
+            <p>{t(" Questions about visiting, volunteering or giving? Leave a note and we will reply by email. ")}</p>
             <form
               className="form contact-form"
               aria-labelledby="footer-form-title"
               onSubmit={handleSubmit}
             >
               <div style={{ display: "none" }} aria-hidden="true">
-                <label htmlFor="company_website">Leave empty</label>
+                <label htmlFor="company_website">{t("Leave empty")}</label>
                 <input
                   type="text"
                   id="company_website"
@@ -194,48 +189,48 @@ export default function Footer({ settings }: FooterProps) {
                 />
               </div>
               <div className="field">
-                <label htmlFor="footer-name">Name</label>
+                <label htmlFor="footer-name">{t("Name")}</label>
                 <input
                   className="input"
                   type="text"
                   id="footer-name"
                   name="name"
                   autoComplete="name"
-                  placeholder="Your name"
+                  placeholder={t("Your name")}
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
               </div>
               <div className="field">
-                <label htmlFor="footer-email">Email</label>
+                <label htmlFor="footer-email">{t("Email")}</label>
                 <input
                   className="input"
                   type="email"
                   id="footer-email"
                   name="email"
                   autoComplete="email"
-                  placeholder="you@example.com"
+                  placeholder={t("you@example.com")}
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
               </div>
               <div className="field">
-                <label htmlFor="footer-message">Message</label>
+                <label htmlFor="footer-message">{t("Message")}</label>
                 <textarea
                   className="input"
                   id="footer-message"
                   name="message"
                   rows={4}
-                  placeholder="How can we help?"
+                  placeholder={t("How can we help?")}
                   required
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 ></textarea>
               </div>
               <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Send message"}
+                {isSubmitting ? t("Sending...") : t("Send message")}
                 <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="m22 2-7 20-4-9-9-4Z" />
                   <path d="M22 2 11 13" />
@@ -248,8 +243,8 @@ export default function Footer({ settings }: FooterProps) {
 
       <div className="footer-bottom">
         <div className="container footer-bottom__inner">
-          <p>©2026 Ashram Gandhi Puri. All rights reserved.</p>
-          <p>Donations are received by Yayasan Ashram Gandhi Puri.</p>
+          <p>{t("©2026 Ashram Gandhi Puri. All rights reserved.")}</p>
+          <p>{t("Donations are received by Yayasan Ashram Gandhi Puri.")}</p>
         </div>
       </div>
     </footer>

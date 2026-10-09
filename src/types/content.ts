@@ -10,6 +10,7 @@ export interface Milestone {
 }
 
 export interface GalleryItem {
+  alt?: string;
   id: string;
   image: string;
   title: string;
