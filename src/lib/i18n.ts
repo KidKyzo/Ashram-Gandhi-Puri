@@ -21,6 +21,9 @@ export function formatMonth(date: string, locale: Locale): string {
 
 // Interface copy belongs in code; editable stories and page content live in Payload.
 const indonesian: Record<string, string> = {
+  "Select language": "Pilih bahasa",
+  "English": "English",
+  "Bahasa Indonesia": "Bahasa Indonesia",
   "Skip to main content": "Langsung ke konten utama",
   "Donate Now": "Donasi Sekarang",
   "Become a Volunteer": "Menjadi Relawan",
@@ -133,6 +136,9 @@ const indonesian: Record<string, string> = {
 
 // Existing donation copy is Indonesian; keep it as the source and provide English equivalents.
 const english: Record<string, string> = {
+  "Select language": "Select language",
+  "English": "English",
+  "Bahasa Indonesia": "Bahasa Indonesia",
   "Dana Punia & Donasi": "Dana Punia & Donations",
   "Mari Berbagi Kebaikan & Kebijaksanaan": "Share Kindness & Wisdom",
   "Setiap punia dan kebaikan yang Anda berikan mengalir untuk kelangsungan pendidikan spiritual, pembinaan santri yoga, dan kelestarian lingkungan Ashram Gandhi Puri.": "Every gift supports spiritual education, yoga students, and environmental care at Ashram Gandhi Puri.",
