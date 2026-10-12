@@ -25,6 +25,7 @@ const indonesian: Record<string, string> = {
   "English": "English",
   "Bahasa Indonesia": "Bahasa Indonesia",
   "Skip to main content": "Langsung ke konten utama",
+  "Back to top": "Kembali ke atas",
   "Donate Now": "Donasi Sekarang",
   "Become a Volunteer": "Menjadi Relawan",
   "Quick facts": "Sekilas tentang kami",

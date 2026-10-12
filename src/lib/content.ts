@@ -130,31 +130,41 @@ export const getSiteSettings = cache(async (locale: Locale = "en"): Promise<Site
       return defaults;
     }
 
+    const localizedString = <K extends Exclude<keyof SiteSettingsData, "founderAwards">>(
+      key: K,
+    ): string => {
+      const value = settings[key];
+      if (locale === "id" && value === DEFAULT_SITE_SETTINGS[key]) {
+        return defaults[key];
+      }
+      return value ?? defaults[key];
+    };
+
     return {
-      siteTitle: settings.siteTitle ?? defaults.siteTitle,
-      siteDescription: settings.siteDescription ?? defaults.siteDescription,
-      contactEmail: settings.contactEmail ?? defaults.contactEmail,
-      address: settings.address ?? defaults.address,
-      googleMapsUrl: settings.googleMapsUrl ?? defaults.googleMapsUrl,
-      facebookUrl: settings.facebookUrl ?? defaults.facebookUrl,
-      instagramUrl: settings.instagramUrl ?? defaults.instagramUrl,
-      heroEyebrow: settings.heroEyebrow ?? defaults.heroEyebrow,
-      heroTitle: settings.heroTitle ?? defaults.heroTitle,
-      heroSubtitle: settings.heroSubtitle ?? defaults.heroSubtitle,
-      heroFact1: settings.heroFact1 ?? defaults.heroFact1,
-      heroFact2: settings.heroFact2 ?? defaults.heroFact2,
-      heroFact3: settings.heroFact3 ?? defaults.heroFact3,
-      founderEyebrow: settings.founderEyebrow ?? defaults.founderEyebrow,
-      founderName: settings.founderName ?? defaults.founderName,
-      founderBio: settings.founderBio ?? defaults.founderBio,
+      siteTitle: localizedString("siteTitle"),
+      siteDescription: localizedString("siteDescription"),
+      contactEmail: localizedString("contactEmail"),
+      address: localizedString("address"),
+      googleMapsUrl: localizedString("googleMapsUrl"),
+      facebookUrl: localizedString("facebookUrl"),
+      instagramUrl: localizedString("instagramUrl"),
+      heroEyebrow: localizedString("heroEyebrow"),
+      heroTitle: localizedString("heroTitle"),
+      heroSubtitle: localizedString("heroSubtitle"),
+      heroFact1: localizedString("heroFact1"),
+      heroFact2: localizedString("heroFact2"),
+      heroFact3: localizedString("heroFact3"),
+      founderEyebrow: localizedString("founderEyebrow"),
+      founderName: localizedString("founderName"),
+      founderBio: localizedString("founderBio"),
       founderAwards:
         Array.isArray(settings.founderAwards) && settings.founderAwards.length > 0
           ? settings.founderAwards
           : defaults.founderAwards,
-      bankName: settings.bankName ?? defaults.bankName,
-      accountNumber: settings.accountNumber ?? defaults.accountNumber,
-      accountName: settings.accountName ?? defaults.accountName,
-      donationSubtitle: settings.donationSubtitle ?? defaults.donationSubtitle,
+      bankName: localizedString("bankName"),
+      accountNumber: localizedString("accountNumber"),
+      accountName: localizedString("accountName"),
+      donationSubtitle: localizedString("donationSubtitle"),
     };
   } catch (err) {
     console.error("Failed to load site settings from CMS:", err);
