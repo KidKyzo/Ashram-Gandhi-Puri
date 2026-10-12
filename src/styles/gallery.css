@@ -28,7 +28,7 @@
 
 .gallery-card:hover {
   box-shadow: var(--shadow-lg);
-  transform: none;
+  transform: translateY(-3px);
   color: var(--color-text);
 }
 
@@ -46,7 +46,7 @@
 }
 
 .gallery-card:hover .gallery-card__media img {
-  transform: none;
+  transform: scale(1.035);
 }
 
 .gallery-card__body {

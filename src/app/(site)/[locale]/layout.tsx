@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { SiteMotion } from "@/components/SiteEnhancements";
 import { ToastProvider } from "@/context/ToastContext";
 import { getSiteSettings } from "@/lib/content";
 import { LocaleProvider } from "@/context/LocaleContext";
@@ -50,6 +51,7 @@ export default async function RootLayout({
       <body>
         <LocaleProvider locale={locale}>
           <ToastProvider>
+            <SiteMotion />
             <a className="skip-link" href="#main">
               {translate(locale, "Skip to main content")}
             </a>
