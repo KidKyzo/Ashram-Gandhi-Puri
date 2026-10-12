@@ -539,11 +539,73 @@ p {
   margin-top: var(--space-sm);
 }
 
-.language-switcher { display: flex; align-items: center; gap: 2px; }
-.nav-links .language-switcher a { padding-inline: 12px; }
-.nav-links .language-switcher a[aria-current='true'] {
-  background: var(--color-tint); color: var(--color-primary-dark);
+.language-switcher { position: relative; }
+.language-switcher__control { position: relative; }
+.language-switcher__flag {
+  display: block;
+  width: 20px;
+  height: 14px;
+  flex: 0 0 20px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(38, 38, 38, 0.12);
 }
+.language-switcher__trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--ease), background var(--ease);
+}
+.language-switcher__trigger:hover,
+.language-switcher__trigger[aria-expanded='true'] {
+  border-color: var(--color-border-strong);
+  background: var(--color-tint);
+}
+.language-switcher__chevron {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  transition: transform var(--ease);
+}
+.language-switcher__trigger[aria-expanded='true'] .language-switcher__chevron { transform: rotate(180deg); }
+.language-switcher__menu {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  margin-top: 4px;
+  padding: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+}
+.language-switcher__menu[hidden] { display: none; }
+.language-switcher__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+.language-switcher__option:hover,
+.language-switcher__option[aria-current='true'] { background: var(--color-tint); }
+.nav-links .language-switcher__option::after { content: none; }
+.language-switcher__current { margin-left: auto; color: var(--color-primary-dark); }
 
 @media (min-width: 900px) {
   .nav-toggle { display: none; }
@@ -595,6 +657,15 @@ p {
   .nav-links .nav-cta {
     margin-top: 0;
     margin-left: var(--space-sm);
+  }
+
+  .language-switcher__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 110;
+    min-width: 190px;
+    margin-top: 0;
   }
 }
 
