@@ -582,7 +582,9 @@ p {
 .language-switcher__menu {
   display: grid;
   gap: 4px;
-  width: 100%;
+  width: max-content;
+  min-width: 190px;
+  box-sizing: border-box;
   margin-top: 4px;
   padding: 6px;
   border: 1px solid var(--color-border);
@@ -594,9 +596,11 @@ p {
 .language-switcher__option {
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
   gap: 10px;
   min-height: 44px;
   padding: 0 10px;
+  white-space: nowrap;
   border-radius: var(--radius-sm);
   color: var(--color-text);
   font-size: 0.9375rem;
