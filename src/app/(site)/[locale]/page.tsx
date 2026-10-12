@@ -1,4 +1,5 @@
 import { getPageMetadata } from "@/lib/page-metadata";
+import { BackToTopButton } from "@/components/SiteEnhancements";
 import { getRequestLocale, type LocaleParams } from "@/lib/request-locale";
 import { localizedPath, translate } from "@/lib/i18n";
 import { getGalleryItems, getMilestones, getSiteSettings } from "@/lib/content";
@@ -307,6 +308,7 @@ export default async function HomePage({ params }: LocaleParams) {
           </div>
         </div>
       </section>
+      <BackToTopButton label={t("Back to top")} />
     </>
   );
 }
